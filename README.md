@@ -1,180 +1,49 @@
-# CodexBar 🎚️ - May your tokens never run out.
+# CodexBar Rust Workspace
 
-Tiny macOS 14+ menu bar app that keeps your Codex, Claude, Cursor, Gemini, Antigravity, Droid (Factory), Copilot, z.ai, Kiro, Vertex AI, Augment, Amp, and JetBrains AI limits visible (session + weekly where available) and shows when each window resets. One status item per provider (or Merge Icons mode); enable what you use from Settings. No Dock icon, minimal UI, dynamic bar icons in the menu bar.
+This workspace is the starting point for a Linux/KDE-native rebuild:
 
-<img src="codexbar.png" alt="CodexBar menu screenshot" width="520" />
+- `crates/codexbar-core`: shared snapshot/domain models.
+- `crates/codexbar-cli`: Rust `codexbar` CLI bootstrap (usage output contract).
+- `crates/codexbar-service`: CLI service that emits Plasma-friendly JSON snapshots.
+- `crates/codexbar-kde-bridge`: IPC/DBus boundary contract for future live transport.
 
-## Install
+## Local build
 
-### Requirements
-- macOS 14+ (Sonoma)
-
-### GitHub Releases
-Download: <https://github.com/steipete/CodexBar/releases>
-
-### Homebrew
 ```bash
-brew install --cask steipete/tap/codexbar
+cd "KDE Plasma/rust"
+cargo fmt
+cargo check
 ```
 
-### Linux (CLI only)
+## Build CLIs
+
 ```bash
-brew install steipete/tap/codexbar
-```
-Or download `CodexBarCLI-v<tag>-linux-<arch>.tar.gz` from GitHub Releases.
-Linux support via Omarchy: community Waybar module and TUI, driven by the `codexbar` executable.
-
-### Linux KDE Plasma (Rust widget preview)
-This repository now includes a Rust-based KDE Plasma widget path:
-- Rust workspace: `KDE Plasma/rust/`
-- Plasma 6 package: `KDE Plasma/org.codexbar.widget/`
-- Plasma 5 package: `KDE Plasma/org.codexbar.widget.plasma5/`
-- Migration notes: `docs/rust-kde-migration.md`
-
-Build and install (Plasma 5 example on Ubuntu):
-```bash
-cargo build --release -p codexbar-cli -p codexbar-service --manifest-path "KDE Plasma/rust/Cargo.toml"
-
-install -Dm755 "KDE Plasma/rust/target/release/codexbar" "$HOME/.local/bin/codexbar"
-install -Dm755 "KDE Plasma/rust/target/release/codexbar-service" "$HOME/.local/bin/codexbar-service"
-
-kpackagetool5 -t Plasma/Applet -u "$PWD/KDE Plasma/org.codexbar.widget.plasma5" || true
-kpackagetool5 -t Plasma/Applet -i "$PWD/KDE Plasma/org.codexbar.widget.plasma5"
-
-kquitapp5 plasmashell || true
-nohup plasmashell --replace >/tmp/plasmashell.log 2>&1 &
+cd "KDE Plasma/rust"
+cargo build --release -p codexbar-cli -p codexbar-service
 ```
 
-Default widget command:
+## Emit a snapshot
+
+Sample snapshot:
+
 ```bash
-codexbar-service snapshot --from-codexbar-cli --provider all --status
+cd "KDE Plasma/rust"
+cargo run -p codexbar-service -- snapshot --pretty
 ```
 
-#### KDE widget meter semantics
-- Compact panel icon: provider initials plus two usage bars.
-- Top bar: primary (shorter) window remaining.
-- Bottom bar: secondary (longer) window remaining.
-- Dropdown view labels each bar with its window (`5h`, `7d`, etc.) and exact percent left.
-- Source labels show where data came from (`codex RPC`, `codex /status`, `claude /usage`).
-- Credits are shown as text when available.
+From installed `codexbar` CLI:
 
-#### KDE widget data accuracy behavior
-- The Rust widget path is now live-data only.
-- Mock/sample fallback data is not shown when provider fetch fails.
-- If no live data is available, the widget surfaces an explicit error/no-data state.
-
-#### KDE troubleshooting
-- `/bin/sh: codexbar-service: not found`: ensure `~/.local/bin` is visible to Plasma or set an absolute command path in widget settings.
-- `codexbar-service` runs but `codexbar` is missing: install both binaries above; `codexbar-service` expects `codexbar` alongside it.
-- To follow runtime logs:
 ```bash
-journalctl --user -b -f | rg -n "org.codexbar.widget|plasmashell|codexbar-service|codexbar"
+cd "KDE Plasma/rust"
+cargo run -p codexbar-service -- snapshot --from-codexbar-cli --provider all --status --pretty
 ```
 
-### First run
-- Open Settings → Providers and enable what you use.
-- Install/sign in to the provider sources you rely on (e.g. `codex`, `claude`, `gemini`, browser cookies, or OAuth; Antigravity requires the Antigravity app running).
-- Optional: Settings → Providers → Codex → OpenAI cookies (Automatic or Manual) to add dashboard extras.
+## License Scan
 
-## Providers
+A ScanCode license scan of the KDE Plasma folder was run with:
 
-- [Codex](docs/codex.md) — Local Codex CLI RPC (+ PTY fallback) and optional OpenAI web dashboard extras.
-- [Claude](docs/claude.md) — OAuth API or browser cookies (+ CLI PTY fallback); session + weekly usage.
-- [Cursor](docs/cursor.md) — Browser session cookies for plan + usage + billing resets.
-- [Gemini](docs/gemini.md) — OAuth-backed quota API using Gemini CLI credentials (no browser cookies).
-- [Antigravity](docs/antigravity.md) — Local language server probe (experimental); no external auth.
-- [Droid](docs/factory.md) — Browser cookies + WorkOS token flows for Factory usage + billing.
-- [Copilot](docs/copilot.md) — GitHub device flow + Copilot internal usage API.
-- [z.ai](docs/zai.md) — API token (Keychain) for quota + MCP windows.
-- [Kimi](docs/kimi.md) — Auth token (JWT from `kimi-auth` cookie) for weekly quota + 5‑hour rate limit.
-- [Kimi K2](docs/kimi-k2.md) — API key for credit-based usage totals.
-- [Kiro](docs/kiro.md) — CLI-based usage via `kiro-cli /usage` command; monthly credits + bonus credits.
-- [Vertex AI](docs/vertexai.md) — Google Cloud gcloud OAuth with token cost tracking from local Claude logs.
-- [Augment](docs/augment.md) — Browser cookie-based authentication with automatic session keepalive; credits tracking and usage monitoring.
-- [Amp](docs/amp.md) — Browser cookie-based authentication with Amp Free usage tracking.
-- [JetBrains AI](docs/jetbrains.md) — Local XML-based quota from JetBrains IDE configuration; monthly credits tracking.
-- Open to new providers: [provider authoring guide](docs/provider.md).
-
-## Icon & Screenshot
-The menu bar icon is a tiny two-bar meter:
-- Top bar: 5‑hour/session window. If weekly is missing/exhausted and credits are available, it becomes a thicker credits bar.
-- Bottom bar: weekly window (hairline).
-- Errors/stale data dim the icon; status overlays indicate incidents.
-
-## Features
-- Multi-provider menu bar with per-provider toggles (Settings → Providers).
-- Session + weekly meters with reset countdowns.
-- Optional Codex web dashboard enrichments (code review remaining, usage breakdown, credits history).
-- Local cost-usage scan for Codex + Claude (last 30 days).
-- Provider status polling with incident badges in the menu and icon overlay.
-- Merge Icons mode to combine providers into one status item + switcher.
-- Refresh cadence presets (manual, 1m, 2m, 5m, 15m).
-- Bundled CLI (`codexbar`) for scripts and CI (including `codexbar cost --provider codex|claude` for local cost usage); Linux CLI builds available.
-- WidgetKit widget mirrors the menu card snapshot.
-- Privacy-first: on-device parsing by default; browser cookies are opt-in and reused (no passwords stored).
-
-## Privacy note
-Wondering if CodexBar scans your disk? It doesn’t crawl your filesystem; it reads a small set of known locations (browser cookies/local storage, local JSONL logs) when the related features are enabled. See the discussion and audit notes in [issue #12](https://github.com/steipete/CodexBar/issues/12).
-
-## macOS permissions (why they’re needed)
-- **Full Disk Access (optional)**: only required to read Safari cookies/local storage for web-based providers (Codex web, Claude web, Cursor, Droid/Factory). If you don’t grant it, use Chrome/Firefox cookies or CLI-only sources instead.
-- **Keychain access (prompted by macOS)**:
-  - Chrome cookie import needs the “Chrome Safe Storage” key to decrypt cookies.
-  - Claude OAuth credentials (written by the Claude CLI) are read from Keychain when present.
-  - z.ai API token is stored in Keychain from Preferences → Providers; Copilot stores its API token in Keychain during device flow.
-  - **How do I prevent those keychain alerts?**
-    - Open **Keychain Access.app** → login keychain → search the item (e.g., “Claude Code-credentials”).
-    - Open the item → **Access Control** → add `CodexBar.app` under “Always allow access by these applications”.
-    - Prefer adding just CodexBar (avoid “Allow all applications” unless you want it wide open).
-    - Relaunch CodexBar after saving.
-    - Reference screenshot: ![Keychain access control](docs/keychain-allow.png)
-  - **How to do the same for the browser?**
-    - Find the browser’s “Safe Storage” key (e.g., “Chrome Safe Storage”, “Brave Safe Storage”, “Firefox”, “Microsoft Edge Safe Storage”).
-    - Open the item → **Access Control** → add `CodexBar.app` under “Always allow access by these applications”.
-    - This removes the prompt when CodexBar decrypts cookies for that browser.
-- **Files & Folders prompts (folder/volume access)**: CodexBar launches provider CLIs (codex/claude/gemini/antigravity). If those CLIs read a project directory or external drive, macOS may ask CodexBar for that folder/volume (e.g., Desktop or an external volume). This is driven by the CLI’s working directory, not background disk scanning.
-- **What we do not request**: no Screen Recording, Accessibility, or Automation permissions; no passwords are stored (browser cookies are reused when you opt in).
-
-## Docs
-- Providers overview: [docs/providers.md](docs/providers.md)
-- Provider authoring: [docs/provider.md](docs/provider.md)
-- UI & icon notes: [docs/ui.md](docs/ui.md)
-- CLI reference: [docs/cli.md](docs/cli.md)
-- Architecture: [docs/architecture.md](docs/architecture.md)
-- Refresh loop: [docs/refresh-loop.md](docs/refresh-loop.md)
-- Status polling: [docs/status.md](docs/status.md)
-- Sparkle updates: [docs/sparkle.md](docs/sparkle.md)
-- Release checklist: [docs/RELEASING.md](docs/RELEASING.md)
-
-## Getting started (dev)
-- Clone the repo and open it in Xcode or run the scripts directly.
-- Launch once, then toggle providers in Settings → Providers.
-- Install/sign in to provider sources you rely on (CLIs, browser cookies, or OAuth).
-- Optional: set OpenAI cookies (Automatic or Manual) for Codex dashboard extras.
-
-## Build from source
 ```bash
-swift build -c release          # or debug for development
-./Scripts/package_app.sh        # builds CodexBar.app in-place
-CODEXBAR_SIGNING=adhoc ./Scripts/package_app.sh  # ad-hoc signing (no Apple Developer account)
-open CodexBar.app
+scancode -clpieu --json-pp codexbar.json /home/sidd/Documents/GitHub/CodexBar/KDE\ Plasma
 ```
 
-Dev loop:
-```bash
-./Scripts/compile_and_run.sh
-```
-
-## Related
-- ✂️ [Trimmy](https://github.com/steipete/Trimmy) — “Paste once, run once.” Flatten multi-line shell snippets so they paste and run.
-- 🧳 [MCPorter](https://mcporter.dev) — TypeScript toolkit + CLI for Model Context Protocol servers.
-- 🧿 [oracle](https://askoracle.dev) — Ask the oracle when you're stuck. Invoke GPT-5 Pro with a custom context and files.
-
-## Looking for a Windows version?
-- [Win-CodexBar](https://github.com/Finesssee/Win-CodexBar)
-
-## Credits
-Inspired by [ccusage](https://github.com/ryoppippi/ccusage) (MIT), specifically the cost usage tracking.
-
-## License
-MIT • Peter Steinberger ([steipete](https://twitter.com/steipete))
+Results are saved in `KDE Plasma/codexbar.json`.
