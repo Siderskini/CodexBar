@@ -12,9 +12,9 @@
         "Description": "Panel usage meters for CodexBar providers.",
         "EnabledByDefault": true,
         "Icon": "utilities-system-monitor",
-        "Id": "org.codexbar.widget",
+        "Id": "org.codexbar.widget.plasma5",
         "License": "MIT",
-        "Name": "CodexBar",
+        "Name": "CodexBar (Plasma 5)",
         "Version": "0.1.0",
         "Website": "https://github.com/Siderskini/CodexBar"
     },

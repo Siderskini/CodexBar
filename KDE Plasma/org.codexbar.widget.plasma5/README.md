@@ -5,13 +5,13 @@ This folder contains a KDE Plasma 5 applet package that consumes JSON from `code
 ## Install for testing
 
 ```bash
-kpackagetool6 --type Plasma/Applet --install "KDE Plasma/org.codexbar.widget"
+kpackagetool5 --type Plasma/Applet --install "KDE Plasma/org.codexbar.widget.plasma5"
 ```
 
 If already installed:
 
 ```bash
-kpackagetool6 --type Plasma/Applet --upgrade "KDE Plasma/org.codexbar.widget"
+kpackagetool5 --type Plasma/Applet --upgrade "KDE Plasma/org.codexbar.widget.plasma5"
 ```
 
 Then add `CodexBar` from Plasma's widget picker.
@@ -19,7 +19,7 @@ Then add `CodexBar` from Plasma's widget picker.
 ## Remove
 
 ```bash
-kpackagetool6 --type Plasma/Applet --remove org.codexbar.widget
+kpackagetool5 --type Plasma/Applet --remove org.codexbar.widget.plasma5
 ```
 
 ## Service dependency

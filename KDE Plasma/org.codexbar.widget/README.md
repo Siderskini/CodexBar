@@ -22,6 +22,8 @@ Then add `CodexBar` from Plasma's widget picker.
 kpackagetool6 --type Plasma/Applet --remove org.codexbar.widget
 ```
 
+Use the `org.codexbar.widget.plasma5` package only on Plasma 5 systems.
+
 ## Service dependency
 
 The applet shell command defaults to:
