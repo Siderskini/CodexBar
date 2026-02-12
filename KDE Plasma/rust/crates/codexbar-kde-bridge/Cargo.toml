@@ -1,0 +1,10 @@
+[package]
+name = "codexbar-kde-bridge"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+authors.workspace = true
+
+[dependencies]
+codexbar-core = { path = "../codexbar-core" }
+serde.workspace = true

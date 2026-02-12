@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <group name="General">
+        <entry name="serviceCommand" type="String">
+            <default>codexbar-service snapshot --from-codexbar-cli --provider all --status</default>
+        </entry>
+        <entry name="refreshSeconds" type="Int">
+            <default>60</default>
+            <min>15</min>
+            <max>3600</max>
+        </entry>
+    </group>
+</kcfg>

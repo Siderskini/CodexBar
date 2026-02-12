@@ -24,6 +24,53 @@ brew install steipete/tap/codexbar
 Or download `CodexBarCLI-v<tag>-linux-<arch>.tar.gz` from GitHub Releases.
 Linux support via Omarchy: community Waybar module and TUI, driven by the `codexbar` executable.
 
+### Linux KDE Plasma (Rust widget preview)
+This repository now includes a Rust-based KDE Plasma widget path:
+- Rust workspace: `KDE Plasma/rust/`
+- Plasma 6 package: `KDE Plasma/org.codexbar.widget/`
+- Plasma 5 package: `KDE Plasma/org.codexbar.widget.plasma5/`
+- Migration notes: `docs/rust-kde-migration.md`
+
+Build and install (Plasma 5 example on Ubuntu):
+```bash
+cargo build --release -p codexbar-cli -p codexbar-service --manifest-path "KDE Plasma/rust/Cargo.toml"
+
+install -Dm755 "KDE Plasma/rust/target/release/codexbar" "$HOME/.local/bin/codexbar"
+install -Dm755 "KDE Plasma/rust/target/release/codexbar-service" "$HOME/.local/bin/codexbar-service"
+
+kpackagetool5 -t Plasma/Applet -u "$PWD/KDE Plasma/org.codexbar.widget.plasma5" || true
+kpackagetool5 -t Plasma/Applet -i "$PWD/KDE Plasma/org.codexbar.widget.plasma5"
+
+kquitapp5 plasmashell || true
+nohup plasmashell --replace >/tmp/plasmashell.log 2>&1 &
+```
+
+Default widget command:
+```bash
+codexbar-service snapshot --from-codexbar-cli --provider all --status
+```
+
+#### KDE widget meter semantics
+- Compact panel icon: provider initials plus two usage bars.
+- Top bar: primary (shorter) window remaining.
+- Bottom bar: secondary (longer) window remaining.
+- Dropdown view labels each bar with its window (`5h`, `7d`, etc.) and exact percent left.
+- Source labels show where data came from (`codex RPC`, `codex /status`, `claude /usage`).
+- Credits are shown as text when available.
+
+#### KDE widget data accuracy behavior
+- The Rust widget path is now live-data only.
+- Mock/sample fallback data is not shown when provider fetch fails.
+- If no live data is available, the widget surfaces an explicit error/no-data state.
+
+#### KDE troubleshooting
+- `/bin/sh: codexbar-service: not found`: ensure `~/.local/bin` is visible to Plasma or set an absolute command path in widget settings.
+- `codexbar-service` runs but `codexbar` is missing: install both binaries above; `codexbar-service` expects `codexbar` alongside it.
+- To follow runtime logs:
+```bash
+journalctl --user -b -f | rg -n "org.codexbar.widget|plasmashell|codexbar-service|codexbar"
+```
+
 ### First run
 - Open Settings → Providers and enable what you use.
 - Install/sign in to the provider sources you rely on (e.g. `codex`, `claude`, `gemini`, browser cookies, or OAuth; Antigravity requires the Antigravity app running).

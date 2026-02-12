@@ -1,0 +1,17 @@
+[package]
+name = "codexbar-cli"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "codexbar"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+codexbar-core = { path = "../codexbar-core" }
+serde.workspace = true
+serde_json.workspace = true

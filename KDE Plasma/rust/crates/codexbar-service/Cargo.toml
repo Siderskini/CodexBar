@@ -1,0 +1,12 @@
+[package]
+name = "codexbar-service"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+authors.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+codexbar-core = { path = "../codexbar-core" }
+serde_json.workspace = true

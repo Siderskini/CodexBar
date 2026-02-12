@@ -8,6 +8,7 @@ xcuserdata/
 # Build products
 .build/
 DerivedData
+KDE Plasma/rust/target/
 
 # Bundles / artifacts
 # Main app bundle (any variation)
@@ -31,6 +32,9 @@ debug_*.swift
 .DS_Store
 .vscode/
 .codex/environments/
+
+# KDE packaging
+*.plasmoid
 
 # Debug/analysis docs
 docs/*-analysis.md

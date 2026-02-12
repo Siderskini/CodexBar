@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "opensource@codexbar.dev",
+                "Name": "CodexBar Contributors"
+            }
+        ],
+        "Category": "System Information",
+        "Description": "Panel usage meters for CodexBar providers.",
+        "EnabledByDefault": true,
+        "Icon": "utilities-system-monitor",
+        "Id": "org.codexbar.widget",
+        "License": "MIT",
+        "Name": "CodexBar",
+        "Version": "0.1.0",
+        "Website": "https://github.com/steipete/CodexBar"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
