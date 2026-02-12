@@ -1,5 +1,7 @@
 # CodexBar Rust Workspace
 
+Disclaimer: The majority of the work in this fork (including this README) has been done via Codex and there is a scancode toolkit result published in this repository for that work
+
 This workspace is the starting point for a Linux/KDE-native rebuild:
 
 - `crates/codexbar-core`: shared snapshot/domain models.
