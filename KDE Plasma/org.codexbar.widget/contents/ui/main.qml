@@ -714,7 +714,8 @@ PlasmoidItem {
         var command = configured.length > 0
             ? configured
             : "codexbar-service snapshot --from-codexbar-cli --provider all --status";
-        executable.exec(command);
+        var wrapped = "export PATH=\"$HOME/.local/bin:$PATH\"; " + command;
+        executable.exec("sh -lc " + shellSingleQuoted(wrapped));
     }
 
     function toggleExpanded() {
