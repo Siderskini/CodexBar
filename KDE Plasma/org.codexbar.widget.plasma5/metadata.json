@@ -3,11 +3,12 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "opensource@codexbar.dev",
-                "Name": "CodexBar Contributors"
+                "Email": "siderskini@icloud.com",
+                "Name": "Siddharth Viswanathan"
             }
         ],
         "Category": "System Information",
+        "Copyright": "Copyright (c) 2026 Peter Steinberger; Copyright (c) 2026 Siddharth Viswanathan",
         "Description": "Panel usage meters for CodexBar providers.",
         "EnabledByDefault": true,
         "Icon": "utilities-system-monitor",
@@ -15,7 +16,7 @@
         "License": "MIT",
         "Name": "CodexBar",
         "Version": "0.1.0",
-        "Website": "https://github.com/steipete/CodexBar"
+        "Website": "https://github.com/Siderskini/CodexBar"
     },
     "X-Plasma-API": "declarativeappletscript",
     "X-Plasma-MainScript": "ui/main.qml",
