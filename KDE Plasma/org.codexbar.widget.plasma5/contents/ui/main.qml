@@ -14,9 +14,14 @@ Item {
     property bool useDarkTheme: root.isDarkThemeColor(Kirigami.Theme.backgroundColor)
     property real cardOpacity: 0.96
 
-    property int baseIconSize: (typeof Plasmoid.iconSize === "number" && Plasmoid.iconSize > 0)
+    readonly property int fallbackIconSize: Math.round(Kirigami.Units.gridUnit * 1.9)
+    readonly property int panelIconSizeRaw: (typeof Plasmoid.iconSize === "number" && isFinite(Plasmoid.iconSize))
         ? Math.round(Plasmoid.iconSize)
-        : Math.round(Kirigami.Units.gridUnit * 1.9)
+        : fallbackIconSize
+    readonly property int iconSizeLowerBound: Math.max(14, Math.round(Kirigami.Units.gridUnit * 1.4))
+    readonly property int iconSizeUpperBound: Math.max(iconSizeLowerBound, Math.round(Kirigami.Units.gridUnit * 2.8))
+    property int baseIconSize: Math.max(iconSizeLowerBound, Math.min(iconSizeUpperBound,
+        panelIconSizeRaw > 0 ? panelIconSizeRaw : fallbackIconSize))
     property int iconWidth: Plasmoid.formFactor === PlasmaCore.Types.Vertical ? baseIconSize : Math.round(baseIconSize * 2.1)
     property int iconHeight: baseIconSize
 
@@ -38,14 +43,19 @@ Item {
         : root.entrySummary(root.currentEntry())
 
     onSnapshotChanged: {
-        if (!snapshot.entries || snapshot.entries.length === 0) {
-            selectedProvider = "";
+        if (selectedProvider.length > 0) {
             return;
         }
 
-        if (selectedProvider.length === 0 || !entryForProvider(selectedProvider)) {
-            selectedProvider = snapshot.entries[0].provider;
+        var codexEntry = entryForProvider("codex");
+        if (codexEntry) {
+            selectedProvider = "codex";
+            return;
         }
+
+        selectedProvider = (snapshot.entries && snapshot.entries.length > 0)
+            ? normalizedProvider(snapshot.entries[0].provider)
+            : "codex";
     }
 
     function entryForProvider(providerId) {
@@ -53,9 +63,10 @@ Item {
             return null;
         }
 
+        var requested = normalizedProvider(providerId);
         for (var i = 0; i < snapshot.entries.length; ++i) {
             var entry = snapshot.entries[i];
-            if (entry && entry.provider === providerId) {
+            if (entry && normalizedProvider(entry.provider) === requested) {
                 return entry;
             }
         }
@@ -340,6 +351,270 @@ Item {
     function normalizedProvider(providerId) {
         var normalized = nonEmptyString(providerId).toLowerCase();
         return normalized.length > 0 ? normalized : "codex";
+    }
+
+    function isClaudeProvider(providerId) {
+        return normalizedProvider(providerId) === "claude";
+    }
+
+    function emptyEntryForProvider(providerId) {
+        return {
+            provider: normalizedProvider(providerId),
+            source: "",
+            updatedAt: "",
+            primary: null,
+            secondary: null,
+            tertiary: null,
+            creditsRemaining: null,
+            codeReviewRemainingPercent: null,
+            status: null
+        };
+    }
+
+    function displayEntry() {
+        var provider = preferredProviderId();
+        var entry = entryForProvider(provider);
+        if (entry) {
+            return entry;
+        }
+
+        return emptyEntryForProvider(provider);
+    }
+
+    function hasAnyUsageData(entry) {
+        if (!entry) {
+            return false;
+        }
+
+        return hasUsage(entry.primary)
+            || hasUsage(entry.secondary)
+            || hasUsage(entry.tertiary)
+            || codeReviewUsedPercent(entry) >= 0
+            || (entry.creditsRemaining !== undefined && entry.creditsRemaining !== null && isFinite(Number(entry.creditsRemaining)));
+    }
+
+    function tabLabelForProvider(providerId) {
+        var provider = normalizedProvider(providerId);
+        if (provider === "factory") {
+            return "Droid";
+        }
+
+        return provider.charAt(0).toUpperCase() + provider.slice(1);
+    }
+
+    function tabIconColor(active) {
+        if (active) {
+            return "#FFFFFF";
+        }
+        return useDarkTheme ? "#DCE2FF" : "#4D4969";
+    }
+
+    function drawIconLine(ctx, x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+    function drawIconRoundedRect(ctx, x, y, width, height, radius) {
+        var r = Math.min(radius, width / 2, height / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + width - r, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+        ctx.lineTo(x + width, y + height - r);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+        ctx.lineTo(x + r, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+    }
+
+    function paintProviderTabIcon(ctx, providerId, width, height, active) {
+        var provider = normalizedProvider(providerId);
+        var unit = Math.min(width, height);
+        var centerX = width / 2;
+        var centerY = height / 2;
+        var color = tabIconColor(active);
+
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        if (provider === "codex") {
+            ctx.lineWidth = Math.max(1.1, unit * 0.10);
+            for (var i = 0; i < 3; ++i) {
+                var angle = (-Math.PI / 2) + (i * (Math.PI * 2 / 3));
+                var ox = centerX + Math.cos(angle) * unit * 0.14;
+                var oy = centerY + Math.sin(angle) * unit * 0.14;
+                ctx.beginPath();
+                ctx.arc(ox, oy, unit * 0.20, 0, Math.PI * 2, false);
+                ctx.stroke();
+            }
+            return;
+        }
+
+        if (provider === "claude") {
+            ctx.lineWidth = Math.max(1.0, unit * 0.085);
+            for (var r = 0; r < 8; ++r) {
+                var rayAngle = r * Math.PI / 4;
+                drawIconLine(
+                    ctx,
+                    centerX + Math.cos(rayAngle) * unit * 0.12,
+                    centerY + Math.sin(rayAngle) * unit * 0.12,
+                    centerX + Math.cos(rayAngle) * unit * 0.35,
+                    centerY + Math.sin(rayAngle) * unit * 0.35
+                );
+            }
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, unit * 0.09, 0, Math.PI * 2, false);
+            ctx.fill();
+            return;
+        }
+
+        if (provider === "cursor") {
+            var topY = centerY - unit * 0.28;
+            var midY = centerY - unit * 0.04;
+            var bottomY = centerY + unit * 0.24;
+            var leftX = centerX - unit * 0.26;
+            var rightX = centerX + unit * 0.26;
+            ctx.lineWidth = Math.max(1.0, unit * 0.09);
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, topY);
+            ctx.lineTo(rightX, midY);
+            ctx.lineTo(centerX, centerY + unit * 0.08);
+            ctx.lineTo(leftX, midY);
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY + unit * 0.08);
+            ctx.lineTo(rightX, bottomY);
+            ctx.lineTo(centerX, centerY + unit * 0.34);
+            ctx.lineTo(leftX, bottomY);
+            ctx.closePath();
+            ctx.stroke();
+
+            drawIconLine(ctx, leftX, midY, leftX, bottomY);
+            drawIconLine(ctx, rightX, midY, rightX, bottomY);
+            return;
+        }
+
+        if (provider === "factory") {
+            ctx.lineWidth = Math.max(1.0, unit * 0.09);
+            for (var s = 0; s < 6; ++s) {
+                var spokeAngle = s * Math.PI / 3;
+                drawIconLine(
+                    ctx,
+                    centerX - Math.cos(spokeAngle) * unit * 0.32,
+                    centerY - Math.sin(spokeAngle) * unit * 0.32,
+                    centerX + Math.cos(spokeAngle) * unit * 0.32,
+                    centerY + Math.sin(spokeAngle) * unit * 0.32
+                );
+            }
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, unit * 0.07, 0, Math.PI * 2, false);
+            ctx.fill();
+            return;
+        }
+
+        if (provider === "gemini") {
+            ctx.lineWidth = Math.max(1.0, unit * 0.09);
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - unit * 0.34);
+            ctx.lineTo(centerX + unit * 0.14, centerY - unit * 0.12);
+            ctx.lineTo(centerX + unit * 0.34, centerY);
+            ctx.lineTo(centerX + unit * 0.14, centerY + unit * 0.12);
+            ctx.lineTo(centerX, centerY + unit * 0.34);
+            ctx.lineTo(centerX - unit * 0.14, centerY + unit * 0.12);
+            ctx.lineTo(centerX - unit * 0.34, centerY);
+            ctx.lineTo(centerX - unit * 0.14, centerY - unit * 0.12);
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.lineWidth = Math.max(0.9, unit * 0.07);
+            drawIconLine(ctx, centerX + unit * 0.2, centerY - unit * 0.28, centerX + unit * 0.2, centerY - unit * 0.06);
+            drawIconLine(ctx, centerX + unit * 0.09, centerY - unit * 0.17, centerX + unit * 0.31, centerY - unit * 0.17);
+            return;
+        }
+
+        if (provider === "copilot") {
+            ctx.lineWidth = Math.max(1.0, unit * 0.08);
+            drawIconRoundedRect(
+                ctx,
+                centerX - unit * 0.34,
+                centerY - unit * 0.24,
+                unit * 0.68,
+                unit * 0.50,
+                unit * 0.14
+            );
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(centerX - unit * 0.13, centerY - unit * 0.02, unit * 0.055, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(centerX + unit * 0.13, centerY - unit * 0.02, unit * 0.055, 0, Math.PI * 2, false);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(centerX - unit * 0.16, centerY + unit * 0.14);
+            ctx.quadraticCurveTo(centerX, centerY + unit * 0.22, centerX + unit * 0.16, centerY + unit * 0.14);
+            ctx.stroke();
+            return;
+        }
+
+        ctx.lineWidth = Math.max(1.0, unit * 0.09);
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, unit * 0.28, 0, Math.PI * 2, false);
+        ctx.stroke();
+    }
+
+    function weeklyUsageForProvider(providerId) {
+        var entry = entryForProvider(providerId);
+        return usedPercent(entry ? entry.secondary : null);
+    }
+
+    function weeklyUsageColorForProvider(providerId) {
+        var entry = entryForProvider(providerId);
+        return usageColor(entry ? entry.secondary : null);
+    }
+
+    function tabModel() {
+        var preferredProviders = ["codex", "claude", "cursor", "factory", "gemini", "copilot"];
+        var tabs = [];
+        var seen = {};
+
+        for (var i = 0; i < preferredProviders.length; ++i) {
+            var preferred = normalizedProvider(preferredProviders[i]);
+            seen[preferred] = true;
+            tabs.push({provider: preferred, label: tabLabelForProvider(preferred)});
+        }
+
+        if (snapshot.entries && snapshot.entries.length > 0) {
+            for (var j = 0; j < snapshot.entries.length; ++j) {
+                var dynamicProvider = normalizedProvider(snapshot.entries[j].provider);
+                if (seen[dynamicProvider]) {
+                    continue;
+                }
+                seen[dynamicProvider] = true;
+                tabs.push({provider: dynamicProvider, label: tabLabelForProvider(dynamicProvider)});
+            }
+        }
+
+        var selectedRaw = nonEmptyString(selectedProvider);
+        if (selectedRaw.length > 0) {
+            var selected = normalizedProvider(selectedRaw);
+            if (!seen[selected]) {
+                tabs.push({provider: selected, label: tabLabelForProvider(selected)});
+            }
+        }
+
+        return tabs;
     }
 
     function preferredProviderId() {
@@ -726,39 +1001,93 @@ Item {
     }
 
     Plasmoid.compactRepresentation: Item {
-        implicitWidth: root.iconWidth
-        implicitHeight: root.iconHeight
+        readonly property int visualWidth: root.iconWidth
+        readonly property int visualHeight: root.iconHeight
+
+        implicitWidth: visualWidth
+        implicitHeight: visualHeight
+        Layout.minimumWidth: visualWidth
+        Layout.preferredWidth: visualWidth
+        Layout.maximumWidth: visualWidth
+        Layout.minimumHeight: visualHeight
+        Layout.preferredHeight: visualHeight
+        Layout.maximumHeight: visualHeight
+        clip: true
 
         readonly property var entry: root.currentEntry()
-
-        Rectangle {
-            anchors.fill: parent
-            radius: height / 2
-            color: root.applyAlpha(root.useDarkTheme ? "#31364D" : "#D6D2F0", root.cardOpacity)
-            border.width: 1
-            border.color: root.cardBorder
+        readonly property real visualScale: {
+            var widthScale = width > 0 ? width / Math.max(1, visualWidth) : 1;
+            var heightScale = height > 0 ? height / Math.max(1, visualHeight) : 1;
+            return Math.min(1, widthScale, heightScale);
         }
 
-        RowLayout {
-            anchors.fill: parent
-            anchors.margins: Math.max(2, Kirigami.Units.smallSpacing)
-            spacing: Math.max(2, Kirigami.Units.smallSpacing / 2)
+        Item {
+            id: compactVisual
+            width: visualWidth
+            height: visualHeight
+            anchors.centerIn: parent
+            scale: visualScale
+            transformOrigin: Item.Center
+            layer.enabled: true
+            layer.smooth: true
+            readonly property real horizontalPadding: Math.max(2, Math.round(height * 0.14))
+            readonly property real topPadding: Math.max(2, Math.round(height * 0.18))
+            readonly property real rowSpacing: Math.max(1, Math.round(height * 0.1))
+            readonly property real labelWidth: Math.max(11, Math.round(width * 0.19))
+            readonly property real tracksLeft: horizontalPadding + labelWidth + Math.max(3, Math.round(height * 0.1))
+            readonly property real tracksWidth: Math.max(8, width - tracksLeft - horizontalPadding)
+            readonly property real primaryTrackHeight: Math.max(4, Math.round(height * 0.24))
+            readonly property real secondaryTrackHeight: Math.max(3, Math.round(height * 0.16))
 
-            Text {
-                text: entry ? entry.provider.toUpperCase().slice(0, 2) : "--"
-                color: root.textStrong
-                font.bold: true
-                font.pixelSize: Math.round(Kirigami.Units.gridUnit * 0.53)
-                Layout.alignment: Qt.AlignVCenter
+            Rectangle {
+                anchors.fill: parent
+                radius: height / 2
+                color: root.applyAlpha(root.useDarkTheme ? "#31364D" : "#D6D2F0", root.cardOpacity)
+                border.width: 1
+                border.color: root.cardBorder
             }
 
-            ColumnLayout {
-                spacing: Math.max(1, Kirigami.Units.smallSpacing / 2)
-                Layout.fillWidth: true
+            Item {
+                id: compactProviderLabel
+                x: compactVisual.horizontalPadding
+                width: compactVisual.labelWidth
+                height: Math.max(8, compactVisual.height - (compactVisual.topPadding * 2))
+                anchors.verticalCenter: parent.verticalCenter
+
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 0
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Codex"
+                        color: root.textStrong
+                        font.bold: true
+                        font.pixelSize: Math.max(5, Math.round(compactVisual.height * 0.16))
+                    }
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Bar"
+                        color: root.textStrong
+                        font.bold: true
+                        font.pixelSize: Math.max(5, Math.round(compactVisual.height * 0.16))
+                    }
+                }
+            }
+
+            Item {
+                x: compactVisual.tracksLeft
+                y: compactVisual.topPadding
+                width: compactVisual.tracksWidth
+                height: compactVisual.primaryTrackHeight + compactVisual.rowSpacing + compactVisual.secondaryTrackHeight
 
                 Rectangle {
-                    Layout.fillWidth: true
-                    implicitHeight: Math.max(4, Kirigami.Units.smallSpacing * 1.6)
+                    id: compactPrimaryTrack
+                    x: 0
+                    y: 0
+                    width: parent.width
+                    height: compactVisual.primaryTrackHeight
                     color: root.trackColor
                     radius: height / 2
 
@@ -773,8 +1102,10 @@ Item {
                 }
 
                 Rectangle {
-                    Layout.fillWidth: true
-                    implicitHeight: Math.max(3, Kirigami.Units.smallSpacing * 1.1)
+                    x: 0
+                    y: compactPrimaryTrack.y + compactPrimaryTrack.height + compactVisual.rowSpacing
+                    width: parent.width
+                    height: compactVisual.secondaryTrackHeight
                     color: root.trackColor
                     radius: height / 2
 
@@ -801,7 +1132,8 @@ Item {
         implicitWidth: Kirigami.Units.gridUnit * 22
         implicitHeight: Kirigami.Units.gridUnit * 24
 
-        readonly property var entry: root.currentEntry()
+        readonly property var entry: root.displayEntry()
+        readonly property bool noDataAvailable: !root.hasAnyUsageData(entry)
         readonly property real reviewUsed: root.codeReviewUsedPercent(entry)
 
         Rectangle {
@@ -832,33 +1164,92 @@ Item {
                 Layout.fillWidth: true
 
                 Repeater {
-                    model: root.snapshot.entries || []
+                    model: root.tabModel()
 
                     delegate: Rectangle {
                         required property var modelData
 
-                        readonly property bool active: entry && entry.provider === modelData.provider
+                        readonly property string providerId: root.normalizedProvider(modelData.provider)
+                        readonly property bool active: root.preferredProviderId() === providerId
+                        readonly property real weeklyUsed: root.weeklyUsageForProvider(providerId)
 
                         radius: Kirigami.Units.smallSpacing
                         color: active ? root.tabActive : root.tabInactive
                         border.color: active ? "#4F84EA" : root.cardBorder
                         border.width: 1
-                        implicitHeight: Kirigami.Units.gridUnit * 1.35
-                        implicitWidth: Math.max(Kirigami.Units.gridUnit * 2.8, tabText.implicitWidth + Kirigami.Units.largeSpacing)
+                        implicitHeight: Kirigami.Units.gridUnit * 2.2
+                        implicitWidth: Math.max(Kirigami.Units.gridUnit * 3.1, tabLabel.implicitWidth + Kirigami.Units.largeSpacing)
 
-                        Text {
-                            id: tabText
-                            anchors.centerIn: parent
-                            text: String(modelData.provider || "").charAt(0).toUpperCase() + String(modelData.provider || "").slice(1)
-                            color: active ? "#FFFFFF" : root.textStrong
-                            font.bold: active
-                            font.pixelSize: Kirigami.Units.gridUnit * 0.5
+                        Column {
+                            anchors.fill: parent
+                            anchors.margins: Math.max(2, Kirigami.Units.smallSpacing / 1.4)
+                            spacing: Math.max(1, Kirigami.Units.smallSpacing / 2)
+
+                            Item {
+                                width: parent.width
+                                height: Kirigami.Units.gridUnit * 0.72
+
+                                Canvas {
+                                    id: tabIconCanvas
+                                    anchors.centerIn: parent
+                                    width: parent.height
+                                    height: parent.height
+                                    antialiasing: true
+                                    renderTarget: Canvas.Image
+
+                                    onPaint: {
+                                        var ctx = getContext("2d");
+                                        root.paintProviderTabIcon(ctx, providerId, width, height, active);
+                                    }
+
+                                    onWidthChanged: requestPaint()
+                                    onHeightChanged: requestPaint()
+                                    Component.onCompleted: requestPaint()
+                                }
+                            }
+
+                            Text {
+                                id: tabLabel
+                                width: parent.width
+                                horizontalAlignment: Text.AlignHCenter
+                                text: String(modelData.label || "")
+                                color: active ? "#FFFFFF" : root.textStrong
+                                font.bold: active
+                                font.pixelSize: Kirigami.Units.gridUnit * 0.42
+                                elide: Text.ElideRight
+                            }
+
+                            Rectangle {
+                                width: parent.width
+                                height: Math.max(2, Kirigami.Units.smallSpacing * 0.62)
+                                radius: height / 2
+                                color: root.applyAlpha(active ? "#FFFFFF" : root.trackColor, active ? 0.32 : 1.0)
+
+                                Rectangle {
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    height: parent.height
+                                    width: parent.width * (weeklyUsed / 100.0)
+                                    radius: height / 2
+                                    color: root.weeklyUsageColorForProvider(providerId)
+                                }
+                            }
                         }
 
                         MouseArea {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
-                            onClicked: root.selectedProvider = modelData.provider
+                            onClicked: root.selectedProvider = providerId
+                        }
+
+                        onActiveChanged: tabIconCanvas.requestPaint()
+                        onProviderIdChanged: tabIconCanvas.requestPaint()
+
+                        Connections {
+                            target: root
+                            function onUseDarkThemeChanged() {
+                                tabIconCanvas.requestPaint();
+                            }
                         }
                     }
                 }
@@ -881,16 +1272,15 @@ Item {
                 }
 
                 Text {
-                visible: root.lastError.length === 0 && !entry
-                text: i18n("No live provider usage data is available right now.")
-                color: root.textMuted
-                font.pixelSize: Kirigami.Units.gridUnit * 0.56
+                visible: noDataAvailable
+                text: i18n("No data found for this agent.")
+                color: "#B13C4F"
+                font.pixelSize: Kirigami.Units.gridUnit * 0.5
                 wrapMode: Text.Wrap
                 Layout.fillWidth: true
                 }
 
                 ColumnLayout {
-                visible: root.lastError.length === 0 && !!entry
                 spacing: Kirigami.Units.smallSpacing
                 Layout.fillWidth: true
 
@@ -1021,6 +1411,7 @@ Item {
                 }
 
                 Text {
+                    visible: root.isClaudeProvider(entry.provider)
                     text: "Sonnet"
                     color: root.textStrong
                     font.bold: true
@@ -1028,6 +1419,7 @@ Item {
                 }
 
                 Rectangle {
+                    visible: root.isClaudeProvider(entry.provider)
                     Layout.fillWidth: true
                     implicitHeight: Kirigami.Units.smallSpacing * 1.2
                     radius: height / 2
@@ -1044,6 +1436,7 @@ Item {
                 }
 
                 Text {
+                    visible: root.isClaudeProvider(entry.provider)
                     text: root.usageText(entry.tertiary)
                     color: root.textStrong
                     font.pixelSize: Kirigami.Units.gridUnit * 0.52
@@ -1233,6 +1626,7 @@ Item {
             var stderr = data.stderr ? data.stderr.toString().trim() : "";
 
             if (!stdout) {
+                root.snapshot = ({generatedAt: "", entries: []});
                 root.lastError = stderr.length > 0 ? stderr : i18n("No data from service command");
                 disconnectSource(sourceName);
                 return;
@@ -1243,6 +1637,7 @@ Item {
                 root.snapshot = parsed;
                 root.lastError = "";
             } catch (error) {
+                root.snapshot = ({generatedAt: "", entries: []});
                 root.lastError = i18n("Invalid snapshot JSON");
             }
 
