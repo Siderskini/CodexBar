@@ -329,6 +329,107 @@ Item {
         return Math.round(used) + "% used";
     }
 
+    function estimatedTokenPricePerMillion(providerId) {
+        var provider = normalizedProvider(providerId);
+        if (provider === "codex") {
+            // General blended estimate (input/output/cache) for Codex usage.
+            return 1.2;
+        }
+        return 1.0;
+    }
+
+    function estimatedSessionTokens(entry) {
+        if (!entry) {
+            return 0;
+        }
+
+        var used = usedPercent(entry.primary);
+        if (used <= 0) {
+            return 0;
+        }
+
+        var provider = normalizedProvider(entry.provider);
+        var fullSessionTokens = provider === "codex" ? 300000 : 200000;
+        return Math.max(0, Math.round((used / 100.0) * fullSessionTokens));
+    }
+
+    function estimated30DayTokens(entry) {
+        if (!entry) {
+            return 0;
+        }
+
+        var provider = normalizedProvider(entry.provider);
+        var weeklyUsed = usedPercent(entry.secondary);
+        if (weeklyUsed > 0) {
+            var fullWeeklyTokens = provider === "codex" ? 20000000 : 12000000;
+            var weeklyTokens = (weeklyUsed / 100.0) * fullWeeklyTokens;
+            return Math.max(0, Math.round(weeklyTokens * (30.0 / 7.0)));
+        }
+
+        var sessionTokens = estimatedSessionTokens(entry);
+        if (sessionTokens <= 0) {
+            return 0;
+        }
+
+        return Math.max(0, Math.round(sessionTokens * (30.0 * 24.0 / 5.0)));
+    }
+
+    function estimatedCostUSD(tokens, providerId) {
+        var value = Number(tokens);
+        if (!isFinite(value) || value < 0) {
+            value = 0;
+        }
+
+        return (value / 1000000.0) * estimatedTokenPricePerMillion(providerId);
+    }
+
+    function formatTokenCount(tokens) {
+        var value = Math.max(0, Math.round(Number(tokens) || 0));
+        if (value >= 1000000000) {
+            return (value / 1000000000).toFixed(2).replace(/\.00$/, "") + "B";
+        }
+        if (value >= 1000000) {
+            return (value / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+        }
+        if (value >= 1000) {
+            return (value / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+        }
+        return String(value);
+    }
+
+    function formatCostUSD(value) {
+        var numeric = Number(value);
+        if (!isFinite(numeric) || numeric < 0) {
+            numeric = 0;
+        }
+
+        return "$" + numeric.toFixed(numeric >= 10 ? 2 : 3);
+    }
+
+    function hasEstimatedCost(entry) {
+        return normalizedProvider(entry ? entry.provider : "") === "codex";
+    }
+
+    function costTodayText(entry) {
+        var sessionTokens = estimatedSessionTokens(entry);
+        var todayTokens = Math.max(sessionTokens, Math.round(sessionTokens * (24.0 / 5.0)));
+        var todayCost = estimatedCostUSD(todayTokens, entry ? entry.provider : "codex");
+        return "Today (est.): " + formatCostUSD(todayCost) + " - " + formatTokenCount(todayTokens) + " tokens";
+    }
+
+    function cost30DayText(entry) {
+        var monthTokens = estimated30DayTokens(entry);
+        var monthCost = estimatedCostUSD(monthTokens, entry ? entry.provider : "codex");
+        return "Last 30 days (est.): " + formatCostUSD(monthCost) + " - " + formatTokenCount(monthTokens) + " tokens";
+    }
+
+    function costDisclaimerText(entry) {
+        if (hasEstimatedCost(entry)) {
+            return "Estimated from live quota usage only (no local session files).";
+        }
+        return "Cost metrics are currently unavailable for this provider.";
+    }
+
     function entrySummary(entry) {
         if (!entry) {
             return i18n("No live provider data yet");
@@ -1507,9 +1608,27 @@ Item {
                 }
 
                 Text {
-                    text: "Cost metrics are not available in the KDE preview yet."
+                    visible: root.hasEstimatedCost(entry)
+                    text: root.costTodayText(entry)
                     color: root.textMuted
                     font.pixelSize: Kirigami.Units.gridUnit * 0.5
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                }
+
+                Text {
+                    visible: root.hasEstimatedCost(entry)
+                    text: root.cost30DayText(entry)
+                    color: root.textMuted
+                    font.pixelSize: Kirigami.Units.gridUnit * 0.5
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                }
+
+                Text {
+                    text: root.costDisclaimerText(entry)
+                    color: root.textMuted
+                    font.pixelSize: Kirigami.Units.gridUnit * 0.46
                     wrapMode: Text.Wrap
                     Layout.fillWidth: true
                 }
