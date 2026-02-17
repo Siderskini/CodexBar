@@ -4,7 +4,7 @@ use codexbar_core::WidgetSnapshot;
 use serde_json::Value;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::process::{Command, Output};
+use std::process::{Command, ExitStatus, Output};
 
 #[derive(Debug, Parser)]
 #[command(name = "codexbar-service")]
@@ -17,6 +17,7 @@ struct Cli {
 #[derive(Debug, Subcommand)]
 enum Commands {
     Snapshot(SnapshotArgs),
+    Auth(AuthArgs),
 }
 
 #[derive(Debug, Parser, Clone)]
@@ -40,6 +41,12 @@ struct SnapshotArgs {
     write_cache: Option<PathBuf>,
 }
 
+#[derive(Debug, Parser, Clone)]
+struct AuthArgs {
+    #[arg(long, default_value = "claude")]
+    provider: String,
+}
+
 fn main() {
     if let Err(error) = run() {
         eprintln!("codexbar-service: {error:#}");
@@ -60,6 +67,7 @@ fn run() -> Result<()> {
 
     match command {
         Commands::Snapshot(args) => render_snapshot(&args),
+        Commands::Auth(args) => run_auth(&args),
     }
 }
 
@@ -184,4 +192,28 @@ fn write_cache_file(path: &PathBuf, payload: &str) -> Result<()> {
 
     fs::write(path, payload).with_context(|| format!("failed to write {}", path.display()))?;
     Ok(())
+}
+
+fn run_auth(args: &AuthArgs) -> Result<()> {
+    let status = if let Some(sibling) = sibling_codexbar_path() {
+        run_codexbar_auth_command(&sibling, &args.provider)
+            .with_context(|| format!("failed to spawn codexbar CLI at {}", sibling.display()))?
+    } else {
+        run_codexbar_auth_command(Path::new("codexbar"), &args.provider)
+            .with_context(|| "failed to spawn codexbar CLI".to_string())?
+    };
+
+    if !status.success() {
+        bail!("codexbar auth exited with status {}", status);
+    }
+
+    Ok(())
+}
+
+fn run_codexbar_auth_command(program: &Path, provider: &str) -> std::io::Result<ExitStatus> {
+    Command::new(program)
+        .arg("auth")
+        .arg("--provider")
+        .arg(provider)
+        .status()
 }

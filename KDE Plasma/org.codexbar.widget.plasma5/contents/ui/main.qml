@@ -331,8 +331,8 @@ Item {
 
     function estimatedTokenPricePerMillion(providerId) {
         var provider = normalizedProvider(providerId);
-        if (provider === "codex") {
-            // General blended estimate (input/output/cache) for Codex usage.
+        if (provider === "codex" || provider === "claude") {
+            // General blended estimate (input/output/cache) for Codex/Claude usage.
             return 1.2;
         }
         return 1.0;
@@ -407,7 +407,8 @@ Item {
     }
 
     function hasEstimatedCost(entry) {
-        return normalizedProvider(entry ? entry.provider : "") === "codex";
+        var provider = normalizedProvider(entry ? entry.provider : "");
+        return provider === "codex" || provider === "claude";
     }
 
     function costTodayText(entry) {
@@ -680,6 +681,16 @@ Item {
         return usedPercent(entry ? entry.secondary : null);
     }
 
+    function sessionUsageForProvider(providerId) {
+        var entry = entryForProvider(providerId);
+        return usedPercent(entry ? entry.primary : null);
+    }
+
+    function sessionUsageColorForProvider(providerId) {
+        var entry = entryForProvider(providerId);
+        return usageColor(entry ? entry.primary : null);
+    }
+
     function weeklyUsageColorForProvider(providerId) {
         var entry = entryForProvider(providerId);
         return usageColor(entry ? entry.secondary : null);
@@ -756,7 +767,7 @@ Item {
             return entry;
         }
 
-        return currentEntry();
+        return emptyEntryForProvider(provider);
     }
 
     function providerMetadata(providerId) {
@@ -768,7 +779,7 @@ Item {
                 subscriptionDashboardUrl: ""
             },
             claude: {
-                dashboardUrl: "https://console.anthropic.com/settings/billing",
+                dashboardUrl: "https://claude.ai/settings/usage",
                 statusPageUrl: "https://status.claude.com/",
                 statusLinkUrl: "",
                 subscriptionDashboardUrl: "https://claude.ai/settings/usage"
@@ -932,12 +943,14 @@ Item {
     }
 
     function statusPageUrlFor(providerId, entry) {
-        var fromEntry = entry && entry.status ? nonEmptyString(entry.status.url) : "";
+        var provider = normalizedProvider(providerId);
+        var entryProvider = entry ? normalizedProvider(entry.provider) : "";
+        var fromEntry = entry && entryProvider === provider && entry.status ? nonEmptyString(entry.status.url) : "";
         if (fromEntry.length > 0) {
             return fromEntry;
         }
 
-        var metadata = providerMetadata(providerId);
+        var metadata = providerMetadata(provider);
         var statusPageUrl = nonEmptyString(metadata.statusPageUrl);
         if (statusPageUrl.length > 0) {
             return statusPageUrl;
@@ -991,7 +1004,7 @@ Item {
             return {kind: "terminal", command: "codex login"};
         }
         if (provider === "claude") {
-            return {kind: "terminal", command: "claude /login"};
+            return {kind: "terminal", command: "codexbar-service auth --provider claude"};
         }
         if (provider === "cursor") {
             return {kind: "url", url: "https://cursor.com/dashboard"};
@@ -1272,13 +1285,14 @@ Item {
 
                         readonly property string providerId: root.normalizedProvider(modelData.provider)
                         readonly property bool active: root.preferredProviderId() === providerId
+                        readonly property real sessionUsed: root.sessionUsageForProvider(providerId)
                         readonly property real weeklyUsed: root.weeklyUsageForProvider(providerId)
 
                         radius: Kirigami.Units.smallSpacing
                         color: active ? root.tabActive : root.tabInactive
                         border.color: active ? "#4F84EA" : root.cardBorder
                         border.width: 1
-                        implicitHeight: Kirigami.Units.gridUnit * 2.2
+                        implicitHeight: Kirigami.Units.gridUnit * 2.4
                         implicitWidth: Math.max(Kirigami.Units.gridUnit * 3.1, tabLabel.implicitWidth + Kirigami.Units.largeSpacing)
 
                         Column {
@@ -1320,19 +1334,40 @@ Item {
                                 elide: Text.ElideRight
                             }
 
-                            Rectangle {
+                            Column {
                                 width: parent.width
-                                height: Math.max(2, Kirigami.Units.smallSpacing * 0.62)
-                                radius: height / 2
-                                color: root.applyAlpha(active ? "#FFFFFF" : root.trackColor, active ? 0.32 : 1.0)
+                                spacing: 1
 
                                 Rectangle {
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    height: parent.height
-                                    width: parent.width * (weeklyUsed / 100.0)
+                                    width: parent.width
+                                    height: Math.max(2, Kirigami.Units.smallSpacing * 0.52)
                                     radius: height / 2
-                                    color: root.weeklyUsageColorForProvider(providerId)
+                                    color: root.applyAlpha(active ? "#FFFFFF" : root.trackColor, active ? 0.34 : 1.0)
+
+                                    Rectangle {
+                                        anchors.left: parent.left
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        height: parent.height
+                                        width: parent.width * (sessionUsed / 100.0)
+                                        radius: height / 2
+                                        color: root.sessionUsageColorForProvider(providerId)
+                                    }
+                                }
+
+                                Rectangle {
+                                    width: parent.width
+                                    height: Math.max(2, Kirigami.Units.smallSpacing * 0.52)
+                                    radius: height / 2
+                                    color: root.applyAlpha(active ? "#FFFFFF" : root.trackColor, active ? 0.26 : 1.0)
+
+                                    Rectangle {
+                                        anchors.left: parent.left
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        height: parent.height
+                                        width: parent.width * (weeklyUsed / 100.0)
+                                        radius: height / 2
+                                        color: root.weeklyUsageColorForProvider(providerId)
+                                    }
                                 }
                             }
                         }
