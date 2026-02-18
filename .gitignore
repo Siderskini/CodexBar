@@ -32,6 +32,7 @@ debug_*.swift
 .DS_Store
 .vscode/
 .codex/environments/
+.swiftpm-cache/
 
 # KDE packaging
 *.plasmoid
