@@ -18,10 +18,10 @@
         "--url": true
       },
       "notice": "Generated with ScanCode and provided on an \"AS IS\" BASIS, WITHOUT WARRANTIES\nOR CONDITIONS OF ANY KIND, either express or implied. No content created from\nScanCode should be considered or used as legal advice. Consult an Attorney\nfor any legal advice.\nScanCode is a free software code scanning tool from nexB Inc. and others.\nVisit https://github.com/nexB/scancode-toolkit/ for support and download.",
-      "start_timestamp": "2026-02-17T211446.818201",
-      "end_timestamp": "2026-02-17T211451.790865",
+      "start_timestamp": "2026-02-22T211730.015495",
+      "end_timestamp": "2026-02-22T211736.558144",
       "output_format_version": "4.1.0",
-      "duration": 4.97266960144043,
+      "duration": 6.5426552295684814,
       "message": null,
       "errors": [],
       "warnings": [],
@@ -83,7 +83,7 @@
       "repository_homepage_url": "https://crates.io/crates/codexbar-cli",
       "repository_download_url": null,
       "api_data_url": "https://crates.io/api/v1/crates/codexbar-cli",
-      "package_uid": "pkg:cargo/codexbar-cli?uuid=36e23c2b-d5b9-4c1f-ab45-62a3fed98185",
+      "package_uid": "pkg:cargo/codexbar-cli?uuid=c54be485-17a8-4625-9acc-d73be4d0916d",
       "datafile_paths": [
         "KDE Plasma/rust/crates/codexbar-cli/Cargo.toml"
       ],
@@ -136,7 +136,7 @@
       "repository_homepage_url": "https://crates.io/crates/codexbar-core",
       "repository_download_url": null,
       "api_data_url": "https://crates.io/api/v1/crates/codexbar-core",
-      "package_uid": "pkg:cargo/codexbar-core?uuid=2b8efde3-a8c1-47f1-a915-4e86783a000e",
+      "package_uid": "pkg:cargo/codexbar-core?uuid=7504ae76-9db1-41fb-b5ae-73fe8bd877b7",
       "datafile_paths": [
         "KDE Plasma/rust/crates/codexbar-core/Cargo.toml"
       ],
@@ -189,7 +189,7 @@
       "repository_homepage_url": "https://crates.io/crates/codexbar-kde-bridge",
       "repository_download_url": null,
       "api_data_url": "https://crates.io/api/v1/crates/codexbar-kde-bridge",
-      "package_uid": "pkg:cargo/codexbar-kde-bridge?uuid=22d51fee-1ff6-4701-a70f-5681c5032781",
+      "package_uid": "pkg:cargo/codexbar-kde-bridge?uuid=e8f73e8e-aeba-409c-bc15-47e6c2c8661b",
       "datafile_paths": [
         "KDE Plasma/rust/crates/codexbar-kde-bridge/Cargo.toml"
       ],
@@ -242,7 +242,7 @@
       "repository_homepage_url": "https://crates.io/crates/codexbar-service",
       "repository_download_url": null,
       "api_data_url": "https://crates.io/api/v1/crates/codexbar-service",
-      "package_uid": "pkg:cargo/codexbar-service?uuid=efb8b559-6f8f-4b3b-a4bc-9d1c78a04fdd",
+      "package_uid": "pkg:cargo/codexbar-service?uuid=90fd548a-e755-42a0-8651-22e2cefc0553",
       "datafile_paths": [
         "KDE Plasma/rust/crates/codexbar-service/Cargo.toml"
       ],
@@ -263,7 +263,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/anstream@0.6.21?uuid=032249f4-6e08-4409-a1b3-332a530b84bd",
+      "dependency_uid": "pkg:cargo/anstream@0.6.21?uuid=01108287-dd6d-4a7a-bc8c-975589e9d414",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -278,7 +278,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/anstyle@1.0.13?uuid=659b1a20-5625-4443-b8b4-f1f55ea94c7f",
+      "dependency_uid": "pkg:cargo/anstyle@1.0.13?uuid=9f97fbbe-dc18-4c51-b825-23545b73f373",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -293,7 +293,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/anstyle-parse@0.2.7?uuid=1ad1e549-46bc-46ad-8168-c880e8d39b43",
+      "dependency_uid": "pkg:cargo/anstyle-parse@0.2.7?uuid=fe697299-a7e2-4cd3-bb00-850284f99065",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -308,7 +308,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/anstyle-query@1.1.5?uuid=555b1a1e-6274-47eb-b248-f7a865ec137b",
+      "dependency_uid": "pkg:cargo/anstyle-query@1.1.5?uuid=7de65f01-5b3b-4a94-afa5-1a4c2b778e3e",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -323,7 +323,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/anstyle-wincon@3.0.11?uuid=59713c90-99a9-4716-bcef-7c81e0f59939",
+      "dependency_uid": "pkg:cargo/anstyle-wincon@3.0.11?uuid=eb9f9ff9-fd1c-4599-91cd-110eabac018f",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -338,7 +338,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/anyhow@1.0.100?uuid=0a8b33f7-3aa4-416a-b920-95e4f03a01bb",
+      "dependency_uid": "pkg:cargo/anyhow@1.0.100?uuid=a37d399b-de83-48cc-8274-166541b3e953",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -353,7 +353,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/clap@4.5.56?uuid=1b368f5c-2358-4119-9be2-c5bc78fc661c",
+      "dependency_uid": "pkg:cargo/clap@4.5.56?uuid=9fa83ca8-f4ff-465b-8fbf-1e8d2dd07815",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -368,7 +368,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/clap_builder@4.5.56?uuid=9f11689f-b2b7-45e9-95b0-a6e96fda74ef",
+      "dependency_uid": "pkg:cargo/clap_builder@4.5.56?uuid=e9300796-92b0-4af9-917b-0700664364e8",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -383,7 +383,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/clap_derive@4.5.55?uuid=c7296efe-1108-414e-9dbb-9ec2561a2606",
+      "dependency_uid": "pkg:cargo/clap_derive@4.5.55?uuid=f6738123-9e8b-4536-8111-af7ee6f01f24",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -398,7 +398,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/clap_lex@0.7.7?uuid=65981723-bc36-458f-baca-1da0f5da2070",
+      "dependency_uid": "pkg:cargo/clap_lex@0.7.7?uuid=3ad77d79-0068-4ef1-a30b-0a19c4ce9fa5",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -413,7 +413,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/codexbar-cli@0.1.0?uuid=e38e09ad-476e-409a-ac78-0e7bf2d077d8",
+      "dependency_uid": "pkg:cargo/codexbar-cli@0.1.0?uuid=b684f35e-6759-4c57-b019-cce281995ff8",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -428,7 +428,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/codexbar-core@0.1.0?uuid=4e7f4d8b-9da1-402a-9698-e7376b9df572",
+      "dependency_uid": "pkg:cargo/codexbar-core@0.1.0?uuid=c0bc672f-90e5-432a-9299-5b62b966aa2e",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -443,7 +443,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/codexbar-kde-bridge@0.1.0?uuid=0cea312b-438c-4813-9694-c304421a4be8",
+      "dependency_uid": "pkg:cargo/codexbar-kde-bridge@0.1.0?uuid=a341ea63-fd93-4188-b9f0-d981f44effd9",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -458,7 +458,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/codexbar-service@0.1.0?uuid=10086b66-c652-4c08-8045-42da448241a5",
+      "dependency_uid": "pkg:cargo/codexbar-service@0.1.0?uuid=27455c9e-8c58-41e5-b9b6-f0d37f2feb69",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -473,7 +473,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/colorchoice@1.0.4?uuid=0e9f4ba1-77d7-4745-94b9-9c671e27b6ca",
+      "dependency_uid": "pkg:cargo/colorchoice@1.0.4?uuid=c2c73970-6838-474d-8b24-f9326f8e8ab1",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -488,7 +488,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/heck@0.5.0?uuid=f718c050-dc8a-4088-8103-b3742d929b30",
+      "dependency_uid": "pkg:cargo/heck@0.5.0?uuid=207b48a6-5a09-4e94-8fda-2de65a07fb5c",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -503,7 +503,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/is_terminal_polyfill@1.70.2?uuid=6b57d569-2060-449d-bc3b-c599418a6cb9",
+      "dependency_uid": "pkg:cargo/is_terminal_polyfill@1.70.2?uuid=fd4cdcfa-5675-4404-b331-d72eae3d9067",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -518,7 +518,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/itoa@1.0.17?uuid=8e5ada67-24dd-4252-a7b6-9deeab693e45",
+      "dependency_uid": "pkg:cargo/itoa@1.0.17?uuid=b3d5c03d-11e4-4e99-95ca-7d08ff87fbf7",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -533,7 +533,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/memchr@2.8.0?uuid=e9b8beef-eff1-4e91-b981-3a5c460b24c4",
+      "dependency_uid": "pkg:cargo/memchr@2.8.0?uuid=51e2498e-070c-4bf3-9959-aa639d183032",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -548,7 +548,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/once_cell_polyfill@1.70.2?uuid=c6e013df-a201-4799-8c2b-f107dd76fc96",
+      "dependency_uid": "pkg:cargo/once_cell_polyfill@1.70.2?uuid=7130a1f1-7756-4932-ab70-da7aad22f659",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -563,7 +563,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/proc-macro2@1.0.106?uuid=8a6151b8-7105-43ba-8c8f-7366fc4b38f1",
+      "dependency_uid": "pkg:cargo/proc-macro2@1.0.106?uuid=f871b57e-ecec-430e-bb5e-0e228461475a",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -578,7 +578,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/quote@1.0.44?uuid=d439f1b0-ef86-4c85-876c-c8fe68bac09c",
+      "dependency_uid": "pkg:cargo/quote@1.0.44?uuid=cbc6d5b0-2e01-405b-990e-2be652692686",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -593,7 +593,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/serde@1.0.228?uuid=7e5cb487-bf7a-4aa9-a731-111e9b67aebe",
+      "dependency_uid": "pkg:cargo/serde@1.0.228?uuid=02c22b7d-d1be-4ca1-92f4-dba57c1dab3e",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -608,7 +608,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/serde_core@1.0.228?uuid=614a5fa1-59b7-4f2a-b049-7caa0352b295",
+      "dependency_uid": "pkg:cargo/serde_core@1.0.228?uuid=5e2e65a6-c5c1-44f6-9490-3dcd27eb0856",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -623,7 +623,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/serde_derive@1.0.228?uuid=a1ca13ad-52c2-4018-90ae-b2c775456ba0",
+      "dependency_uid": "pkg:cargo/serde_derive@1.0.228?uuid=35744902-cc7d-46d0-a040-a4bd6ce3836c",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -638,7 +638,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/serde_json@1.0.149?uuid=cca2b4e2-16ab-4065-962a-039ffba6ce05",
+      "dependency_uid": "pkg:cargo/serde_json@1.0.149?uuid=27ad22e8-215b-4171-8ad7-9b5076472798",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -653,7 +653,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/strsim@0.11.1?uuid=f489faa2-62bd-4aa1-97c2-98cb64c5e913",
+      "dependency_uid": "pkg:cargo/strsim@0.11.1?uuid=bb931cd5-5a66-4676-a534-9a4550a2e831",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -668,7 +668,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/syn@2.0.114?uuid=53da132a-a4ce-43ca-9da7-c3f9ebd40778",
+      "dependency_uid": "pkg:cargo/syn@2.0.114?uuid=125283de-07b5-4eab-8923-d3cd8f16581c",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -683,7 +683,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/unicode-ident@1.0.22?uuid=18613b09-0e42-4eee-a013-79d9fee2d06e",
+      "dependency_uid": "pkg:cargo/unicode-ident@1.0.22?uuid=aef80b98-4c3e-498f-a5ea-a492916444a3",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -698,7 +698,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/utf8parse@0.2.2?uuid=c4c33003-d487-4710-981a-d75db77ae76b",
+      "dependency_uid": "pkg:cargo/utf8parse@0.2.2?uuid=f8561621-8107-4b80-ae00-f37a7a79dbe1",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -713,7 +713,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/windows-link@0.2.1?uuid=2f39b9e8-ec5f-4d17-9cf0-6a54a574e67a",
+      "dependency_uid": "pkg:cargo/windows-link@0.2.1?uuid=6e1bcef7-0db9-4a09-b3ec-87d2f29f92e8",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -728,7 +728,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/windows-sys@0.61.2?uuid=ef08bc0f-37d6-4d98-9133-84fa794747c2",
+      "dependency_uid": "pkg:cargo/windows-sys@0.61.2?uuid=24ed80c2-2f77-4410-afba-6024db31678e",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -743,7 +743,7 @@
       "is_direct": true,
       "resolved_package": {},
       "extra_data": {},
-      "dependency_uid": "pkg:cargo/zmij@1.0.19?uuid=1bc7e7f2-d498-4ce4-acc4-8a5170ce2dce",
+      "dependency_uid": "pkg:cargo/zmij@1.0.19?uuid=09f47cd7-af12-4800-8c42-f664f0e23ad2",
       "for_package_uid": null,
       "datafile_path": "KDE Plasma/rust/Cargo.lock",
       "datasource_id": "cargo_lock"
@@ -760,8 +760,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/anyhow?uuid=15bc65da-b897-4a6c-82cb-531f886e0b4a",
-      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=36e23c2b-d5b9-4c1f-ab45-62a3fed98185",
+      "dependency_uid": "pkg:cargo/anyhow?uuid=7cd832d3-0e34-44f2-bf95-61df9abf496b",
+      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=c54be485-17a8-4625-9acc-d73be4d0916d",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-cli/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -777,8 +777,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/clap?uuid=ecab2d0b-5fce-4646-8e86-8f953a31936d",
-      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=36e23c2b-d5b9-4c1f-ab45-62a3fed98185",
+      "dependency_uid": "pkg:cargo/clap?uuid=a515c0a8-d335-4dbf-a9aa-865a62a752e5",
+      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=c54be485-17a8-4625-9acc-d73be4d0916d",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-cli/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -794,8 +794,8 @@
       "extra_data": {
         "path": "../codexbar-core"
       },
-      "dependency_uid": "pkg:cargo/codexbar-core?uuid=675e0eee-31be-436c-afb2-33461b3efa37",
-      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=36e23c2b-d5b9-4c1f-ab45-62a3fed98185",
+      "dependency_uid": "pkg:cargo/codexbar-core?uuid=b872b3fa-4eab-4486-930b-8d05eaa68efe",
+      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=c54be485-17a8-4625-9acc-d73be4d0916d",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-cli/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -811,8 +811,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/serde?uuid=8d7de55c-891f-4587-9f54-0eaa92b83ad1",
-      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=36e23c2b-d5b9-4c1f-ab45-62a3fed98185",
+      "dependency_uid": "pkg:cargo/serde?uuid=91ca84f7-59bc-43e0-9351-002f06b24864",
+      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=c54be485-17a8-4625-9acc-d73be4d0916d",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-cli/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -828,8 +828,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/serde_json?uuid=c1a3be93-e59f-4d1f-bf47-5c615ebb6b24",
-      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=36e23c2b-d5b9-4c1f-ab45-62a3fed98185",
+      "dependency_uid": "pkg:cargo/serde_json?uuid=7f34e95e-39c6-4f35-8606-f3dccce6ab27",
+      "for_package_uid": "pkg:cargo/codexbar-cli?uuid=c54be485-17a8-4625-9acc-d73be4d0916d",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-cli/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -845,8 +845,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/serde?uuid=5d8f2471-9e07-4cb6-a349-85f6dcf1ea2a",
-      "for_package_uid": "pkg:cargo/codexbar-core?uuid=2b8efde3-a8c1-47f1-a915-4e86783a000e",
+      "dependency_uid": "pkg:cargo/serde?uuid=cad41d94-2d7d-4335-bb5c-f9af4d59601e",
+      "for_package_uid": "pkg:cargo/codexbar-core?uuid=7504ae76-9db1-41fb-b5ae-73fe8bd877b7",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-core/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -862,8 +862,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/serde_json?uuid=41e24731-a7c4-4def-8d6e-9f05ab6347ca",
-      "for_package_uid": "pkg:cargo/codexbar-core?uuid=2b8efde3-a8c1-47f1-a915-4e86783a000e",
+      "dependency_uid": "pkg:cargo/serde_json?uuid=945defeb-b503-4c83-91a7-744b318d7eb8",
+      "for_package_uid": "pkg:cargo/codexbar-core?uuid=7504ae76-9db1-41fb-b5ae-73fe8bd877b7",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-core/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -879,8 +879,8 @@
       "extra_data": {
         "path": "../codexbar-core"
       },
-      "dependency_uid": "pkg:cargo/codexbar-core?uuid=9d1fb349-e70a-41b4-b4b0-91013abc2657",
-      "for_package_uid": "pkg:cargo/codexbar-kde-bridge?uuid=22d51fee-1ff6-4701-a70f-5681c5032781",
+      "dependency_uid": "pkg:cargo/codexbar-core?uuid=208df543-8c2b-4e9b-9548-a3ab5f8120c6",
+      "for_package_uid": "pkg:cargo/codexbar-kde-bridge?uuid=e8f73e8e-aeba-409c-bc15-47e6c2c8661b",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-kde-bridge/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -896,8 +896,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/serde?uuid=f1c39c1e-6b9c-44e2-ad1b-8c60942bbdc4",
-      "for_package_uid": "pkg:cargo/codexbar-kde-bridge?uuid=22d51fee-1ff6-4701-a70f-5681c5032781",
+      "dependency_uid": "pkg:cargo/serde?uuid=988b3184-b3c0-4e59-b92c-02133af9a2db",
+      "for_package_uid": "pkg:cargo/codexbar-kde-bridge?uuid=e8f73e8e-aeba-409c-bc15-47e6c2c8661b",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-kde-bridge/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -913,8 +913,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/anyhow?uuid=5006c93a-1a04-4add-b69b-5d431190f901",
-      "for_package_uid": "pkg:cargo/codexbar-service?uuid=efb8b559-6f8f-4b3b-a4bc-9d1c78a04fdd",
+      "dependency_uid": "pkg:cargo/anyhow?uuid=f240b6f5-d56f-42f3-9492-6edeee3ee09a",
+      "for_package_uid": "pkg:cargo/codexbar-service?uuid=90fd548a-e755-42a0-8651-22e2cefc0553",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-service/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -930,8 +930,8 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/clap?uuid=31f686e4-a21a-42d7-bbb6-bc48d2d348cc",
-      "for_package_uid": "pkg:cargo/codexbar-service?uuid=efb8b559-6f8f-4b3b-a4bc-9d1c78a04fdd",
+      "dependency_uid": "pkg:cargo/clap?uuid=53d9f6dc-4f1a-43f3-ac4f-c0002b847b22",
+      "for_package_uid": "pkg:cargo/codexbar-service?uuid=90fd548a-e755-42a0-8651-22e2cefc0553",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-service/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -947,8 +947,8 @@
       "extra_data": {
         "path": "../codexbar-core"
       },
-      "dependency_uid": "pkg:cargo/codexbar-core?uuid=ce68999a-5784-46c8-8463-54ba7d7460dd",
-      "for_package_uid": "pkg:cargo/codexbar-service?uuid=efb8b559-6f8f-4b3b-a4bc-9d1c78a04fdd",
+      "dependency_uid": "pkg:cargo/codexbar-core?uuid=0b14f43e-522c-4875-84e9-e58059846532",
+      "for_package_uid": "pkg:cargo/codexbar-service?uuid=90fd548a-e755-42a0-8651-22e2cefc0553",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-service/Cargo.toml",
       "datasource_id": "cargo_toml"
     },
@@ -964,25 +964,39 @@
       "extra_data": {
         "workspace": true
       },
-      "dependency_uid": "pkg:cargo/serde_json?uuid=31fa4785-d4aa-4305-9779-a654583662c0",
-      "for_package_uid": "pkg:cargo/codexbar-service?uuid=efb8b559-6f8f-4b3b-a4bc-9d1c78a04fdd",
+      "dependency_uid": "pkg:cargo/serde_json?uuid=c015ae74-3005-4cf7-94d7-8c6358c82e73",
+      "for_package_uid": "pkg:cargo/codexbar-service?uuid=90fd548a-e755-42a0-8651-22e2cefc0553",
       "datafile_path": "KDE Plasma/rust/crates/codexbar-service/Cargo.toml",
       "datasource_id": "cargo_toml"
     }
   ],
   "license_detections": [
     {
-      "identifier": "json-a22df283-4cbb-b1f3-dac1-6aa82c584b30",
+      "identifier": "json-981d329b-9269-f448-9907-b92bd76e2ea9",
       "license_expression": "json",
       "license_expression_spdx": "JSON",
-      "detection_count": 2,
+      "detection_count": 3,
       "reference_matches": [
         {
           "license_expression": "json",
           "license_expression_spdx": "JSON",
           "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 979,
-          "end_line": 980,
+          "start_line": 976,
+          "end_line": 977,
+          "matcher": "2-aho",
+          "score": 100.0,
+          "matched_length": 2,
+          "match_coverage": 100.0,
+          "rule_relevance": 100,
+          "rule_identifier": "json_5.RULE",
+          "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
+        },
+        {
+          "license_expression": "json",
+          "license_expression_spdx": "JSON",
+          "from_file": "KDE Plasma/codexbar.json",
+          "start_line": 981,
+          "end_line": 982,
           "matcher": "2-aho",
           "score": 100.0,
           "matched_length": 2,
@@ -994,7 +1008,29 @@
       ]
     },
     {
-      "identifier": "json_and_warranty_disclaimer-8091f85c-53a4-def7-dbda-9cecc71d7c10",
+      "identifier": "json-a22df283-4cbb-b1f3-dac1-6aa82c584b30",
+      "license_expression": "json",
+      "license_expression_spdx": "JSON",
+      "detection_count": 2,
+      "reference_matches": [
+        {
+          "license_expression": "json",
+          "license_expression_spdx": "JSON",
+          "from_file": "KDE Plasma/codexbar.json",
+          "start_line": 1003,
+          "end_line": 1004,
+          "matcher": "2-aho",
+          "score": 100.0,
+          "matched_length": 2,
+          "match_coverage": 100.0,
+          "rule_relevance": 100,
+          "rule_identifier": "json_5.RULE",
+          "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
+        }
+      ]
+    },
+    {
+      "identifier": "json_and_warranty_disclaimer-12c78963-36c7-08ae-b9ca-6cb97fe7c0d3",
       "license_expression": "json AND warranty-disclaimer",
       "license_expression_spdx": "JSON AND LicenseRef-scancode-warranty-disclaimer",
       "detection_count": 1,
@@ -1018,7 +1054,7 @@
           "license_expression_spdx": "LicenseRef-scancode-warranty-disclaimer",
           "from_file": "KDE Plasma/codexbar.json",
           "start_line": 14,
-          "end_line": 18,
+          "end_line": 20,
           "matcher": "3-seq",
           "score": 34.04,
           "matched_length": 16,
@@ -1030,39 +1066,17 @@
       ]
     },
     {
-      "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929",
-      "license_expression": "mit",
-      "license_expression_spdx": "MIT",
-      "detection_count": 17,
-      "reference_matches": [
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 1051,
-          "end_line": 1052,
-          "matcher": "2-aho",
-          "score": 100.0,
-          "matched_length": 2,
-          "match_coverage": 100.0,
-          "rule_relevance": 100,
-          "rule_identifier": "mit_14.RULE",
-          "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-        }
-      ]
-    },
-    {
       "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68",
       "license_expression": "mit",
       "license_expression_spdx": "MIT",
-      "detection_count": 11,
+      "detection_count": 39,
       "reference_matches": [
         {
           "license_expression": "mit",
           "license_expression_spdx": "MIT",
           "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 1010,
-          "end_line": 1011,
+          "start_line": 1034,
+          "end_line": 1035,
           "matcher": "2-aho",
           "score": 100.0,
           "matched_length": 2,
@@ -1075,8 +1089,30 @@
           "license_expression": "mit",
           "license_expression_spdx": "MIT",
           "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 1015,
-          "end_line": 1016,
+          "start_line": 1039,
+          "end_line": 1040,
+          "matcher": "2-aho",
+          "score": 100.0,
+          "matched_length": 2,
+          "match_coverage": 100.0,
+          "rule_relevance": 100,
+          "rule_identifier": "mit_14.RULE",
+          "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+        }
+      ]
+    },
+    {
+      "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929",
+      "license_expression": "mit",
+      "license_expression_spdx": "MIT",
+      "detection_count": 27,
+      "reference_matches": [
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "from_file": "KDE Plasma/codexbar.json",
+          "start_line": 1075,
+          "end_line": 1076,
           "matcher": "2-aho",
           "score": 100.0,
           "matched_length": 2,
@@ -1097,8 +1133,8 @@
           "license_expression": "mit",
           "license_expression_spdx": "MIT",
           "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 3700,
-          "end_line": 3700,
+          "start_line": 4557,
+          "end_line": 4557,
           "matcher": "2-aho",
           "score": 100.0,
           "matched_length": 2,
@@ -1119,8 +1155,8 @@
           "license_expression": "mit",
           "license_expression_spdx": "MIT",
           "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 1893,
-          "end_line": 1894,
+          "start_line": 2760,
+          "end_line": 2761,
           "matcher": "2-aho",
           "score": 100.0,
           "matched_length": 2,
@@ -1133,8 +1169,8 @@
           "license_expression": "mit",
           "license_expression_spdx": "MIT",
           "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 1896,
-          "end_line": 1897,
+          "start_line": 2763,
+          "end_line": 2764,
           "matcher": "2-aho",
           "score": 100.0,
           "matched_length": 2,
@@ -1147,8 +1183,8 @@
           "license_expression": "mit",
           "license_expression_spdx": "MIT",
           "from_file": "KDE Plasma/codexbar.json",
-          "start_line": 1900,
-          "end_line": 1901,
+          "start_line": 2767,
+          "end_line": 2768,
           "matcher": "2-aho",
           "score": 100.0,
           "matched_length": 2,
@@ -1196,7 +1232,7 @@
       "urls": [],
       "files_count": 23,
       "dirs_count": 18,
-      "size_count": 348337,
+      "size_count": 451257,
       "scan_errors": []
     },
     {
@@ -1205,12 +1241,12 @@
       "name": "codexbar.json",
       "base_name": "codexbar",
       "extension": ".json",
-      "size": 152655,
-      "date": "2026-02-14",
-      "sha1": "b443ee771d6cc0df737df6403522df05be72ba30",
-      "md5": "40ff94b449796a8a063789d956463945",
-      "sha256": "538479c63ff866cbbdeccd14154c928cebcc1ae2e67bf2b33cbb97f5ff822c25",
-      "sha1_git": "b8404a595cdd4abec5c9dd59c007104f58a9d7b0",
+      "size": 184968,
+      "date": "2026-02-17",
+      "sha1": "b0b45335d567d8c5d2f22e8624fcdeb45b1270a2",
+      "md5": "e03b3a85a28fa26536c1b17b0b128e96",
+      "sha256": "4644024f0864601e08237f73541ab2a71ac02aea523e59ee1b9536053de0128e",
+      "sha1_git": "30db522e8ca1c490f92f8571c35f25e7ca2c68ef",
       "mime_type": "application/json",
       "file_type": "JSON data",
       "programming_language": null,
@@ -1248,7 +1284,7 @@
               "license_expression_spdx": "LicenseRef-scancode-warranty-disclaimer",
               "from_file": "KDE Plasma/codexbar.json",
               "start_line": 14,
-              "end_line": 18,
+              "end_line": 20,
               "matcher": "3-seq",
               "score": 34.04,
               "matched_length": 16,
@@ -1258,7 +1294,7 @@
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/warranty-disclaimer_18.RULE"
             }
           ],
-          "identifier": "json_and_warranty_disclaimer-8091f85c-53a4-def7-dbda-9cecc71d7c10"
+          "identifier": "json_and_warranty_disclaimer-12c78963-36c7-08ae-b9ca-6cb97fe7c0d3"
         },
         {
           "license_expression": "json",
@@ -1268,8 +1304,43 @@
               "license_expression": "json",
               "license_expression_spdx": "JSON",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 979,
-              "end_line": 980,
+              "start_line": 976,
+              "end_line": 977,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "json_5.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
+            },
+            {
+              "license_expression": "json",
+              "license_expression_spdx": "JSON",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 981,
+              "end_line": 982,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "json_5.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
+            }
+          ],
+          "identifier": "json-981d329b-9269-f448-9907-b92bd76e2ea9"
+        },
+        {
+          "license_expression": "json",
+          "license_expression_spdx": "JSON",
+          "matches": [
+            {
+              "license_expression": "json",
+              "license_expression_spdx": "JSON",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1003,
+              "end_line": 1004,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1289,8 +1360,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1010,
-              "end_line": 1011,
+              "start_line": 1034,
+              "end_line": 1035,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1303,8 +1374,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1015,
-              "end_line": 1016,
+              "start_line": 1039,
+              "end_line": 1040,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1324,8 +1395,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1032,
-              "end_line": 1033,
+              "start_line": 1056,
+              "end_line": 1057,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1338,8 +1409,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1037,
-              "end_line": 1038,
+              "start_line": 1061,
+              "end_line": 1062,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1359,8 +1430,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1051,
-              "end_line": 1052,
+              "start_line": 1075,
+              "end_line": 1076,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1380,29 +1451,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1065,
-              "end_line": 1066,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1082,
-              "end_line": 1083,
+              "start_line": 1092,
+              "end_line": 1093,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1415,8 +1465,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1087,
-              "end_line": 1088,
+              "start_line": 1097,
+              "end_line": 1098,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1436,8 +1486,43 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1101,
-              "end_line": 1102,
+              "start_line": 1114,
+              "end_line": 1115,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1119,
+              "end_line": 1120,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1133,
+              "end_line": 1134,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1457,8 +1542,29 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1180,
-              "end_line": 1181,
+              "start_line": 1147,
+              "end_line": 1148,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1226,
+              "end_line": 1227,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1478,8 +1584,8 @@
               "license_expression": "json",
               "license_expression_spdx": "JSON",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1187,
-              "end_line": 1188,
+              "start_line": 1233,
+              "end_line": 1234,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1492,116 +1598,39 @@
           "identifier": "json-a22df283-4cbb-b1f3-dac1-6aa82c584b30"
         },
         {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
+          "license_expression": "json",
+          "license_expression_spdx": "JSON",
           "matches": [
             {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
+              "license_expression": "json",
+              "license_expression_spdx": "JSON",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1218,
-              "end_line": 1219,
+              "start_line": 1264,
+              "end_line": 1265,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
               "match_coverage": 100.0,
               "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+              "rule_identifier": "json_5.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
             },
             {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
+              "license_expression": "json",
+              "license_expression_spdx": "JSON",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1222,
-              "end_line": 1223,
+              "start_line": 1268,
+              "end_line": 1269,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
               "match_coverage": 100.0,
               "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+              "rule_identifier": "json_5.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
             }
           ],
-          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1236,
-              "end_line": 1237,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1253,
-              "end_line": 1254,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            },
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1257,
-              "end_line": 1258,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1271,
-              "end_line": 1272,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+          "identifier": "json-981d329b-9269-f448-9907-b92bd76e2ea9"
         },
         {
           "license_expression": "mit",
@@ -1620,34 +1649,13 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1302,
-              "end_line": 1303,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
             },
             {
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1306,
-              "end_line": 1307,
+              "start_line": 1289,
+              "end_line": 1290,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1658,6 +1666,27 @@
             }
           ],
           "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1303,
+              "end_line": 1304,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
         },
         {
           "license_expression": "mit",
@@ -1676,49 +1705,49 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1334,
-              "end_line": 1335,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1351,
-              "end_line": 1352,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
             },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1324,
+              "end_line": 1325,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1338,
+              "end_line": 1339,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
             {
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
@@ -1732,6 +1761,20 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1359,
+              "end_line": 1360,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
             }
           ],
           "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
@@ -1744,50 +1787,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1369,
-              "end_line": 1370,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1383,
-              "end_line": 1384,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1400,
-              "end_line": 1401,
+              "start_line": 1376,
+              "end_line": 1377,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1800,8 +1801,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1404,
-              "end_line": 1405,
+              "start_line": 1380,
+              "end_line": 1381,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1821,8 +1822,43 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1418,
-              "end_line": 1419,
+              "start_line": 1397,
+              "end_line": 1398,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1401,
+              "end_line": 1402,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1415,
+              "end_line": 1416,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1851,20 +1887,13 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
+            },
             {
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1449,
-              "end_line": 1450,
+              "start_line": 1436,
+              "end_line": 1437,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1872,7 +1901,14 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            },
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
             {
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
@@ -1886,30 +1922,58 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1457,
+              "end_line": 1458,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
             }
           ],
           "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
         },
         {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
+          "license_expression": "json",
+          "license_expression_spdx": "JSON",
           "matches": [
             {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
+              "license_expression": "json",
+              "license_expression_spdx": "JSON",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1467,
-              "end_line": 1468,
+              "start_line": 1474,
+              "end_line": 1475,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
               "match_coverage": 100.0,
               "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+              "rule_identifier": "json_5.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
+            },
+            {
+              "license_expression": "json",
+              "license_expression_spdx": "JSON",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1478,
+              "end_line": 1479,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "json_5.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE"
             }
           ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+          "identifier": "json-981d329b-9269-f448-9907-b92bd76e2ea9"
         },
         {
           "license_expression": "mit",
@@ -1919,29 +1983,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1481,
-              "end_line": 1482,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1498,
-              "end_line": 1499,
+              "start_line": 1495,
+              "end_line": 1496,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1954,8 +1997,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1502,
-              "end_line": 1503,
+              "start_line": 1499,
+              "end_line": 1500,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1975,8 +2018,29 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1519,
-              "end_line": 1520,
+              "start_line": 1513,
+              "end_line": 1514,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1530,
+              "end_line": 1531,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -1989,8 +2053,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1523,
-              "end_line": 1524,
+              "start_line": 1534,
+              "end_line": 1535,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2001,27 +2065,6 @@
             }
           ],
           "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
-        },
-        {
-          "license_expression": "mit",
-          "license_expression_spdx": "MIT",
-          "matches": [
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1537,
-              "end_line": 1538,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            }
-          ],
-          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
         },
         {
           "license_expression": "mit",
@@ -2040,6 +2083,41 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1555,
+              "end_line": 1556,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1569,
+              "end_line": 1570,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
             }
           ],
           "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
@@ -2052,8 +2130,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1893,
-              "end_line": 1894,
+              "start_line": 1586,
+              "end_line": 1587,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2066,22 +2144,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1896,
-              "end_line": 1897,
-              "matcher": "2-aho",
-              "score": 100.0,
-              "matched_length": 2,
-              "match_coverage": 100.0,
-              "rule_relevance": 100,
-              "rule_identifier": "mit_14.RULE",
-              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
-            },
-            {
-              "license_expression": "mit",
-              "license_expression_spdx": "MIT",
-              "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1900,
-              "end_line": 1901,
+              "start_line": 1590,
+              "end_line": 1591,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2091,7 +2155,7 @@
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
             }
           ],
-          "identifier": "mit-47d0959a-8602-e2d7-d7fb-98b54eb82282"
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
         },
         {
           "license_expression": "mit",
@@ -2101,8 +2165,547 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1937,
-              "end_line": 1938,
+              "start_line": 1607,
+              "end_line": 1608,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1611,
+              "end_line": 1612,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1628,
+              "end_line": 1629,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1632,
+              "end_line": 1633,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1646,
+              "end_line": 1647,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1663,
+              "end_line": 1664,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1667,
+              "end_line": 1668,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1684,
+              "end_line": 1685,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1688,
+              "end_line": 1689,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1705,
+              "end_line": 1706,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1709,
+              "end_line": 1710,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1723,
+              "end_line": 1724,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1740,
+              "end_line": 1741,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1744,
+              "end_line": 1745,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1761,
+              "end_line": 1762,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1765,
+              "end_line": 1766,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1782,
+              "end_line": 1783,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1786,
+              "end_line": 1787,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1800,
+              "end_line": 1801,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1817,
+              "end_line": 1818,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1821,
+              "end_line": 1822,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1838,
+              "end_line": 1839,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1842,
+              "end_line": 1843,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1859,
+              "end_line": 1860,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1863,
+              "end_line": 1864,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1877,
+              "end_line": 1878,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1894,
+              "end_line": 1895,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1898,
+              "end_line": 1899,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1915,
+              "end_line": 1916,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1919,
+              "end_line": 1920,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1936,
+              "end_line": 1937,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2124,13 +2727,692 @@
               "rule_relevance": 100,
               "rule_identifier": "mit_14.RULE",
               "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1954,
+              "end_line": 1955,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1971,
+              "end_line": 1972,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
             },
             {
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 1944,
-              "end_line": 1945,
+              "start_line": 1975,
+              "end_line": 1976,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 1989,
+              "end_line": 1990,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2006,
+              "end_line": 2007,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2010,
+              "end_line": 2011,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2027,
+              "end_line": 2028,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2031,
+              "end_line": 2032,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2048,
+              "end_line": 2049,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2052,
+              "end_line": 2053,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2066,
+              "end_line": 2067,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2080,
+              "end_line": 2081,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2097,
+              "end_line": 2098,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2101,
+              "end_line": 2102,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2115,
+              "end_line": 2116,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2129,
+              "end_line": 2130,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2146,
+              "end_line": 2147,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2150,
+              "end_line": 2151,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2164,
+              "end_line": 2165,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2178,
+              "end_line": 2179,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2195,
+              "end_line": 2196,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2199,
+              "end_line": 2200,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2213,
+              "end_line": 2214,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2227,
+              "end_line": 2228,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2244,
+              "end_line": 2245,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2248,
+              "end_line": 2249,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2262,
+              "end_line": 2263,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2276,
+              "end_line": 2277,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2293,
+              "end_line": 2294,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2297,
+              "end_line": 2298,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2314,
+              "end_line": 2315,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2318,
+              "end_line": 2319,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-c50f9352-032a-ddb1-9025-a7ee1bf1bc68"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2332,
+              "end_line": 2333,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2346,
+              "end_line": 2347,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-9967e727-165e-9bb5-f090-7de5e47a3929"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2760,
+              "end_line": 2761,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2763,
+              "end_line": 2764,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 2767,
+              "end_line": 2768,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2150,8 +3432,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 2548,
-              "end_line": 2549,
+              "start_line": 2804,
+              "end_line": 2805,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2164,8 +3446,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 2551,
-              "end_line": 2552,
+              "start_line": 2807,
+              "end_line": 2808,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2178,8 +3460,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 2555,
-              "end_line": 2556,
+              "start_line": 2811,
+              "end_line": 2812,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2199,8 +3481,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 2592,
-              "end_line": 2593,
+              "start_line": 3410,
+              "end_line": 3411,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2213,8 +3495,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 2595,
-              "end_line": 2596,
+              "start_line": 3413,
+              "end_line": 3414,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2227,8 +3509,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 2599,
-              "end_line": 2600,
+              "start_line": 3417,
+              "end_line": 3418,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2248,8 +3530,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 3656,
-              "end_line": 3657,
+              "start_line": 3454,
+              "end_line": 3455,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2262,8 +3544,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 3659,
-              "end_line": 3660,
+              "start_line": 3457,
+              "end_line": 3458,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2276,8 +3558,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 3663,
-              "end_line": 3664,
+              "start_line": 3461,
+              "end_line": 3462,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2297,8 +3579,57 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 3700,
-              "end_line": 3700,
+              "start_line": 4513,
+              "end_line": 4514,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 4516,
+              "end_line": 4517,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            },
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 4520,
+              "end_line": 4521,
+              "matcher": "2-aho",
+              "score": 100.0,
+              "matched_length": 2,
+              "match_coverage": 100.0,
+              "rule_relevance": 100,
+              "rule_identifier": "mit_14.RULE",
+              "rule_url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE"
+            }
+          ],
+          "identifier": "mit-47d0959a-8602-e2d7-d7fb-98b54eb82282"
+        },
+        {
+          "license_expression": "mit",
+          "license_expression_spdx": "MIT",
+          "matches": [
+            {
+              "license_expression": "mit",
+              "license_expression_spdx": "MIT",
+              "from_file": "KDE Plasma/codexbar.json",
+              "start_line": 4557,
+              "end_line": 4557,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2318,8 +3649,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 3734,
-              "end_line": 3735,
+              "start_line": 4591,
+              "end_line": 4592,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2332,8 +3663,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 3737,
-              "end_line": 3738,
+              "start_line": 4594,
+              "end_line": 4595,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2346,8 +3677,8 @@
               "license_expression": "mit",
               "license_expression_spdx": "MIT",
               "from_file": "KDE Plasma/codexbar.json",
-              "start_line": 3741,
-              "end_line": 3742,
+              "start_line": 4598,
+              "end_line": 4599,
               "matcher": "2-aho",
               "score": 100.0,
               "matched_length": 2,
@@ -2361,310 +3692,360 @@
         }
       ],
       "license_clues": [],
-      "percentage_of_license_text": 0.96,
+      "percentage_of_license_text": 1.64,
       "copyrights": [
         {
           "copyright": "Copyright (c) 2026 Peter Steinberger",
-          "start_line": 1965,
-          "end_line": 1965
+          "start_line": 2367,
+          "end_line": 2367
         },
         {
           "copyright": "Copyright (c) 2026 Siddharth Viswanathan",
-          "start_line": 1970,
-          "end_line": 1970
+          "start_line": 2372,
+          "end_line": 2372
         },
         {
           "copyright": "Copyright (c) 2026 Peter Steinberger",
-          "start_line": 2620,
-          "end_line": 2620
+          "start_line": 2377,
+          "end_line": 2377
         },
         {
           "copyright": "Copyright (c) 2026 Siddharth Viswanathan",
-          "start_line": 2625,
-          "end_line": 2625
+          "start_line": 2382,
+          "end_line": 2382
+        },
+        {
+          "copyright": "Copyright (c) 2026 Peter Steinberger",
+          "start_line": 2832,
+          "end_line": 2832
+        },
+        {
+          "copyright": "Copyright (c) 2026 Siddharth Viswanathan",
+          "start_line": 2837,
+          "end_line": 2837
+        },
+        {
+          "copyright": "Copyright (c) 2026 Peter Steinberger",
+          "start_line": 3482,
+          "end_line": 3482
+        },
+        {
+          "copyright": "Copyright (c) 2026 Siddharth Viswanathan",
+          "start_line": 3487,
+          "end_line": 3487
         }
       ],
       "holders": [
         {
           "holder": "Peter Steinberger",
-          "start_line": 1965,
-          "end_line": 1965
+          "start_line": 2367,
+          "end_line": 2367
         },
         {
           "holder": "Siddharth Viswanathan",
-          "start_line": 1970,
-          "end_line": 1970
+          "start_line": 2372,
+          "end_line": 2372
         },
         {
           "holder": "Peter Steinberger",
-          "start_line": 2620,
-          "end_line": 2620
+          "start_line": 2377,
+          "end_line": 2377
         },
         {
           "holder": "Siddharth Viswanathan",
-          "start_line": 2625,
-          "end_line": 2625
+          "start_line": 2382,
+          "end_line": 2382
+        },
+        {
+          "holder": "Peter Steinberger",
+          "start_line": 2832,
+          "end_line": 2832
+        },
+        {
+          "holder": "Siddharth Viswanathan",
+          "start_line": 2837,
+          "end_line": 2837
+        },
+        {
+          "holder": "Peter Steinberger",
+          "start_line": 3482,
+          "end_line": 3482
+        },
+        {
+          "holder": "Siddharth Viswanathan",
+          "start_line": 3487,
+          "end_line": 3487
         }
       ],
       "authors": [
         {
           "author": "CodexBar Contributors",
-          "start_line": 1574,
-          "end_line": 1574
+          "start_line": 2411,
+          "end_line": 2411
         },
         {
           "author": "CodexBar Contributors",
-          "start_line": 3764,
-          "end_line": 3764
+          "start_line": 2416,
+          "end_line": 2416
+        },
+        {
+          "author": "CodexBar Contributors",
+          "start_line": 4621,
+          "end_line": 4621
         }
       ],
       "emails": [
         {
           "email": "opensource@codexbar.dev",
-          "start_line": 1581,
-          "end_line": 1581
+          "start_line": 2423,
+          "end_line": 2423
         },
         {
           "email": "siderskini@icloud.com",
-          "start_line": 1990,
-          "end_line": 1990
+          "start_line": 2428,
+          "end_line": 2428
         }
       ],
       "urls": [
         {
           "url": "https://github.com/nexB/scancode-toolkit/",
-          "start_line": 18,
-          "end_line": 18
+          "start_line": 20,
+          "end_line": 20
         },
         {
           "url": "https://crates.io/crates/codexbar-cli",
-          "start_line": 81,
-          "end_line": 81
-        },
-        {
-          "url": "https://crates.io/api/v1/crates/codexbar-cli",
           "start_line": 83,
           "end_line": 83
         },
         {
-          "url": "https://crates.io/crates/codexbar-core",
-          "start_line": 134,
-          "end_line": 134
+          "url": "https://crates.io/api/v1/crates/codexbar-cli",
+          "start_line": 85,
+          "end_line": 85
         },
         {
-          "url": "https://crates.io/api/v1/crates/codexbar-core",
+          "url": "https://crates.io/crates/codexbar-core",
           "start_line": 136,
           "end_line": 136
         },
         {
-          "url": "https://crates.io/crates/codexbar-kde-bridge",
-          "start_line": 187,
-          "end_line": 187
+          "url": "https://crates.io/api/v1/crates/codexbar-core",
+          "start_line": 138,
+          "end_line": 138
         },
         {
-          "url": "https://crates.io/api/v1/crates/codexbar-kde-bridge",
+          "url": "https://crates.io/crates/codexbar-kde-bridge",
           "start_line": 189,
           "end_line": 189
         },
         {
-          "url": "https://crates.io/crates/codexbar-service",
-          "start_line": 240,
-          "end_line": 240
+          "url": "https://crates.io/api/v1/crates/codexbar-kde-bridge",
+          "start_line": 191,
+          "end_line": 191
         },
         {
-          "url": "https://crates.io/api/v1/crates/codexbar-service",
+          "url": "https://crates.io/crates/codexbar-service",
           "start_line": 242,
           "end_line": 242
         },
         {
+          "url": "https://crates.io/api/v1/crates/codexbar-service",
+          "start_line": 244,
+          "end_line": 244
+        },
+        {
           "url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/json_5.RULE",
-          "start_line": 990,
-          "end_line": 990
+          "start_line": 992,
+          "end_line": 992
         },
         {
           "url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/warranty-disclaimer_18.RULE",
-          "start_line": 1004,
-          "end_line": 1004
-        },
-        {
-          "url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_30.RULE",
-          "start_line": 1026,
-          "end_line": 1026
+          "start_line": 1028,
+          "end_line": 1028
         },
         {
           "url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_14.RULE",
-          "start_line": 1048,
-          "end_line": 1048
+          "start_line": 1050,
+          "end_line": 1050
+        },
+        {
+          "url": "https://github.com/nexB/scancode-toolkit/tree/develop/src/licensedcode/data/rules/mit_30.RULE",
+          "start_line": 1108,
+          "end_line": 1108
         },
         {
           "url": "https://github.com/steipete/CodexBar",
-          "start_line": 1638,
-          "end_line": 1638
+          "start_line": 2500,
+          "end_line": 2500
         },
         {
           "url": "http://www.kde.org/standards/kcfg/1.0",
-          "start_line": 1643,
-          "end_line": 1643
+          "start_line": 2505,
+          "end_line": 2505
         },
         {
           "url": "https://chatgpt.com/codex/settings/usage",
-          "start_line": 1648,
-          "end_line": 1648
+          "start_line": 2510,
+          "end_line": 2510
         },
         {
           "url": "https://status.openai.com/",
-          "start_line": 1653,
-          "end_line": 1653
+          "start_line": 2515,
+          "end_line": 2515
         },
         {
           "url": "https://console.anthropic.com/settings/billing",
-          "start_line": 1658,
-          "end_line": 1658
+          "start_line": 2520,
+          "end_line": 2520
         },
         {
           "url": "https://status.claude.com/",
-          "start_line": 1663,
-          "end_line": 1663
+          "start_line": 2525,
+          "end_line": 2525
         },
         {
           "url": "https://claude.ai/settings/usage",
-          "start_line": 1668,
-          "end_line": 1668
+          "start_line": 2530,
+          "end_line": 2530
         },
         {
           "url": "https://cursor.com/dashboard?tab=usage",
-          "start_line": 1673,
-          "end_line": 1673
+          "start_line": 2535,
+          "end_line": 2535
         },
         {
           "url": "https://status.cursor.com/",
-          "start_line": 1678,
-          "end_line": 1678
+          "start_line": 2540,
+          "end_line": 2540
         },
         {
           "url": "https://app.factory.ai/settings/billing",
-          "start_line": 1683,
-          "end_line": 1683
+          "start_line": 2545,
+          "end_line": 2545
         },
         {
           "url": "https://status.factory.ai/",
-          "start_line": 1688,
-          "end_line": 1688
+          "start_line": 2550,
+          "end_line": 2550
         },
         {
           "url": "https://gemini.google.com/",
-          "start_line": 1693,
-          "end_line": 1693
+          "start_line": 2555,
+          "end_line": 2555
         },
         {
           "url": "https://www.google.com/appsstatus/dashboard/products/npdyhgECDJ6tB66MxXyo/history",
-          "start_line": 1698,
-          "end_line": 1698
+          "start_line": 2560,
+          "end_line": 2560
         },
         {
           "url": "https://github.com/settings/copilot",
-          "start_line": 1703,
-          "end_line": 1703
+          "start_line": 2565,
+          "end_line": 2565
         },
         {
           "url": "https://www.githubstatus.com/",
-          "start_line": 1708,
-          "end_line": 1708
+          "start_line": 2570,
+          "end_line": 2570
         },
         {
           "url": "https://z.ai/manage-apikey/subscription",
-          "start_line": 1713,
-          "end_line": 1713
+          "start_line": 2575,
+          "end_line": 2575
         },
         {
           "url": "https://platform.minimax.io/user-center/payment/coding-plan?cycle_type=3",
-          "start_line": 1718,
-          "end_line": 1718
+          "start_line": 2580,
+          "end_line": 2580
         },
         {
           "url": "https://www.kimi.com/code/console",
-          "start_line": 1723,
-          "end_line": 1723
+          "start_line": 2585,
+          "end_line": 2585
         },
         {
           "url": "https://kimi-k2.ai/my-credits",
-          "start_line": 1728,
-          "end_line": 1728
+          "start_line": 2590,
+          "end_line": 2590
         },
         {
           "url": "https://app.kiro.dev/account/usage",
-          "start_line": 1733,
-          "end_line": 1733
+          "start_line": 2595,
+          "end_line": 2595
         },
         {
           "url": "https://health.aws.amazon.com/health/status",
-          "start_line": 1738,
-          "end_line": 1738
+          "start_line": 2600,
+          "end_line": 2600
         },
         {
           "url": "https://console.cloud.google.com/vertex-ai",
-          "start_line": 1743,
-          "end_line": 1743
+          "start_line": 2605,
+          "end_line": 2605
         },
         {
           "url": "https://status.cloud.google.com/",
-          "start_line": 1748,
-          "end_line": 1748
+          "start_line": 2610,
+          "end_line": 2610
         },
         {
           "url": "https://app.augmentcode.com/account/subscription",
-          "start_line": 1753,
-          "end_line": 1753
+          "start_line": 2615,
+          "end_line": 2615
         },
         {
           "url": "https://ampcode.com/settings",
-          "start_line": 1758,
-          "end_line": 1758
+          "start_line": 2620,
+          "end_line": 2620
         },
         {
           "url": "https://opencode.ai/",
-          "start_line": 1763,
-          "end_line": 1763
+          "start_line": 2625,
+          "end_line": 2625
         },
         {
           "url": "https://app.warp.dev/settings/account",
-          "start_line": 1768,
-          "end_line": 1768
+          "start_line": 2630,
+          "end_line": 2630
         },
         {
           "url": "https://cursor.com/dashboard",
-          "start_line": 1773,
-          "end_line": 1773
+          "start_line": 2635,
+          "end_line": 2635
         },
         {
           "url": "https://app.factory.ai/",
-          "start_line": 1778,
-          "end_line": 1778
+          "start_line": 2640,
+          "end_line": 2640
         },
         {
           "url": "https://www.googleapis.com/auth/userinfo.email,https:/www.googleapis.com/auth/cloud-platform",
-          "start_line": 1783,
-          "end_line": 1783
+          "start_line": 2645,
+          "end_line": 2645
         },
         {
           "url": "https://github.com/login/device",
-          "start_line": 1788,
-          "end_line": 1788
+          "start_line": 2650,
+          "end_line": 2650
         },
         {
           "url": "https://github.com/rust-lang/crates.io-index",
-          "start_line": 1793,
-          "end_line": 1793
+          "start_line": 2655,
+          "end_line": 2655
         },
         {
           "url": "https://status.anthropic.com/",
-          "start_line": 1798,
-          "end_line": 1798
+          "start_line": 2660,
+          "end_line": 2660
         },
         {
           "url": "https://github.com/Siderskini/CodexBar",
-          "start_line": 1997,
-          "end_line": 1997
+          "start_line": 2665,
+          "end_line": 2665
+        },
+        {
+          "url": "https://api.anthropic.com/api/oauth/usage",
+          "start_line": 4942,
+          "end_line": 4942
         }
       ],
       "files_count": 0,
@@ -2707,7 +4088,7 @@
       "urls": [],
       "files_count": 6,
       "dirs_count": 3,
-      "size_count": 68689,
+      "size_count": 72540,
       "scan_errors": []
     },
     {
@@ -2944,7 +4325,7 @@
       "urls": [],
       "files_count": 4,
       "dirs_count": 2,
-      "size_count": 67170,
+      "size_count": 71021,
       "scan_errors": []
     },
     {
@@ -3102,7 +4483,7 @@
       "urls": [],
       "files_count": 2,
       "dirs_count": 0,
-      "size_count": 66450,
+      "size_count": 70301,
       "scan_errors": []
     },
     {
@@ -3149,12 +4530,12 @@
       "name": "main.qml",
       "base_name": "main",
       "extension": ".qml",
-      "size": 65824,
-      "date": "2026-02-17",
-      "sha1": "5f37e506aacd413fc141d150c4737e788976e4b5",
-      "md5": "ef751d3215cdde3601aacd3d14b5e4cc",
-      "sha256": "bc67cc672bf47322b507a3eb1947d6663f215214b5104dcf259037553566b793",
-      "sha1_git": "90dc8ff71bd0a0c142de5ea62a0e55d5f8e476f9",
+      "size": 69675,
+      "date": "2026-02-22",
+      "sha1": "58cc529daa460d28051bf2a01bd8100663c9c789",
+      "md5": "7d9c90642cd827cba778fc3a966b50c9",
+      "sha256": "235cbff99fd5097b6b01328093975598993b59fe122dda660582687fdca3da6d",
+      "sha1_git": "bb1a251ea846775588a056e02523865873f48cd9",
       "mime_type": "text/plain",
       "file_type": "ASCII text",
       "programming_language": null,
@@ -3178,143 +4559,133 @@
       "urls": [
         {
           "url": "https://chatgpt.com/codex/settings/usage",
-          "start_line": 776,
-          "end_line": 776
+          "start_line": 786,
+          "end_line": 786
         },
         {
           "url": "https://status.openai.com/",
-          "start_line": 777,
-          "end_line": 777
+          "start_line": 787,
+          "end_line": 787
         },
         {
           "url": "https://claude.ai/settings/usage",
-          "start_line": 782,
-          "end_line": 782
+          "start_line": 792,
+          "end_line": 792
         },
         {
           "url": "https://status.claude.com/",
-          "start_line": 783,
-          "end_line": 783
+          "start_line": 793,
+          "end_line": 793
         },
         {
           "url": "https://cursor.com/dashboard?tab=usage",
-          "start_line": 788,
-          "end_line": 788
+          "start_line": 798,
+          "end_line": 798
         },
         {
           "url": "https://status.cursor.com/",
-          "start_line": 789,
-          "end_line": 789
+          "start_line": 799,
+          "end_line": 799
         },
         {
           "url": "https://app.factory.ai/settings/billing",
-          "start_line": 794,
-          "end_line": 794
+          "start_line": 804,
+          "end_line": 804
         },
         {
           "url": "https://status.factory.ai/",
-          "start_line": 795,
-          "end_line": 795
+          "start_line": 805,
+          "end_line": 805
         },
         {
           "url": "https://gemini.google.com/",
-          "start_line": 800,
-          "end_line": 800
+          "start_line": 810,
+          "end_line": 810
         },
         {
           "url": "https://www.google.com/appsstatus/dashboard/products/npdyhgECDJ6tB66MxXyo/history",
-          "start_line": 802,
-          "end_line": 802
-        },
-        {
-          "url": "https://github.com/settings/copilot",
           "start_line": 812,
           "end_line": 812
         },
         {
+          "url": "https://github.com/settings/copilot",
+          "start_line": 822,
+          "end_line": 822
+        },
+        {
           "url": "https://www.githubstatus.com/",
-          "start_line": 813,
-          "end_line": 813
+          "start_line": 823,
+          "end_line": 823
         },
         {
           "url": "https://z.ai/manage-apikey/subscription",
-          "start_line": 818,
-          "end_line": 818
+          "start_line": 828,
+          "end_line": 828
         },
         {
           "url": "https://platform.minimax.io/user-center/payment/coding-plan?cycle_type=3",
-          "start_line": 824,
-          "end_line": 824
+          "start_line": 834,
+          "end_line": 834
         },
         {
           "url": "https://www.kimi.com/code/console",
-          "start_line": 830,
-          "end_line": 830
+          "start_line": 840,
+          "end_line": 840
         },
         {
           "url": "https://kimi-k2.ai/my-credits",
-          "start_line": 836,
-          "end_line": 836
+          "start_line": 846,
+          "end_line": 846
         },
         {
           "url": "https://app.kiro.dev/account/usage",
-          "start_line": 842,
-          "end_line": 842
+          "start_line": 852,
+          "end_line": 852
         },
         {
           "url": "https://health.aws.amazon.com/health/status",
-          "start_line": 844,
-          "end_line": 844
-        },
-        {
-          "url": "https://console.cloud.google.com/vertex-ai",
-          "start_line": 848,
-          "end_line": 848
-        },
-        {
-          "url": "https://status.cloud.google.com/",
-          "start_line": 850,
-          "end_line": 850
-        },
-        {
-          "url": "https://app.augmentcode.com/account/subscription",
           "start_line": 854,
           "end_line": 854
         },
         {
-          "url": "https://ampcode.com/settings",
+          "url": "https://console.cloud.google.com/vertex-ai",
+          "start_line": 858,
+          "end_line": 858
+        },
+        {
+          "url": "https://status.cloud.google.com/",
           "start_line": 860,
           "end_line": 860
         },
         {
+          "url": "https://app.augmentcode.com/account/subscription",
+          "start_line": 864,
+          "end_line": 864
+        },
+        {
+          "url": "https://ampcode.com/settings",
+          "start_line": 870,
+          "end_line": 870
+        },
+        {
           "url": "https://opencode.ai/",
-          "start_line": 866,
-          "end_line": 866
+          "start_line": 876,
+          "end_line": 876
         },
         {
           "url": "https://app.warp.dev/settings/account",
-          "start_line": 872,
-          "end_line": 872
-        },
-        {
-          "url": "https://cursor.com/dashboard",
-          "start_line": 1010,
-          "end_line": 1010
+          "start_line": 882,
+          "end_line": 882
         },
         {
           "url": "https://app.factory.ai/",
-          "start_line": 1013,
-          "end_line": 1013
+          "start_line": 1039,
+          "end_line": 1039
         },
         {
           "url": "https://www.googleapis.com/auth/userinfo.email,https:/www.googleapis.com/auth/cloud-platform",
-          "start_line": 1021,
-          "end_line": 1021
-        },
-        {
-          "url": "https://github.com/login/device",
-          "start_line": 1025,
-          "end_line": 1025
+          "start_line": 1047,
+          "end_line": 1047
         }
       ],
       "files_count": 0,
@@ -3357,7 +4728,7 @@
       "urls": [],
       "files_count": 6,
       "dirs_count": 3,
-      "size_count": 68820,
+      "size_count": 72671,
       "scan_errors": []
     },
     {
@@ -3594,7 +4965,7 @@
       "urls": [],
       "files_count": 4,
       "dirs_count": 2,
-      "size_count": 67239,
+      "size_count": 71090,
       "scan_errors": []
     },
     {
@@ -3752,7 +5123,7 @@
       "urls": [],
       "files_count": 2,
       "dirs_count": 0,
-      "size_count": 66511,
+      "size_count": 70362,
       "scan_errors": []
     },
     {
@@ -3799,12 +5170,12 @@
       "name": "main.qml",
       "base_name": "main",
       "extension": ".qml",
-      "size": 65870,
-      "date": "2026-02-17",
-      "sha1": "f5197652dd97931dac01369f143c1687e1f9162a",
-      "md5": "74aa9ee016d32913bdbeb900026e2229",
-      "sha256": "0c35b3ec7fbd378cb390efb1e4856643a0efee337f5cad7d48f4680b5d081b00",
-      "sha1_git": "ff864d76e528faafc1bcdbe08bda0cc21568e8ad",
+      "size": 69721,
+      "date": "2026-02-22",
+      "sha1": "a25966f69c523aff0084d9feab307530145e856e",
+      "md5": "78f7a926cc7ffdc02f9cc2f8968db108",
+      "sha256": "4239695ee356b8bdf154db97cc16378064ec32d45f7d214a8bdfe807a9577a74",
+      "sha1_git": "4a2c4f7979b02fe30baee74f490448cc83a3ff33",
       "mime_type": "text/plain",
       "file_type": "ASCII text",
       "programming_language": null,
@@ -3828,143 +5199,133 @@
       "urls": [
         {
           "url": "https://chatgpt.com/codex/settings/usage",
-          "start_line": 776,
-          "end_line": 776
+          "start_line": 786,
+          "end_line": 786
         },
         {
           "url": "https://status.openai.com/",
-          "start_line": 777,
-          "end_line": 777
+          "start_line": 787,
+          "end_line": 787
         },
         {
           "url": "https://claude.ai/settings/usage",
-          "start_line": 782,
-          "end_line": 782
+          "start_line": 792,
+          "end_line": 792
         },
         {
           "url": "https://status.claude.com/",
-          "start_line": 783,
-          "end_line": 783
+          "start_line": 793,
+          "end_line": 793
         },
         {
           "url": "https://cursor.com/dashboard?tab=usage",
-          "start_line": 788,
-          "end_line": 788
+          "start_line": 798,
+          "end_line": 798
         },
         {
           "url": "https://status.cursor.com/",
-          "start_line": 789,
-          "end_line": 789
+          "start_line": 799,
+          "end_line": 799
         },
         {
           "url": "https://app.factory.ai/settings/billing",
-          "start_line": 794,
-          "end_line": 794
+          "start_line": 804,
+          "end_line": 804
         },
         {
           "url": "https://status.factory.ai/",
-          "start_line": 795,
-          "end_line": 795
+          "start_line": 805,
+          "end_line": 805
         },
         {
           "url": "https://gemini.google.com/",
-          "start_line": 800,
-          "end_line": 800
+          "start_line": 810,
+          "end_line": 810
         },
         {
           "url": "https://www.google.com/appsstatus/dashboard/products/npdyhgECDJ6tB66MxXyo/history",
-          "start_line": 802,
-          "end_line": 802
-        },
-        {
-          "url": "https://github.com/settings/copilot",
           "start_line": 812,
           "end_line": 812
         },
         {
+          "url": "https://github.com/settings/copilot",
+          "start_line": 822,
+          "end_line": 822
+        },
+        {
           "url": "https://www.githubstatus.com/",
-          "start_line": 813,
-          "end_line": 813
+          "start_line": 823,
+          "end_line": 823
         },
         {
           "url": "https://z.ai/manage-apikey/subscription",
-          "start_line": 818,
-          "end_line": 818
+          "start_line": 828,
+          "end_line": 828
         },
         {
           "url": "https://platform.minimax.io/user-center/payment/coding-plan?cycle_type=3",
-          "start_line": 824,
-          "end_line": 824
+          "start_line": 834,
+          "end_line": 834
         },
         {
           "url": "https://www.kimi.com/code/console",
-          "start_line": 830,
-          "end_line": 830
+          "start_line": 840,
+          "end_line": 840
         },
         {
           "url": "https://kimi-k2.ai/my-credits",
-          "start_line": 836,
-          "end_line": 836
+          "start_line": 846,
+          "end_line": 846
         },
         {
           "url": "https://app.kiro.dev/account/usage",
-          "start_line": 842,
-          "end_line": 842
+          "start_line": 852,
+          "end_line": 852
         },
         {
           "url": "https://health.aws.amazon.com/health/status",
-          "start_line": 844,
-          "end_line": 844
-        },
-        {
-          "url": "https://console.cloud.google.com/vertex-ai",
-          "start_line": 848,
-          "end_line": 848
-        },
-        {
-          "url": "https://status.cloud.google.com/",
-          "start_line": 850,
-          "end_line": 850
-        },
-        {
-          "url": "https://app.augmentcode.com/account/subscription",
           "start_line": 854,
           "end_line": 854
         },
         {
-          "url": "https://ampcode.com/settings",
+          "url": "https://console.cloud.google.com/vertex-ai",
+          "start_line": 858,
+          "end_line": 858
+        },
+        {
+          "url": "https://status.cloud.google.com/",
           "start_line": 860,
           "end_line": 860
         },
         {
+          "url": "https://app.augmentcode.com/account/subscription",
+          "start_line": 864,
+          "end_line": 864
+        },
+        {
+          "url": "https://ampcode.com/settings",
+          "start_line": 870,
+          "end_line": 870
+        },
+        {
           "url": "https://opencode.ai/",
-          "start_line": 866,
-          "end_line": 866
+          "start_line": 876,
+          "end_line": 876
         },
         {
           "url": "https://app.warp.dev/settings/account",
-          "start_line": 872,
-          "end_line": 872
-        },
-        {
-          "url": "https://cursor.com/dashboard",
-          "start_line": 1010,
-          "end_line": 1010
+          "start_line": 882,
+          "end_line": 882
         },
         {
           "url": "https://app.factory.ai/",
-          "start_line": 1013,
-          "end_line": 1013
+          "start_line": 1039,
+          "end_line": 1039
         },
         {
           "url": "https://www.googleapis.com/auth/userinfo.email,https:/www.googleapis.com/auth/cloud-platform",
-          "start_line": 1021,
-          "end_line": 1021
-        },
-        {
-          "url": "https://github.com/login/device",
-          "start_line": 1025,
-          "end_line": 1025
+          "start_line": 1047,
+          "end_line": 1047
         }
       ],
       "files_count": 0,
@@ -4007,7 +5368,7 @@
       "urls": [],
       "files_count": 10,
       "dirs_count": 9,
-      "size_count": 58173,
+      "size_count": 121078,
       "scan_errors": []
     },
     {
@@ -4665,7 +6026,7 @@
       "urls": [],
       "files_count": 8,
       "dirs_count": 8,
-      "size_count": 50678,
+      "size_count": 113583,
       "scan_errors": []
     },
     {
@@ -4703,7 +6064,7 @@
       "urls": [],
       "files_count": 2,
       "dirs_count": 1,
-      "size_count": 33235,
+      "size_count": 93131,
       "scan_errors": []
     },
     {
@@ -4845,7 +6206,7 @@
         }
       ],
       "for_packages": [
-        "pkg:cargo/codexbar-cli?uuid=36e23c2b-d5b9-4c1f-ab45-62a3fed98185"
+        "pkg:cargo/codexbar-cli?uuid=c54be485-17a8-4625-9acc-d73be4d0916d"
       ],
       "detected_license_expression": null,
       "detected_license_expression_spdx": null,
@@ -4897,7 +6258,7 @@
       "urls": [],
       "files_count": 1,
       "dirs_count": 0,
-      "size_count": 32896,
+      "size_count": 92792,
       "scan_errors": []
     },
     {
@@ -4906,12 +6267,12 @@
       "name": "main.rs",
       "base_name": "main",
       "extension": ".rs",
-      "size": 32896,
-      "date": "2026-02-17",
-      "sha1": "210dfdb2ba91527de82964f4db8ec3bc47f4f2a9",
-      "md5": "bba31ec71f8ab219c33c22b4d1d72c37",
-      "sha256": "1a3daa69483067db7a69c57d33c1fcaa08da7ef594894083f19d8d5e100c483a",
-      "sha1_git": "7b4737c83ea2ff8f5da713a5c502255f7d2c99b4",
+      "size": 92792,
+      "date": "2026-02-22",
+      "sha1": "fb837559d6a9855ce5eea7777a2f276b8e3c6620",
+      "md5": "439d8e8c1df903523b8c51348aa15ca9",
+      "sha256": "2f393f21f596d3faa503c286c1f8c55e58cb406f533cd650d3bd097c02ce5789",
+      "sha1_git": "59a88a3dbc2ac40de7546267a0630613e736ba95",
       "mime_type": "text/x-c",
       "file_type": "C source, ASCII text",
       "programming_language": "Rust",
@@ -4934,19 +6295,74 @@
       "emails": [],
       "urls": [
         {
+          "url": "https://app.factory.ai/",
+          "start_line": 233,
+          "end_line": 233
+        },
+        {
+          "url": "https://cursor.com/dashboard?tab=usage",
+          "start_line": 342,
+          "end_line": 342
+        },
+        {
+          "url": "https://cursor.com/api/usage-summary",
+          "start_line": 351,
+          "end_line": 351
+        },
+        {
           "url": "https://status.openai.com/",
-          "start_line": 451,
-          "end_line": 451
+          "start_line": 994,
+          "end_line": 994
         },
         {
           "url": "https://api.anthropic.com/api/oauth/usage",
-          "start_line": 478,
-          "end_line": 478
+          "start_line": 1021,
+          "end_line": 1021
+        },
+        {
+          "url": "https://www.google.com/appsstatus/dashboard/products/npdyhgECDJ6tB66MxXyo/history",
+          "start_line": 1175,
+          "end_line": 1175
+        },
+        {
+          "url": "https://cloudcode-pa.googleapis.com/v1internal:loadCodeAssist",
+          "start_line": 1494,
+          "end_line": 1494
+        },
+        {
+          "url": "https://cloudresourcemanager.googleapis.com/v1/projects",
+          "start_line": 1502,
+          "end_line": 1502
+        },
+        {
+          "url": "https://cloudcode-pa.googleapis.com/v1internal:retrieveUserQuota",
+          "start_line": 1513,
+          "end_line": 1513
+        },
+        {
+          "url": "https://oauth2.googleapis.com/token",
+          "start_line": 1693,
+          "end_line": 1693
+        },
+        {
+          "url": "https://status.cursor.com/",
+          "start_line": 2029,
+          "end_line": 2029
+        },
+        {
+          "url": "https://api.github.com/copilot_internal/user",
+          "start_line": 2157,
+          "end_line": 2157
+        },
+        {
+          "url": "https://www.githubstatus.com/",
+          "start_line": 2193,
+          "end_line": 2193
         },
         {
           "url": "https://status.claude.com/",
-          "start_line": 703,
-          "end_line": 703
+          "start_line": 2524,
+          "end_line": 2524
         }
       ],
       "files_count": 0,
@@ -5092,7 +6508,7 @@
         }
       ],
       "for_packages": [
-        "pkg:cargo/codexbar-core?uuid=2b8efde3-a8c1-47f1-a915-4e86783a000e"
+        "pkg:cargo/codexbar-core?uuid=7504ae76-9db1-41fb-b5ae-73fe8bd877b7"
       ],
       "detected_license_expression": null,
       "detected_license_expression_spdx": null,
@@ -5334,7 +6750,7 @@
         }
       ],
       "for_packages": [
-        "pkg:cargo/codexbar-kde-bridge?uuid=22d51fee-1ff6-4701-a70f-5681c5032781"
+        "pkg:cargo/codexbar-kde-bridge?uuid=e8f73e8e-aeba-409c-bc15-47e6c2c8661b"
       ],
       "detected_license_expression": null,
       "detected_license_expression_spdx": null,
@@ -5462,7 +6878,7 @@
       "urls": [],
       "files_count": 2,
       "dirs_count": 1,
-      "size_count": 6329,
+      "size_count": 9338,
       "scan_errors": []
     },
     {
@@ -5591,7 +7007,7 @@
         }
       ],
       "for_packages": [
-        "pkg:cargo/codexbar-service?uuid=efb8b559-6f8f-4b3b-a4bc-9d1c78a04fdd"
+        "pkg:cargo/codexbar-service?uuid=90fd548a-e755-42a0-8651-22e2cefc0553"
       ],
       "detected_license_expression": null,
       "detected_license_expression_spdx": null,
@@ -5643,7 +7059,7 @@
       "urls": [],
       "files_count": 1,
       "dirs_count": 0,
-      "size_count": 6057,
+      "size_count": 9066,
       "scan_errors": []
     },
     {
@@ -5652,12 +7068,12 @@
       "name": "main.rs",
       "base_name": "main",
       "extension": ".rs",
-      "size": 6057,
-      "date": "2026-02-17",
-      "sha1": "24b9eeaadd9e52c0bc20230d2386f2701c94b9dc",
-      "md5": "4d60677a61d8a1c898d6650f3f4c789e",
-      "sha256": "c530d1a1438250dd2db85f34534b2015e82b58ab5ac854c0f840bb5df25e708e",
-      "sha1_git": "b9e3a8f2dcfea7d4b23f6d8aad81866154ca4994",
+      "size": 9066,
+      "date": "2026-02-22",
+      "sha1": "078e383499b3e34c12ed61d1e2e146653453dd74",
+      "md5": "7cd6afb2fd719021a1a90789a61ec7bf",
+      "sha256": "fc618b93ef74da99e92a8d7b795f520f0ed94aaa5fa9660394defabbd044082c",
+      "sha1_git": "d4a3a4b7478f974ec672a71217a371290e5696e3",
       "mime_type": "text/x-c",
       "file_type": "C source, ASCII text",
       "programming_language": "Rust",

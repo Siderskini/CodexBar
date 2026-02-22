@@ -12,6 +12,8 @@ PlasmoidItem {
     property string lastError: ""
     property bool isShuttingDown: false
     property string selectedProvider: ""
+    readonly property string addProviderTabId: "__add_provider__"
+    property int pendingSetupRefreshCount: 0
     property bool useDarkTheme: root.isDarkThemeColor(Kirigami.Theme.backgroundColor)
     property real cardOpacity: 0.96
 
@@ -43,19 +45,18 @@ PlasmoidItem {
         : root.entrySummary(root.currentEntry())
 
     onSnapshotChanged: {
-        if (selectedProvider.length > 0) {
+        var selected = normalizedProvider(selectedProvider);
+        if (selected.length > 0 && selected !== addProviderTabId && root.isProviderPinned(selected)) {
             return;
         }
 
-        var codexEntry = entryForProvider("codex");
-        if (codexEntry) {
-            selectedProvider = "codex";
+        var pinned = root.pinnedProviderList();
+        if (pinned.length > 0) {
+            selectedProvider = pinned[0];
             return;
         }
 
-        selectedProvider = (snapshot.entries && snapshot.entries.length > 0)
-            ? normalizedProvider(snapshot.entries[0].provider)
-            : "codex";
+        selectedProvider = "codex";
     }
 
     function entryForProvider(providerId) {
@@ -281,8 +282,17 @@ PlasmoidItem {
         if (lower === "openai-web") {
             return "OpenAI web";
         }
+        if (lower === "cursor-usage-summary") {
+            return "Cursor web";
+        }
         if (lower === "oauth") {
             return "OAuth";
+        }
+        if (lower === "github-copilot-api") {
+            return "GitHub API";
+        }
+        if (lower === "github-auth") {
+            return "GitHub auth";
         }
         return raw;
     }
@@ -696,65 +706,65 @@ PlasmoidItem {
         return usageColor(entry ? entry.secondary : null);
     }
 
-    function tabModel() {
-        var preferredProviders = ["codex", "claude", "cursor", "factory", "gemini", "copilot"];
-        var tabs = [];
+    function pinnedProviderList() {
+        var providers = [];
         var seen = {};
 
-        for (var i = 0; i < preferredProviders.length; ++i) {
-            var preferred = normalizedProvider(preferredProviders[i]);
-            seen[preferred] = true;
-            tabs.push({provider: preferred, label: tabLabelForProvider(preferred)});
+        function addProvider(rawProvider) {
+            var provider = normalizedProvider(rawProvider);
+            if (provider.length === 0 || provider === addProviderTabId || seen[provider]) {
+                return;
+            }
+            seen[provider] = true;
+            providers.push(provider);
         }
 
-        if (snapshot.entries && snapshot.entries.length > 0) {
-            for (var j = 0; j < snapshot.entries.length; ++j) {
-                var dynamicProvider = normalizedProvider(snapshot.entries[j].provider);
-                if (seen[dynamicProvider]) {
-                    continue;
-                }
-                seen[dynamicProvider] = true;
-                tabs.push({provider: dynamicProvider, label: tabLabelForProvider(dynamicProvider)});
+        addProvider("codex");
+
+        if (snapshot.enabledProviders && snapshot.enabledProviders.length > 0) {
+            for (var i = 0; i < snapshot.enabledProviders.length; ++i) {
+                addProvider(snapshot.enabledProviders[i]);
             }
         }
 
-        var selectedRaw = nonEmptyString(selectedProvider);
-        if (selectedRaw.length > 0) {
-            var selected = normalizedProvider(selectedRaw);
-            if (!seen[selected]) {
-                tabs.push({provider: selected, label: tabLabelForProvider(selected)});
+        return providers;
+    }
+
+    function isProviderPinned(providerId) {
+        var requested = normalizedProvider(providerId);
+        if (requested.length === 0 || requested === addProviderTabId) {
+            return false;
+        }
+
+        var pinned = pinnedProviderList();
+        for (var i = 0; i < pinned.length; ++i) {
+            if (pinned[i] === requested) {
+                return true;
             }
         }
 
+        return false;
+    }
+
+    function tabModel() {
+        var tabs = [];
+        var pinned = pinnedProviderList();
+        for (var i = 0; i < pinned.length; ++i) {
+            tabs.push({provider: pinned[i], label: tabLabelForProvider(pinned[i]), addTab: false});
+        }
+        tabs.push({provider: addProviderTabId, label: "+", addTab: true});
         return tabs;
     }
 
     function preferredProviderId() {
         var selected = normalizedProvider(selectedProvider);
-        if (selectedProvider.length > 0) {
+        if (selected.length > 0 && selected !== addProviderTabId && isProviderPinned(selected)) {
             return selected;
         }
 
-        if (snapshot.entries && snapshot.entries.length > 0) {
-            for (var i = 0; i < snapshot.entries.length; ++i) {
-                var provider = normalizedProvider(snapshot.entries[i].provider);
-                if (provider === "codex") {
-                    return provider;
-                }
-            }
-
-            return normalizedProvider(snapshot.entries[0].provider);
-        }
-
-        if (snapshot.enabledProviders && snapshot.enabledProviders.length > 0) {
-            for (var j = 0; j < snapshot.enabledProviders.length; ++j) {
-                var enabledProvider = normalizedProvider(snapshot.enabledProviders[j]);
-                if (enabledProvider === "codex") {
-                    return enabledProvider;
-                }
-            }
-
-            return normalizedProvider(snapshot.enabledProviders[0]);
+        var pinned = pinnedProviderList();
+        if (pinned.length > 0) {
+            return pinned[0];
         }
 
         return "codex";
@@ -921,7 +931,7 @@ PlasmoidItem {
             return "";
         }
 
-        return providerHasAccount(preferredProviderEntry()) ? "Switch Account..." : "Add Account...";
+        return "Switch Account";
     }
 
     function dashboardUrlFor(providerId, entry) {
@@ -971,6 +981,11 @@ PlasmoidItem {
         return statusPageUrlFor(preferredProviderId(), preferredProviderEntry()).length > 0;
     }
 
+    function hasRemoveProviderAction() {
+        var provider = preferredProviderId();
+        return provider.length > 0 && provider !== addProviderTabId;
+    }
+
     function shellSingleQuoted(value) {
         return "'" + String(value).replace(/'/g, "'\"'\"'") + "'";
     }
@@ -998,22 +1013,33 @@ PlasmoidItem {
         actionExecutor.exec("sh -lc " + shellSingleQuoted(launch));
     }
 
+    function startSetupRefreshPolling() {
+        pendingSetupRefreshCount = 30;
+        setupRefreshTimer.start();
+    }
+
+    function runAddProviderAction() {
+        startSetupRefreshPolling();
+        launchTerminalCommand("codexbar-service auth --provider interactive");
+        collapsePopup();
+    }
+
     function loginActionForProvider(providerId) {
         var provider = normalizedProvider(providerId);
         if (provider === "codex") {
-            return {kind: "terminal", command: "codex login"};
+            return {kind: "terminal", command: "codexbar-service auth --provider codex"};
         }
         if (provider === "claude") {
             return {kind: "terminal", command: "codexbar-service auth --provider claude"};
         }
         if (provider === "cursor") {
-            return {kind: "url", url: "https://cursor.com/dashboard"};
+            return {kind: "terminal", command: "codexbar-service auth --provider cursor"};
         }
         if (provider === "factory") {
             return {kind: "url", url: "https://app.factory.ai"};
         }
         if (provider === "gemini") {
-            return {kind: "terminal", command: "gemini"};
+            return {kind: "terminal", command: "codexbar-service auth --provider gemini"};
         }
         if (provider === "vertexai") {
             return {
@@ -1022,7 +1048,7 @@ PlasmoidItem {
             };
         }
         if (provider === "copilot") {
-            return {kind: "url", url: "https://github.com/login/device"};
+            return {kind: "terminal", command: "codexbar-service auth --provider copilot"};
         }
 
         return null;
@@ -1044,6 +1070,7 @@ PlasmoidItem {
         }
 
         if (action.kind === "terminal") {
+            startSetupRefreshPolling();
             launchTerminalCommand(action.command);
             collapsePopup();
             return;
@@ -1052,6 +1079,17 @@ PlasmoidItem {
         if (action.kind === "url" && openExternalUrl(action.url)) {
             collapsePopup();
         }
+    }
+
+    function runRemoveProviderAction() {
+        var provider = preferredProviderId();
+        if (provider.length === 0 || provider === addProviderTabId) {
+            return;
+        }
+
+        startSetupRefreshPolling();
+        launchTerminalCommand("codexbar-service remove --provider " + provider + " --yes");
+        collapsePopup();
     }
 
     function openUsageDashboard() {
@@ -1284,18 +1322,22 @@ PlasmoidItem {
                         required property var modelData
 
                         readonly property string providerId: root.normalizedProvider(modelData.provider)
-                        readonly property bool active: root.preferredProviderId() === providerId
-                        readonly property real sessionUsed: root.sessionUsageForProvider(providerId)
-                        readonly property real weeklyUsed: root.weeklyUsageForProvider(providerId)
+                        readonly property bool addTab: !!modelData.addTab
+                        readonly property bool active: !addTab && root.preferredProviderId() === providerId
+                        readonly property real sessionUsed: addTab ? 0 : root.sessionUsageForProvider(providerId)
+                        readonly property real weeklyUsed: addTab ? 0 : root.weeklyUsageForProvider(providerId)
 
                         radius: Kirigami.Units.smallSpacing
-                        color: active ? root.tabActive : root.tabInactive
+                        color: addTab ? root.tabInactive : (active ? root.tabActive : root.tabInactive)
                         border.color: active ? "#4F84EA" : root.cardBorder
                         border.width: 1
                         implicitHeight: Kirigami.Units.gridUnit * 2.4
-                        implicitWidth: Math.max(Kirigami.Units.gridUnit * 3.1, tabLabel.implicitWidth + Kirigami.Units.largeSpacing)
+                        implicitWidth: addTab
+                            ? Kirigami.Units.gridUnit * 2.4
+                            : Math.max(Kirigami.Units.gridUnit * 3.1, tabLabel.implicitWidth + Kirigami.Units.largeSpacing)
 
                         Column {
+                            visible: !addTab
                             anchors.fill: parent
                             anchors.margins: Math.max(2, Kirigami.Units.smallSpacing / 1.4)
                             spacing: Math.max(1, Kirigami.Units.smallSpacing / 2)
@@ -1372,19 +1414,44 @@ PlasmoidItem {
                             }
                         }
 
+                        Text {
+                            visible: addTab
+                            anchors.centerIn: parent
+                            text: "+"
+                            color: root.textStrong
+                            font.bold: true
+                            font.pixelSize: Kirigami.Units.gridUnit * 1.05
+                        }
+
                         MouseArea {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
-                            onClicked: root.selectedProvider = providerId
+                            onClicked: {
+                                if (addTab) {
+                                    root.runAddProviderAction();
+                                    return;
+                                }
+                                root.selectedProvider = providerId;
+                            }
                         }
 
-                        onActiveChanged: tabIconCanvas.requestPaint()
-                        onProviderIdChanged: tabIconCanvas.requestPaint()
+                        onActiveChanged: {
+                            if (!addTab) {
+                                tabIconCanvas.requestPaint();
+                            }
+                        }
+                        onProviderIdChanged: {
+                            if (!addTab) {
+                                tabIconCanvas.requestPaint();
+                            }
+                        }
 
                         Connections {
                             target: root
                             function onUseDarkThemeChanged() {
-                                tabIconCanvas.requestPaint();
+                                if (!addTab) {
+                                    tabIconCanvas.requestPaint();
+                                }
                             }
                         }
                     }
@@ -1728,6 +1795,32 @@ PlasmoidItem {
                 }
 
                 Item {
+                    visible: root.hasRemoveProviderAction()
+                    Layout.fillWidth: true
+                    implicitHeight: removeProviderActionText.implicitHeight + Kirigami.Units.smallSpacing
+
+                    Text {
+                        id: removeProviderActionText
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Remove Provider"
+                        color: root.textStrong
+                        opacity: removeProviderActionMouseArea.containsMouse ? 0.78 : 1.0
+                        font.pixelSize: Kirigami.Units.gridUnit * 0.66
+                        font.bold: true
+                    }
+
+                    MouseArea {
+                        id: removeProviderActionMouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        enabled: root.hasRemoveProviderAction()
+                        onClicked: root.runRemoveProviderAction()
+                    }
+                }
+
+                Item {
                     visible: root.hasStatusPageAction()
                     Layout.fillWidth: true
                     implicitHeight: statusActionText.implicitHeight + Kirigami.Units.smallSpacing
@@ -1815,6 +1908,27 @@ PlasmoidItem {
         onNewData: function (sourceName, data) {
             var _ = data;
             disconnectSource(sourceName);
+            if (root.pendingSetupRefreshCount > 0) {
+                root.refreshSnapshot();
+            }
+        }
+    }
+
+    Timer {
+        id: setupRefreshTimer
+        interval: 5000
+        repeat: true
+        running: false
+        onTriggered: {
+            if (root.pendingSetupRefreshCount <= 0) {
+                stop();
+                return;
+            }
+            root.pendingSetupRefreshCount = root.pendingSetupRefreshCount - 1;
+            root.refreshSnapshot();
+            if (root.pendingSetupRefreshCount <= 0) {
+                stop();
+            }
         }
     }
 
@@ -1842,6 +1956,7 @@ PlasmoidItem {
 
     Component.onDestruction: {
         root.isShuttingDown = true;
+        setupRefreshTimer.stop();
         refreshTimer.stop();
         root.disconnectAllSources();
     }

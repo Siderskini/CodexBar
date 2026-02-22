@@ -9,6 +9,10 @@ For the Rust components in `KDE Plasma/rust`, file access is limited to:
 - `codexbar-service` executable path itself (invoked by the widget command you configure).
 - `codexbar` executable file in the same directory as `codexbar-service` (if present), otherwise `codexbar` resolved from `PATH`.
 - `~/.claude/.credentials.json` (read-only, to load Claude OAuth tokens produced by `claude auth login`).
+- `~/.gemini/settings.json` (read-only, to detect Gemini auth type).
+- `~/.gemini/oauth_creds.json` (read/write, to load and refresh Gemini OAuth tokens).
+- Gemini CLI installation files near the `gemini` binary (read-only, to extract OAuth client ID/secret from `oauth2.js`).
+- `~/.codexbar/config.json` (read/write for Cursor `cookieHeader` during auth; read for provider `apiKey` values such as Copilot).
 - `secret-tool` executable from `PATH` (preferred secure store backend for Claude credentials).
 - `kwallet-query` executable from `PATH` (KDE Wallet secure store fallback for Claude credentials).
 - `--input <path>`: reads only the file at `<path>` (optional, when this flag is used).
@@ -16,7 +20,7 @@ For the Rust components in `KDE Plasma/rust`, file access is limited to:
 
 Credential storage is handled through system keyrings (`secret-tool` or KDE Wallet via `kwallet-query`), not plaintext files.
 No other fixed file paths are hardcoded by the Rust code in this repository.  
-Note: `codexbar` calls external `codex` and `claude` CLIs; any extra file access from those programs is outside this project.
+Note: `codexbar` calls external `codex`, `claude`, `gemini`, and `gh` CLIs; any extra file access from those programs is outside this project.
 
 This workspace is the starting point for a Linux/KDE-native rebuild:
 
@@ -68,6 +72,34 @@ Direct CLI equivalent:
 
 ```bash
 codexbar auth --provider claude
+```
+
+## GitHub Copilot account setup
+
+Browser-based setup (used by widget "Add Account..."):
+
+```bash
+codexbar-service auth --provider copilot
+```
+
+Direct CLI equivalent:
+
+```bash
+codexbar auth --provider copilot
+```
+
+## Cursor account setup
+
+Browser-assisted setup (used by widget "Add Account..."):
+
+```bash
+codexbar-service auth --provider cursor
+```
+
+Direct CLI equivalent:
+
+```bash
+codexbar auth --provider cursor
 ```
 
 ## License Scan

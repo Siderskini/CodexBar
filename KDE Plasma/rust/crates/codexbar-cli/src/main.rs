@@ -2,12 +2,13 @@ use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand, ValueEnum};
 use codexbar_core::{now_iso8601, IdentityInfo, ProviderEntry, RateWindow, StatusInfo};
 use serde::Deserialize;
-use serde_json::{json, Value};
+use serde_json::{json, Map, Value};
+use std::collections::HashMap;
 use std::fs;
 use std::io::{self, BufRead, BufReader, ErrorKind, Write};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::{Child, ChildStdin, ChildStdout, Command, Output, Stdio};
-use std::time::{Duration, Instant};
+use std::time::{Duration, Instant, UNIX_EPOCH};
 
 #[derive(Debug, Parser)]
 #[command(name = "codexbar")]
@@ -21,6 +22,7 @@ struct Cli {
 enum Commands {
     Usage(UsageArgs),
     Auth(AuthArgs),
+    Remove(RemoveArgs),
 }
 
 #[derive(Debug, Parser, Clone)]
@@ -45,6 +47,15 @@ struct UsageArgs {
 struct AuthArgs {
     #[arg(long, default_value = "claude")]
     provider: String,
+}
+
+#[derive(Debug, Parser, Clone)]
+struct RemoveArgs {
+    #[arg(long)]
+    provider: String,
+
+    #[arg(long, default_value_t = false)]
+    yes: bool,
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, ValueEnum)]
@@ -79,14 +90,203 @@ fn run() -> Result<()> {
     match command {
         Commands::Usage(args) => run_usage(&args),
         Commands::Auth(args) => run_auth(&args),
+        Commands::Remove(args) => run_remove(&args),
     }
 }
 
 fn run_auth(args: &AuthArgs) -> Result<()> {
-    match args.provider.trim().to_ascii_lowercase().as_str() {
+    let provider = normalize_provider_id(args.provider.trim());
+    if matches!(provider.as_str(), "interactive" | "prompt" | "wizard") {
+        return run_interactive_auth_flow();
+    }
+
+    run_auth_for_provider(&provider)?;
+    pin_provider_in_config(&provider)?;
+    println!("Provider '{provider}' is now pinned in CodexBar tabs.");
+    Ok(())
+}
+
+fn run_remove(args: &RemoveArgs) -> Result<()> {
+    let provider = normalize_provider_id(args.provider.trim());
+    if !is_pinnable_provider(&provider) {
+        bail!("unsupported provider '{provider}'");
+    }
+
+    if !args.yes && !confirm_provider_removal(&provider)? {
+        println!("Cancelled removal for provider '{provider}'.");
+        return Ok(());
+    }
+
+    remove_provider_data(&provider)?;
+    remove_provider_from_config(&provider)?;
+    println!("Removed provider '{provider}' from CodexBar.");
+    Ok(())
+}
+
+fn confirm_provider_removal(provider: &str) -> Result<bool> {
+    print!("Remove provider '{provider}' and its local CodexBar data? [y/N]: ");
+    io::stdout().flush().context("failed to flush stdout")?;
+
+    let mut input = String::new();
+    io::stdin()
+        .read_line(&mut input)
+        .context("failed to read confirmation")?;
+    let normalized = input.trim().to_ascii_lowercase();
+    Ok(normalized == "y" || normalized == "yes")
+}
+
+fn run_auth_for_provider(provider: &str) -> Result<()> {
+    match provider {
+        "codex" => run_codex_auth(),
         "claude" => run_claude_auth(),
+        "cursor" => run_cursor_auth(),
+        "gemini" => run_gemini_auth(),
+        "copilot" => run_copilot_auth(),
+        "factory" => run_factory_auth(),
         other => bail!("unsupported auth provider '{other}'"),
     }
+}
+
+fn run_interactive_auth_flow() -> Result<()> {
+    println!("CodexBar provider setup");
+    println!("Choose a provider to configure:");
+    println!("  1) Codex");
+    println!("  2) Claude");
+    println!("  3) Cursor");
+    println!("  4) Gemini");
+    println!("  5) GitHub Copilot");
+    println!("  6) Droid (Factory)");
+
+    let provider = prompt_for_provider_choice()?;
+    println!("Starting setup for {provider}...");
+
+    run_auth_for_provider(&provider)?;
+    pin_provider_in_config(&provider)?;
+
+    println!("Setup complete. Added '{provider}' to CodexBar tabs.");
+    Ok(())
+}
+
+fn prompt_for_provider_choice() -> Result<String> {
+    for attempt in 1..=3 {
+        print!("Provider (name or number): ");
+        io::stdout().flush().context("failed to flush stdout")?;
+
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .context("failed to read provider choice")?;
+        let normalized = normalize_provider_id(input.trim());
+
+        let provider = match normalized.as_str() {
+            "1" | "codex" => Some("codex"),
+            "2" | "claude" => Some("claude"),
+            "3" | "cursor" => Some("cursor"),
+            "4" | "gemini" => Some("gemini"),
+            "5" | "copilot" | "github" | "github-copilot" => Some("copilot"),
+            "6" | "factory" | "droid" => Some("factory"),
+            _ => None,
+        };
+        if let Some(provider) = provider {
+            return Ok(provider.to_string());
+        }
+
+        if attempt < 3 {
+            println!("Invalid choice. Enter a number 1-6 or provider name.");
+        }
+    }
+
+    bail!("no valid provider selection was provided")
+}
+
+fn run_codex_auth() -> Result<()> {
+    println!("Starting Codex login...");
+    let status = Command::new("codex")
+        .arg("login")
+        .status()
+        .context("failed to launch `codex login`; ensure Codex CLI is installed")?;
+
+    if !status.success() {
+        bail!("`codex login` exited with status {status}");
+    }
+
+    println!("Codex login complete.");
+    Ok(())
+}
+
+fn run_gemini_auth() -> Result<()> {
+    println!("Starting Gemini setup...");
+    println!("Complete browser login in Gemini CLI, then exit Gemini when done.");
+    let status = Command::new("gemini")
+        .status()
+        .context("failed to launch `gemini`; ensure Gemini CLI is installed")?;
+
+    if !status.success() {
+        bail!("`gemini` exited with status {status}");
+    }
+
+    println!("Gemini setup complete.");
+    Ok(())
+}
+
+fn run_factory_auth() -> Result<()> {
+    let dashboard_url = "https://app.factory.ai";
+    println!("Opening Factory login page...");
+    if open_url_in_browser(dashboard_url) {
+        println!("Opened Factory in your browser.");
+    } else {
+        println!("Could not open your browser automatically.");
+        println!("Open this URL manually: {dashboard_url}");
+    }
+    println!("Press Enter after signing into Factory.");
+    let mut input = String::new();
+    io::stdin()
+        .read_line(&mut input)
+        .context("failed to read confirmation from stdin")?;
+    Ok(())
+}
+
+fn remove_provider_data(provider: &str) -> Result<()> {
+    match provider {
+        "codex" => {
+            run_optional_command("codex", &["logout"], Duration::from_secs(12));
+        }
+        "claude" => {
+            clear_claude_secret("oauth_access_token");
+        }
+        "cursor" => {}
+        "gemini" => {
+            remove_gemini_oauth_credentials_file()?;
+        }
+        "copilot" => {
+            run_optional_command(
+                "gh",
+                &["auth", "logout", "--hostname", "github.com", "--yes"],
+                Duration::from_secs(12),
+            );
+        }
+        "factory" => {}
+        other => bail!("unsupported provider '{other}'"),
+    }
+
+    Ok(())
+}
+
+fn run_optional_command(program: &str, args: &[&str], timeout: Duration) {
+    let _ = run_command_with_timeout(program, args, timeout);
+}
+
+fn remove_gemini_oauth_credentials_file() -> Result<()> {
+    let home = std::env::var("HOME").context("HOME is not set")?;
+    let path = PathBuf::from(home).join(".gemini").join("oauth_creds.json");
+    match fs::remove_file(&path) {
+        Ok(()) => {}
+        Err(error) if error.kind() == ErrorKind::NotFound => {}
+        Err(error) => {
+            return Err(error).with_context(|| format!("failed to remove {}", path.display()));
+        }
+    }
+    Ok(())
 }
 
 fn run_claude_auth() -> Result<()> {
@@ -115,6 +315,343 @@ fn run_claude_auth() -> Result<()> {
 
     println!("Claude browser login complete. CodexBar will use OAuth usage data.");
     Ok(())
+}
+
+fn run_copilot_auth() -> Result<()> {
+    println!("Starting GitHub device login for Copilot...");
+    let status = Command::new("gh")
+        .arg("auth")
+        .arg("login")
+        .arg("--hostname")
+        .arg("github.com")
+        .arg("--git-protocol")
+        .arg("https")
+        .arg("--web")
+        .status()
+        .context("failed to launch `gh auth login`; ensure GitHub CLI (`gh`) is installed")?;
+
+    if !status.success() {
+        bail!("`gh auth login` exited with status {status}");
+    }
+
+    println!("GitHub login complete. Copilot account should now be available.");
+    Ok(())
+}
+
+fn run_cursor_auth() -> Result<()> {
+    let dashboard_url = "https://cursor.com/dashboard?tab=usage";
+    println!("Starting Cursor account setup...");
+    if open_url_in_browser(dashboard_url) {
+        println!("Opened Cursor dashboard in your browser.");
+    } else {
+        println!("Could not open your browser automatically.");
+        println!("Open this URL manually: {dashboard_url}");
+    }
+    println!("After signing in, copy the Cookie header from a request to:");
+    println!("  https://cursor.com/api/usage-summary");
+    println!("Paste the header value below (everything after `Cookie:`).");
+
+    let cookie_header = prompt_for_cursor_cookie_header()?;
+    validate_cursor_cookie_header(&cookie_header)?;
+    upsert_cursor_cookie_header_in_config(&cookie_header)?;
+
+    println!("Cursor session saved in ~/.codexbar/config.json.");
+    println!("Refresh the widget to load Cursor data.");
+    Ok(())
+}
+
+fn open_url_in_browser(url: &str) -> bool {
+    let launchers: [(&str, &[&str]); 4] = [
+        ("xdg-open", &[url]),
+        ("gio", &["open", url]),
+        ("kioclient6", &["exec", url]),
+        ("kioclient5", &["exec", url]),
+    ];
+
+    for (program, args) in launchers {
+        let status = match Command::new(program)
+            .args(args)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .status()
+        {
+            Ok(status) => status,
+            Err(_) => continue,
+        };
+        if status.success() {
+            return true;
+        }
+    }
+
+    false
+}
+
+fn prompt_for_cursor_cookie_header() -> Result<String> {
+    let mut input = String::new();
+    for attempt in 1..=3 {
+        print!("Cursor cookie header: ");
+        io::stdout().flush().context("failed to flush stdout")?;
+        input.clear();
+        io::stdin()
+            .read_line(&mut input)
+            .context("failed to read cursor cookie header from stdin")?;
+
+        if let Some(cookie_header) = normalize_cursor_cookie_header_input(&input) {
+            return Ok(cookie_header);
+        }
+
+        if attempt < 3 {
+            println!("No cookie header detected. Please paste a non-empty Cookie header value.");
+        }
+    }
+
+    bail!("no valid Cursor cookie header was provided")
+}
+
+fn normalize_cursor_cookie_header_input(raw: &str) -> Option<String> {
+    let trimmed = raw.trim();
+    if trimmed.is_empty() {
+        return None;
+    }
+
+    let value = match trimmed.split_once(':') {
+        Some((prefix, rest)) if prefix.trim().eq_ignore_ascii_case("cookie") => rest.trim(),
+        _ => trimmed,
+    };
+
+    let cleaned = clean_token_value(value)?;
+    if !cleaned.contains('=') {
+        return None;
+    }
+
+    Some(cleaned)
+}
+
+fn validate_cursor_cookie_header(cookie_header: &str) -> Result<()> {
+    let output = fetch_cursor_usage_summary_json(cookie_header)
+        .context("failed to query Cursor usage-summary API for validation")?;
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let (body, status_code) = split_curl_body_and_status(&stdout)
+        .context("failed to parse Cursor validation response")?;
+    if status_code != 200 {
+        let message = serde_json::from_str::<Value>(body)
+            .ok()
+            .and_then(|json| {
+                json.get("error")
+                    .or_else(|| json.get("message"))
+                    .and_then(Value::as_str)
+                    .map(str::to_string)
+            })
+            .unwrap_or_else(|| body.trim().to_string());
+        bail!("Cursor cookie validation failed (HTTP {status_code}): {message}");
+    }
+
+    let _ = serde_json::from_str::<Value>(body)
+        .context("Cursor usage-summary response was not valid JSON")?;
+    Ok(())
+}
+
+fn upsert_cursor_cookie_header_in_config(cookie_header: &str) -> Result<()> {
+    let home = std::env::var("HOME").context("HOME is not set")?;
+    let config_dir = PathBuf::from(home).join(".codexbar");
+    fs::create_dir_all(&config_dir)
+        .with_context(|| format!("failed to create {}", config_dir.display()))?;
+    let config_path = config_dir.join("config.json");
+
+    let mut root = match fs::read_to_string(&config_path) {
+        Ok(raw) => serde_json::from_str::<Value>(&raw)
+            .with_context(|| format!("failed to parse {}", config_path.display()))?,
+        Err(error) if error.kind() == ErrorKind::NotFound => Value::Object(Map::new()),
+        Err(error) => {
+            return Err(error).with_context(|| format!("failed to read {}", config_path.display()));
+        }
+    };
+
+    if !root.is_object() {
+        root = Value::Object(Map::new());
+    }
+    let root_obj = root
+        .as_object_mut()
+        .context("internal error: config root was not an object")?;
+
+    if !root_obj
+        .get("providers")
+        .map(Value::is_array)
+        .unwrap_or(false)
+    {
+        root_obj.insert("providers".to_string(), Value::Array(Vec::new()));
+    }
+    let providers = root_obj
+        .get_mut("providers")
+        .and_then(Value::as_array_mut)
+        .context("internal error: providers field is not an array")?;
+
+    let cursor_index = providers.iter().position(|provider| {
+        provider
+            .get("id")
+            .and_then(Value::as_str)
+            .map(|id| id.eq_ignore_ascii_case("cursor"))
+            .unwrap_or(false)
+    });
+
+    if let Some(index) = cursor_index {
+        if !providers[index].is_object() {
+            providers[index] = Value::Object(Map::new());
+        }
+        let provider_obj = providers[index]
+            .as_object_mut()
+            .context("internal error: cursor provider entry is not an object")?;
+        provider_obj.insert("id".to_string(), Value::String("cursor".to_string()));
+        provider_obj.insert(
+            "cookieSource".to_string(),
+            Value::String("manual".to_string()),
+        );
+        provider_obj.insert(
+            "cookieHeader".to_string(),
+            Value::String(cookie_header.to_string()),
+        );
+    } else {
+        providers.push(json!({
+            "id": "cursor",
+            "cookieSource": "manual",
+            "cookieHeader": cookie_header
+        }));
+    }
+
+    let encoded = serde_json::to_string_pretty(&root)
+        .with_context(|| format!("failed to encode {}", config_path.display()))?;
+    fs::write(&config_path, format!("{encoded}\n"))
+        .with_context(|| format!("failed to write {}", config_path.display()))?;
+    Ok(())
+}
+
+fn normalize_provider_id(raw: &str) -> String {
+    let trimmed = raw.trim().to_ascii_lowercase();
+    match trimmed.as_str() {
+        "droid" => "factory".to_string(),
+        _ => trimmed,
+    }
+}
+
+fn pin_provider_in_config(provider_id: &str) -> Result<()> {
+    let normalized = normalize_provider_id(provider_id);
+    if !is_pinnable_provider(&normalized) {
+        bail!("unsupported provider '{provider_id}' for tab pinning");
+    }
+
+    let home = std::env::var("HOME").context("HOME is not set")?;
+    let config_dir = PathBuf::from(home).join(".codexbar");
+    fs::create_dir_all(&config_dir)
+        .with_context(|| format!("failed to create {}", config_dir.display()))?;
+    let config_path = config_dir.join("config.json");
+
+    let mut root = match fs::read_to_string(&config_path) {
+        Ok(raw) => serde_json::from_str::<Value>(&raw)
+            .with_context(|| format!("failed to parse {}", config_path.display()))?,
+        Err(error) if error.kind() == ErrorKind::NotFound => Value::Object(Map::new()),
+        Err(error) => {
+            return Err(error).with_context(|| format!("failed to read {}", config_path.display()));
+        }
+    };
+
+    if !root.is_object() {
+        root = Value::Object(Map::new());
+    }
+    let root_obj = root
+        .as_object_mut()
+        .context("internal error: config root was not an object")?;
+
+    let mut pinned = vec!["codex".to_string()];
+    if let Some(existing) = root_obj.get("pinnedProviders").and_then(Value::as_array) {
+        for item in existing {
+            let provider = item.as_str().map(normalize_provider_id).unwrap_or_default();
+            if !is_pinnable_provider(&provider) {
+                continue;
+            }
+            if !pinned.contains(&provider) {
+                pinned.push(provider);
+            }
+        }
+    }
+
+    if !pinned.contains(&normalized) {
+        pinned.push(normalized);
+    }
+
+    root_obj.insert(
+        "pinnedProviders".to_string(),
+        Value::Array(pinned.into_iter().map(Value::String).collect()),
+    );
+
+    let encoded = serde_json::to_string_pretty(&root)
+        .with_context(|| format!("failed to encode {}", config_path.display()))?;
+    fs::write(&config_path, format!("{encoded}\n"))
+        .with_context(|| format!("failed to write {}", config_path.display()))?;
+    Ok(())
+}
+
+fn remove_provider_from_config(provider_id: &str) -> Result<()> {
+    let normalized = normalize_provider_id(provider_id);
+    if !is_pinnable_provider(&normalized) {
+        bail!("unsupported provider '{provider_id}' for removal");
+    }
+
+    let home = std::env::var("HOME").context("HOME is not set")?;
+    let config_path = PathBuf::from(home).join(".codexbar").join("config.json");
+
+    let raw = match fs::read_to_string(&config_path) {
+        Ok(raw) => raw,
+        Err(error) if error.kind() == ErrorKind::NotFound => return Ok(()),
+        Err(error) => {
+            return Err(error).with_context(|| format!("failed to read {}", config_path.display()));
+        }
+    };
+    let mut root = serde_json::from_str::<Value>(&raw)
+        .with_context(|| format!("failed to parse {}", config_path.display()))?;
+    if !root.is_object() {
+        return Ok(());
+    }
+    let root_obj = root
+        .as_object_mut()
+        .context("internal error: config root was not an object")?;
+
+    if let Some(existing) = root_obj.get("pinnedProviders").and_then(Value::as_array) {
+        let filtered = existing
+            .iter()
+            .filter_map(Value::as_str)
+            .map(normalize_provider_id)
+            .filter(|provider| !provider.is_empty() && provider != &normalized)
+            .collect::<Vec<_>>();
+        root_obj.insert(
+            "pinnedProviders".to_string(),
+            Value::Array(filtered.into_iter().map(Value::String).collect()),
+        );
+    }
+
+    if let Some(providers) = root_obj.get_mut("providers").and_then(Value::as_array_mut) {
+        providers.retain(|provider| {
+            let id = provider
+                .get("id")
+                .and_then(Value::as_str)
+                .map(normalize_provider_id)
+                .unwrap_or_default();
+            id != normalized
+        });
+    }
+
+    let encoded = serde_json::to_string_pretty(&root)
+        .with_context(|| format!("failed to encode {}", config_path.display()))?;
+    fs::write(&config_path, format!("{encoded}\n"))
+        .with_context(|| format!("failed to write {}", config_path.display()))?;
+    Ok(())
+}
+
+fn is_pinnable_provider(provider_id: &str) -> bool {
+    matches!(
+        provider_id,
+        "codex" | "claude" | "cursor" | "gemini" | "copilot" | "factory"
+    )
 }
 
 fn run_usage(args: &UsageArgs) -> Result<()> {
@@ -300,9 +837,12 @@ fn format_percent(value: Option<f64>) -> String {
 fn requested_providers(raw: &str) -> Result<Vec<&'static str>> {
     let normalized = raw.trim().to_ascii_lowercase();
     match normalized.as_str() {
-        "all" | "both" => Ok(vec!["codex", "claude"]),
+        "all" | "both" => Ok(vec!["codex", "claude", "gemini", "cursor", "copilot"]),
         "codex" => Ok(vec!["codex"]),
         "claude" => Ok(vec!["claude"]),
+        "gemini" => Ok(vec!["gemini"]),
+        "cursor" => Ok(vec!["cursor"]),
+        "copilot" => Ok(vec!["copilot"]),
         _ => bail!("unknown provider '{}'", raw),
     }
 }
@@ -311,6 +851,9 @@ fn fetch_live_entry(provider: &str, args: &UsageArgs) -> Result<Option<ProviderE
     match provider {
         "codex" => fetch_codex_entry(args),
         "claude" => fetch_claude_entry(args),
+        "gemini" => fetch_gemini_entry(args),
+        "cursor" => fetch_cursor_entry(args),
+        "copilot" => fetch_copilot_entry(args),
         _ => Ok(None),
     }
 }
@@ -494,6 +1037,1264 @@ fn fetch_claude_entry(args: &UsageArgs) -> Result<Option<ProviderEntry>> {
     Ok(claude_entry_from_usage_json(body, args, "claude-oauth-api"))
 }
 
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+enum GeminiAuthType {
+    OauthPersonal,
+    ApiKey,
+    VertexAi,
+    Unknown,
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+enum GeminiUserTierId {
+    Free,
+    Legacy,
+    Standard,
+}
+
+#[derive(Debug, Deserialize)]
+struct GeminiOAuthCredentials {
+    #[serde(default)]
+    access_token: Option<String>,
+    #[serde(default)]
+    id_token: Option<String>,
+    #[serde(default)]
+    refresh_token: Option<String>,
+    #[serde(default)]
+    expiry_date: Option<f64>,
+}
+
+#[derive(Debug)]
+struct GeminiTokenClaims {
+    email: Option<String>,
+    hosted_domain: Option<String>,
+}
+
+#[derive(Debug, Clone)]
+struct GeminiModelQuota {
+    remaining_fraction: f64,
+    reset_time: Option<String>,
+}
+
+#[derive(Debug, Clone)]
+struct GeminiCodeAssistStatus {
+    tier: Option<GeminiUserTierId>,
+    project_id: Option<String>,
+}
+
+#[derive(Debug, Clone)]
+struct GeminiOAuthClientCredentials {
+    client_id: String,
+    client_secret: String,
+}
+
+fn fetch_gemini_entry(args: &UsageArgs) -> Result<Option<ProviderEntry>> {
+    let home = resolve_home_directory()?;
+    let auth_type = current_gemini_auth_type(&home);
+    match auth_type {
+        GeminiAuthType::ApiKey => {
+            bail!("Gemini API key auth is not supported; use Gemini OAuth login")
+        }
+        GeminiAuthType::VertexAi => {
+            bail!("Gemini Vertex AI auth is not supported in Gemini provider")
+        }
+        GeminiAuthType::OauthPersonal | GeminiAuthType::Unknown => {}
+    }
+
+    let mut credentials = match load_gemini_oauth_credentials(&home)? {
+        Some(credentials) => credentials,
+        None => return Ok(None),
+    };
+
+    let mut access_token = match credentials
+        .access_token
+        .as_deref()
+        .and_then(clean_token_value)
+    {
+        Some(token) => token,
+        None => return Ok(None),
+    };
+
+    let token_expired = credentials
+        .expiry_date
+        .map(|expiry_ms| expiry_ms < current_unix_millis())
+        .unwrap_or(false);
+    if token_expired {
+        let refresh_token = match credentials
+            .refresh_token
+            .as_deref()
+            .and_then(clean_token_value)
+        {
+            Some(token) => token,
+            None => return Ok(None),
+        };
+
+        access_token = refresh_gemini_access_token(&refresh_token, &home)?;
+        credentials.access_token = Some(access_token.clone());
+    }
+
+    let claims = extract_gemini_token_claims(credentials.id_token.as_deref());
+    let code_assist = load_gemini_code_assist_status(&access_token)?;
+    let project_id = if let Some(project_id) = code_assist.project_id.clone() {
+        Some(project_id)
+    } else {
+        discover_gemini_project_id(&access_token)?
+    };
+
+    let quota_output = match fetch_gemini_quota_json(&access_token, project_id.as_deref()) {
+        Ok(output) => output,
+        Err(error) if error.kind() == ErrorKind::NotFound => return Ok(None),
+        Err(error) if error.kind() == ErrorKind::TimedOut => return Ok(None),
+        Err(error) => return Err(error).context("failed to query Gemini quota API"),
+    };
+    let quota_stdout = String::from_utf8_lossy(&quota_output.stdout);
+    let (quota_body, quota_status) = match split_curl_body_and_status(&quota_stdout) {
+        Some(parts) => parts,
+        None => return Ok(None),
+    };
+    if quota_status == 401 {
+        return Ok(None);
+    }
+    if quota_status != 200 {
+        bail!("Gemini quota API returned HTTP {quota_status}");
+    }
+
+    let (primary, secondary) = parse_gemini_quota_windows(quota_body)?;
+    let source = if args.source.eq_ignore_ascii_case("auto") {
+        "api".to_string()
+    } else {
+        args.source.clone()
+    };
+    let plan_label = gemini_plan_label(code_assist.tier, claims.hosted_domain.as_deref());
+    let status = if args.status {
+        Some(StatusInfo {
+            indicator: Some("none".to_string()),
+            description: Some("Operational".to_string()),
+            updated_at: Some(now_iso8601()),
+            url: Some(
+                "https://www.google.com/appsstatus/dashboard/products/npdyhgECDJ6tB66MxXyo/history"
+                    .to_string(),
+            ),
+        })
+    } else {
+        None
+    };
+
+    Ok(Some(ProviderEntry {
+        provider: "gemini".to_string(),
+        source: Some(source),
+        updated_at: now_iso8601(),
+        primary: Some(primary),
+        secondary,
+        tertiary: None,
+        credits_remaining: None,
+        code_review_remaining_percent: None,
+        identity: Some(IdentityInfo {
+            account_email: claims.email,
+            account_organization: None,
+            login_method: plan_label,
+        }),
+        status,
+    }))
+}
+
+fn resolve_home_directory() -> Result<PathBuf> {
+    let home = std::env::var("HOME").context("HOME is not set")?;
+    Ok(PathBuf::from(home))
+}
+
+fn current_unix_millis() -> f64 {
+    UNIX_EPOCH
+        .elapsed()
+        .map(|duration| duration.as_millis() as f64)
+        .unwrap_or(0.0)
+}
+
+fn current_gemini_auth_type(home: &Path) -> GeminiAuthType {
+    let settings_path = home.join(".gemini").join("settings.json");
+    let raw = match fs::read_to_string(settings_path) {
+        Ok(raw) => raw,
+        Err(_) => return GeminiAuthType::Unknown,
+    };
+    let json = match serde_json::from_str::<Value>(&raw) {
+        Ok(json) => json,
+        Err(_) => return GeminiAuthType::Unknown,
+    };
+    let selected_type = json
+        .get("security")
+        .and_then(|security| security.get("auth"))
+        .and_then(|auth| auth.get("selectedType"))
+        .and_then(Value::as_str)
+        .map(str::trim)
+        .unwrap_or_default();
+
+    match selected_type {
+        "oauth-personal" => GeminiAuthType::OauthPersonal,
+        "api-key" => GeminiAuthType::ApiKey,
+        "vertex-ai" => GeminiAuthType::VertexAi,
+        _ => GeminiAuthType::Unknown,
+    }
+}
+
+fn load_gemini_oauth_credentials(home: &Path) -> Result<Option<GeminiOAuthCredentials>> {
+    let creds_path = home.join(".gemini").join("oauth_creds.json");
+    let raw = match fs::read_to_string(&creds_path) {
+        Ok(raw) => raw,
+        Err(error) if error.kind() == ErrorKind::NotFound => return Ok(None),
+        Err(error) => {
+            return Err(error).with_context(|| format!("failed to read {}", creds_path.display()))
+        }
+    };
+    let credentials = serde_json::from_str::<GeminiOAuthCredentials>(&raw)
+        .with_context(|| format!("failed to parse {}", creds_path.display()))?;
+    Ok(Some(credentials))
+}
+
+fn extract_gemini_token_claims(id_token: Option<&str>) -> GeminiTokenClaims {
+    let token = match id_token.and_then(clean_token_value) {
+        Some(token) => token,
+        None => {
+            return GeminiTokenClaims {
+                email: None,
+                hosted_domain: None,
+            }
+        }
+    };
+    let mut parts = token.split('.');
+    let _header = parts.next();
+    let payload = match parts.next() {
+        Some(payload) => payload,
+        None => {
+            return GeminiTokenClaims {
+                email: None,
+                hosted_domain: None,
+            }
+        }
+    };
+
+    let mut normalized = payload.replace('-', "+").replace('_', "/");
+    while normalized.len() % 4 != 0 {
+        normalized.push('=');
+    }
+    let decoded = match base64_decode(&normalized) {
+        Some(decoded) => decoded,
+        None => {
+            return GeminiTokenClaims {
+                email: None,
+                hosted_domain: None,
+            }
+        }
+    };
+    let value = match serde_json::from_slice::<Value>(&decoded) {
+        Ok(value) => value,
+        Err(_) => {
+            return GeminiTokenClaims {
+                email: None,
+                hosted_domain: None,
+            }
+        }
+    };
+
+    GeminiTokenClaims {
+        email: value
+            .get("email")
+            .and_then(Value::as_str)
+            .map(str::trim)
+            .filter(|value| !value.is_empty())
+            .map(ToOwned::to_owned),
+        hosted_domain: value
+            .get("hd")
+            .and_then(Value::as_str)
+            .map(str::trim)
+            .filter(|value| !value.is_empty())
+            .map(ToOwned::to_owned),
+    }
+}
+
+fn base64_decode(input: &str) -> Option<Vec<u8>> {
+    let mut output = Vec::new();
+    let mut chunk = [0u8; 4];
+    let mut chunk_len = 0usize;
+
+    for byte in input.bytes() {
+        if matches!(byte, b' ' | b'\n' | b'\r' | b'\t') {
+            continue;
+        }
+        let value = match byte {
+            b'A'..=b'Z' => byte - b'A',
+            b'a'..=b'z' => 26 + (byte - b'a'),
+            b'0'..=b'9' => 52 + (byte - b'0'),
+            b'+' => 62,
+            b'/' => 63,
+            b'=' => 64,
+            _ => return None,
+        };
+        chunk[chunk_len] = value;
+        chunk_len += 1;
+
+        if chunk_len == 4 {
+            if chunk[0] == 64 || chunk[1] == 64 {
+                return None;
+            }
+            output.push((chunk[0] << 2) | (chunk[1] >> 4));
+            if chunk[2] != 64 {
+                output.push((chunk[1] << 4) | (chunk[2] >> 2));
+            }
+            if chunk[3] != 64 {
+                output.push((chunk[2] << 6) | chunk[3]);
+            }
+            chunk_len = 0;
+        }
+    }
+
+    if chunk_len != 0 {
+        return None;
+    }
+
+    Some(output)
+}
+
+fn load_gemini_code_assist_status(access_token: &str) -> Result<GeminiCodeAssistStatus> {
+    let output = match fetch_gemini_load_code_assist_json(access_token) {
+        Ok(output) => output,
+        Err(error) if error.kind() == ErrorKind::NotFound => {
+            return Ok(GeminiCodeAssistStatus {
+                tier: None,
+                project_id: None,
+            })
+        }
+        Err(error) if error.kind() == ErrorKind::TimedOut => {
+            return Ok(GeminiCodeAssistStatus {
+                tier: None,
+                project_id: None,
+            })
+        }
+        Err(error) => return Err(error).context("failed to query Gemini loadCodeAssist API"),
+    };
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let (body, status_code) = match split_curl_body_and_status(&stdout) {
+        Some(parts) => parts,
+        None => {
+            return Ok(GeminiCodeAssistStatus {
+                tier: None,
+                project_id: None,
+            })
+        }
+    };
+    if status_code != 200 {
+        return Ok(GeminiCodeAssistStatus {
+            tier: None,
+            project_id: None,
+        });
+    }
+    let value = match serde_json::from_str::<Value>(body) {
+        Ok(value) => value,
+        Err(_) => {
+            return Ok(GeminiCodeAssistStatus {
+                tier: None,
+                project_id: None,
+            })
+        }
+    };
+
+    let project_id = extract_gemini_code_assist_project_id(&value);
+    let tier = value
+        .get("currentTier")
+        .and_then(|tier| tier.get("id"))
+        .and_then(Value::as_str)
+        .and_then(gemini_tier_from_str);
+    Ok(GeminiCodeAssistStatus { tier, project_id })
+}
+
+fn extract_gemini_code_assist_project_id(value: &Value) -> Option<String> {
+    if let Some(project) = value.get("cloudaicompanionProject").and_then(Value::as_str) {
+        let trimmed = project.trim();
+        if !trimmed.is_empty() {
+            return Some(trimmed.to_string());
+        }
+    }
+
+    let project_obj = value
+        .get("cloudaicompanionProject")
+        .and_then(Value::as_object)?;
+    if let Some(project_id) = project_obj.get("id").and_then(Value::as_str) {
+        let trimmed = project_id.trim();
+        if !trimmed.is_empty() {
+            return Some(trimmed.to_string());
+        }
+    }
+    if let Some(project_id) = project_obj.get("projectId").and_then(Value::as_str) {
+        let trimmed = project_id.trim();
+        if !trimmed.is_empty() {
+            return Some(trimmed.to_string());
+        }
+    }
+    None
+}
+
+fn gemini_tier_from_str(raw: &str) -> Option<GeminiUserTierId> {
+    match raw.trim() {
+        "free-tier" => Some(GeminiUserTierId::Free),
+        "legacy-tier" => Some(GeminiUserTierId::Legacy),
+        "standard-tier" => Some(GeminiUserTierId::Standard),
+        _ => None,
+    }
+}
+
+fn discover_gemini_project_id(access_token: &str) -> Result<Option<String>> {
+    let output = match fetch_gemini_projects_json(access_token) {
+        Ok(output) => output,
+        Err(error) if error.kind() == ErrorKind::NotFound => return Ok(None),
+        Err(error) if error.kind() == ErrorKind::TimedOut => return Ok(None),
+        Err(error) => return Err(error).context("failed to query Google Cloud project list"),
+    };
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let (body, status_code) = match split_curl_body_and_status(&stdout) {
+        Some(parts) => parts,
+        None => return Ok(None),
+    };
+    if status_code != 200 {
+        return Ok(None);
+    }
+    let value = match serde_json::from_str::<Value>(body) {
+        Ok(value) => value,
+        Err(_) => return Ok(None),
+    };
+    let projects = match value.get("projects").and_then(Value::as_array) {
+        Some(projects) => projects,
+        None => return Ok(None),
+    };
+
+    for project in projects {
+        let project_id = match project.get("projectId").and_then(Value::as_str) {
+            Some(project_id) => project_id.trim(),
+            None => continue,
+        };
+        if project_id.is_empty() {
+            continue;
+        }
+        if project_id.starts_with("gen-lang-client") {
+            return Ok(Some(project_id.to_string()));
+        }
+        if project
+            .get("labels")
+            .and_then(Value::as_object)
+            .map(|labels| labels.contains_key("generative-language"))
+            .unwrap_or(false)
+        {
+            return Ok(Some(project_id.to_string()));
+        }
+    }
+
+    Ok(None)
+}
+
+fn fetch_gemini_load_code_assist_json(access_token: &str) -> io::Result<Output> {
+    fetch_json_post_with_bearer(
+        "https://cloudcode-pa.googleapis.com/v1internal:loadCodeAssist",
+        access_token,
+        "{\"metadata\":{\"ideType\":\"GEMINI_CLI\",\"pluginType\":\"GEMINI\"}}",
+    )
+}
+
+fn fetch_gemini_projects_json(access_token: &str) -> io::Result<Output> {
+    fetch_json_get_with_bearer(
+        "https://cloudresourcemanager.googleapis.com/v1/projects",
+        access_token,
+    )
+}
+
+fn fetch_gemini_quota_json(access_token: &str, project_id: Option<&str>) -> io::Result<Output> {
+    let body = match project_id {
+        Some(project_id) => json!({"project": project_id}).to_string(),
+        None => "{}".to_string(),
+    };
+    fetch_json_post_with_bearer(
+        "https://cloudcode-pa.googleapis.com/v1internal:retrieveUserQuota",
+        access_token,
+        &body,
+    )
+}
+
+fn fetch_json_get_with_bearer(endpoint: &str, access_token: &str) -> io::Result<Output> {
+    let args_owned = [
+        "-sS".to_string(),
+        "--location".to_string(),
+        "--max-time".to_string(),
+        "15".to_string(),
+        "-H".to_string(),
+        format!("Authorization: Bearer {access_token}"),
+        "-H".to_string(),
+        "Accept: application/json".to_string(),
+        "-w".to_string(),
+        "\n%{http_code}".to_string(),
+        endpoint.to_string(),
+    ];
+    let args = args_owned.iter().map(String::as_str).collect::<Vec<_>>();
+    run_command_with_timeout("curl", &args, Duration::from_secs(20))
+}
+
+fn fetch_json_post_with_bearer(
+    endpoint: &str,
+    access_token: &str,
+    body_json: &str,
+) -> io::Result<Output> {
+    let args_owned = [
+        "-sS".to_string(),
+        "--location".to_string(),
+        "--max-time".to_string(),
+        "15".to_string(),
+        "-H".to_string(),
+        format!("Authorization: Bearer {access_token}"),
+        "-H".to_string(),
+        "Accept: application/json".to_string(),
+        "-H".to_string(),
+        "Content-Type: application/json".to_string(),
+        "--data".to_string(),
+        body_json.to_string(),
+        "-w".to_string(),
+        "\n%{http_code}".to_string(),
+        endpoint.to_string(),
+    ];
+    let args = args_owned.iter().map(String::as_str).collect::<Vec<_>>();
+    run_command_with_timeout("curl", &args, Duration::from_secs(20))
+}
+
+fn parse_gemini_quota_windows(raw_json: &str) -> Result<(RateWindow, Option<RateWindow>)> {
+    let value =
+        serde_json::from_str::<Value>(raw_json).context("failed to parse Gemini quota JSON")?;
+    let buckets = value
+        .get("buckets")
+        .and_then(Value::as_array)
+        .context("Gemini quota JSON did not include buckets")?;
+    if buckets.is_empty() {
+        bail!("Gemini quota JSON contained no buckets");
+    }
+
+    let mut model_quotas: HashMap<String, GeminiModelQuota> = HashMap::new();
+    for bucket in buckets {
+        let model_id = match bucket.get("modelId").and_then(Value::as_str).map(str::trim) {
+            Some(model_id) if !model_id.is_empty() => model_id,
+            _ => continue,
+        };
+        let remaining_fraction = match bucket.get("remainingFraction").and_then(json_number_value) {
+            Some(remaining) => remaining.clamp(0.0, 1.0),
+            None => continue,
+        };
+        let reset_time = bucket
+            .get("resetTime")
+            .and_then(Value::as_str)
+            .map(str::trim)
+            .filter(|value| !value.is_empty())
+            .map(ToOwned::to_owned);
+
+        let entry = model_quotas
+            .entry(model_id.to_string())
+            .or_insert_with(|| GeminiModelQuota {
+                remaining_fraction,
+                reset_time: reset_time.clone(),
+            });
+        if remaining_fraction < entry.remaining_fraction {
+            entry.remaining_fraction = remaining_fraction;
+            entry.reset_time = reset_time;
+        }
+    }
+
+    if model_quotas.is_empty() {
+        bail!("Gemini quota JSON did not include usable quota buckets");
+    }
+
+    let pro_min = model_quotas
+        .iter()
+        .filter(|(model_id, _)| model_id.to_ascii_lowercase().contains("pro"))
+        .map(|(_, quota)| quota)
+        .min_by(|lhs, rhs| lhs.remaining_fraction.total_cmp(&rhs.remaining_fraction));
+    let flash_min = model_quotas
+        .iter()
+        .filter(|(model_id, _)| model_id.to_ascii_lowercase().contains("flash"))
+        .map(|(_, quota)| quota)
+        .min_by(|lhs, rhs| lhs.remaining_fraction.total_cmp(&rhs.remaining_fraction));
+
+    let pro_used = pro_min
+        .map(|quota| (100.0 - (quota.remaining_fraction * 100.0)).clamp(0.0, 100.0))
+        .unwrap_or(0.0);
+    let primary = RateWindow {
+        used_percent: Some(pro_used),
+        window_minutes: Some(1440),
+        resets_at: pro_min.and_then(|quota| quota.reset_time.clone()),
+    };
+    let secondary = flash_min.map(|quota| RateWindow {
+        used_percent: Some((100.0 - (quota.remaining_fraction * 100.0)).clamp(0.0, 100.0)),
+        window_minutes: Some(1440),
+        resets_at: quota.reset_time.clone(),
+    });
+
+    Ok((primary, secondary))
+}
+
+fn gemini_plan_label(
+    tier: Option<GeminiUserTierId>,
+    hosted_domain: Option<&str>,
+) -> Option<String> {
+    match (tier, hosted_domain) {
+        (Some(GeminiUserTierId::Standard), _) => Some("Paid".to_string()),
+        (Some(GeminiUserTierId::Free), Some(domain)) if !domain.trim().is_empty() => {
+            Some("Workspace".to_string())
+        }
+        (Some(GeminiUserTierId::Free), _) => Some("Free".to_string()),
+        (Some(GeminiUserTierId::Legacy), _) => Some("Legacy".to_string()),
+        (None, _) => None,
+    }
+}
+
+fn refresh_gemini_access_token(refresh_token: &str, home: &Path) -> Result<String> {
+    let oauth_credentials = extract_gemini_oauth_client_credentials()
+        .context("Could not find Gemini CLI OAuth configuration")?;
+    let refresh_body = format!(
+        "client_id={}&client_secret={}&refresh_token={}&grant_type=refresh_token",
+        percent_encode_form_value(&oauth_credentials.client_id),
+        percent_encode_form_value(&oauth_credentials.client_secret),
+        percent_encode_form_value(refresh_token),
+    );
+
+    let output = fetch_oauth_token_refresh_json(&refresh_body)
+        .context("failed to request Google OAuth token refresh")?;
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let (body, status_code) =
+        split_curl_body_and_status(&stdout).context("failed to parse OAuth refresh response")?;
+    if status_code != 200 {
+        bail!("Gemini OAuth refresh failed with HTTP {status_code}");
+    }
+
+    let refresh_json = serde_json::from_str::<Value>(body)
+        .context("failed to parse OAuth refresh JSON payload")?;
+    let access_token = refresh_json
+        .get("access_token")
+        .and_then(Value::as_str)
+        .and_then(clean_token_value)
+        .context("OAuth refresh response did not include access_token")?;
+
+    update_gemini_stored_credentials(home, &refresh_json)?;
+    Ok(access_token)
+}
+
+fn fetch_oauth_token_refresh_json(form_body: &str) -> io::Result<Output> {
+    let args_owned = [
+        "-sS".to_string(),
+        "--location".to_string(),
+        "--max-time".to_string(),
+        "15".to_string(),
+        "-H".to_string(),
+        "Content-Type: application/x-www-form-urlencoded".to_string(),
+        "--data".to_string(),
+        form_body.to_string(),
+        "-w".to_string(),
+        "\n%{http_code}".to_string(),
+        "https://oauth2.googleapis.com/token".to_string(),
+    ];
+    let args = args_owned.iter().map(String::as_str).collect::<Vec<_>>();
+    run_command_with_timeout("curl", &args, Duration::from_secs(20))
+}
+
+fn percent_encode_form_value(value: &str) -> String {
+    let mut output = String::with_capacity(value.len());
+    for byte in value.bytes() {
+        let is_unreserved =
+            byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_' | b'.' | b'~');
+        if is_unreserved {
+            output.push(byte as char);
+        } else {
+            output.push('%');
+            output.push_str(&format!("{byte:02X}"));
+        }
+    }
+    output
+}
+
+fn update_gemini_stored_credentials(home: &Path, refresh_json: &Value) -> Result<()> {
+    let creds_path = home.join(".gemini").join("oauth_creds.json");
+    let raw = fs::read_to_string(&creds_path)
+        .with_context(|| format!("failed to read {}", creds_path.display()))?;
+    let mut root = serde_json::from_str::<Value>(&raw)
+        .with_context(|| format!("failed to parse {}", creds_path.display()))?;
+    if !root.is_object() {
+        bail!("Gemini credentials file was not a JSON object");
+    }
+    let obj = root
+        .as_object_mut()
+        .context("internal error: Gemini credentials root was not an object")?;
+
+    if let Some(token) = refresh_json
+        .get("access_token")
+        .and_then(Value::as_str)
+        .and_then(clean_token_value)
+    {
+        obj.insert("access_token".to_string(), Value::String(token));
+    }
+    if let Some(expires_in) = refresh_json.get("expires_in").and_then(json_number_value) {
+        let expiry_date_ms = current_unix_millis() + (expires_in * 1000.0);
+        if let Some(number) = serde_json::Number::from_f64(expiry_date_ms) {
+            obj.insert("expiry_date".to_string(), Value::Number(number));
+        }
+    }
+    if let Some(id_token) = refresh_json
+        .get("id_token")
+        .and_then(Value::as_str)
+        .and_then(clean_token_value)
+    {
+        obj.insert("id_token".to_string(), Value::String(id_token));
+    }
+
+    let encoded = serde_json::to_string_pretty(&root)
+        .with_context(|| format!("failed to encode {}", creds_path.display()))?;
+    fs::write(&creds_path, format!("{encoded}\n"))
+        .with_context(|| format!("failed to write {}", creds_path.display()))?;
+    Ok(())
+}
+
+fn extract_gemini_oauth_client_credentials() -> Option<GeminiOAuthClientCredentials> {
+    let gemini_path = resolve_gemini_binary_path()?;
+    let resolved_binary = resolve_single_symlink_path(&gemini_path);
+    let bin_dir = resolved_binary.parent()?;
+    let base_dir = bin_dir.parent()?;
+
+    let candidates = [
+        base_dir.join("libexec/lib/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/code_assist/oauth2.js"),
+        base_dir.join("lib/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/code_assist/oauth2.js"),
+        base_dir.join("share/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/code_assist/oauth2.js"),
+        base_dir.join("../gemini-cli-core/dist/src/code_assist/oauth2.js"),
+        base_dir.join("node_modules/@google/gemini-cli-core/dist/src/code_assist/oauth2.js"),
+    ];
+
+    for path in candidates {
+        let content = match fs::read_to_string(&path) {
+            Ok(content) => content,
+            Err(_) => continue,
+        };
+        let client_id = match extract_js_constant(&content, "OAUTH_CLIENT_ID") {
+            Some(value) => value,
+            None => continue,
+        };
+        let client_secret = match extract_js_constant(&content, "OAUTH_CLIENT_SECRET") {
+            Some(value) => value,
+            None => continue,
+        };
+        return Some(GeminiOAuthClientCredentials {
+            client_id,
+            client_secret,
+        });
+    }
+
+    None
+}
+
+fn resolve_gemini_binary_path() -> Option<PathBuf> {
+    if let Some(path) = std::env::var("GEMINI_CLI_PATH")
+        .ok()
+        .and_then(|value| clean_token_value(&value))
+        .map(PathBuf::from)
+        .filter(|path| path.is_file())
+    {
+        return Some(path);
+    }
+
+    let which_output =
+        run_command_with_timeout("which", &["gemini"], Duration::from_secs(5)).ok()?;
+    if !which_output.status.success() {
+        return None;
+    }
+    let which_stdout = String::from_utf8_lossy(&which_output.stdout).to_string();
+    let candidate = which_stdout
+        .lines()
+        .next()
+        .map(str::trim)
+        .filter(|line| !line.is_empty())?
+        .to_string();
+    let path = PathBuf::from(candidate);
+    if path.is_file() {
+        Some(path)
+    } else {
+        None
+    }
+}
+
+fn resolve_single_symlink_path(path: &Path) -> PathBuf {
+    let link_target = match fs::read_link(path) {
+        Ok(target) => target,
+        Err(_) => return path.to_path_buf(),
+    };
+    if link_target.is_absolute() {
+        return link_target;
+    }
+    match path.parent() {
+        Some(parent) => parent.join(link_target),
+        None => link_target,
+    }
+}
+
+fn extract_js_constant(content: &str, key: &str) -> Option<String> {
+    let key_index = content.find(key)?;
+    let after_key = &content[(key_index + key.len())..];
+    let equals_index = after_key.find('=')?;
+    let after_equals = after_key[(equals_index + 1)..].trim_start();
+    let quote = after_equals.chars().next()?;
+    if quote != '\'' && quote != '"' {
+        return None;
+    }
+    let quoted = &after_equals[1..];
+    let end_index = quoted.find(quote)?;
+    let value = quoted[..end_index].trim();
+    if value.is_empty() {
+        None
+    } else {
+        Some(value.to_string())
+    }
+}
+
+fn fetch_cursor_entry(args: &UsageArgs) -> Result<Option<ProviderEntry>> {
+    let cookie_header = match resolve_cursor_cookie_header() {
+        Some(header) => header,
+        None => return Ok(None),
+    };
+
+    let output = match fetch_cursor_usage_summary_json(&cookie_header) {
+        Ok(output) => output,
+        Err(error) if error.kind() == ErrorKind::NotFound => return Ok(None),
+        Err(error) if error.kind() == ErrorKind::TimedOut => return Ok(None),
+        Err(error) => return Err(error).context("failed to query Cursor usage summary API"),
+    };
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let (body, status_code) = match split_curl_body_and_status(&stdout) {
+        Some(parts) => parts,
+        None => return Ok(None),
+    };
+    if status_code != 200 {
+        return Ok(None);
+    }
+
+    Ok(cursor_entry_from_usage_summary_json(
+        body,
+        args,
+        "cursor-usage-summary",
+    ))
+}
+
+fn resolve_cursor_cookie_header() -> Option<String> {
+    first_env_value(&[
+        "CODEXBAR_CURSOR_COOKIE_HEADER",
+        "CURSOR_COOKIE_HEADER",
+        "CURSOR_COOKIE",
+    ])
+    .and_then(|value| clean_token_value(&value))
+    .or_else(load_cursor_cookie_header_from_config)
+}
+
+fn load_cursor_cookie_header_from_config() -> Option<String> {
+    let home = std::env::var("HOME").ok()?;
+    let path = PathBuf::from(home).join(".codexbar").join("config.json");
+    let raw = fs::read_to_string(path).ok()?;
+    let json = serde_json::from_str::<Value>(&raw).ok()?;
+    let providers = json.get("providers").and_then(Value::as_array)?;
+
+    for provider in providers {
+        let id = provider
+            .get("id")
+            .and_then(Value::as_str)
+            .unwrap_or_default()
+            .trim();
+        if !id.eq_ignore_ascii_case("cursor") {
+            continue;
+        }
+
+        let cookie_source = provider
+            .get("cookieSource")
+            .and_then(Value::as_str)
+            .unwrap_or_default()
+            .trim();
+        if cookie_source.eq_ignore_ascii_case("off") {
+            return None;
+        }
+
+        if let Some(cookie_header) = provider.get("cookieHeader").and_then(Value::as_str) {
+            if let Some(value) = clean_token_value(cookie_header) {
+                return Some(value);
+            }
+        }
+    }
+
+    None
+}
+
+fn fetch_cursor_usage_summary_json(cookie_header: &str) -> io::Result<Output> {
+    let args_owned = [
+        "-sS".to_string(),
+        "--location".to_string(),
+        "--max-time".to_string(),
+        "15".to_string(),
+        "-H".to_string(),
+        "Accept: application/json".to_string(),
+        "-H".to_string(),
+        format!("Cookie: {cookie_header}"),
+        "-w".to_string(),
+        "\n%{http_code}".to_string(),
+        "https://cursor.com/api/usage-summary".to_string(),
+    ];
+    let args = args_owned.iter().map(String::as_str).collect::<Vec<_>>();
+    run_command_with_timeout("curl", &args, Duration::from_secs(20))
+}
+
+fn cursor_entry_from_usage_summary_json(
+    raw_json: &str,
+    args: &UsageArgs,
+    source_label: &str,
+) -> Option<ProviderEntry> {
+    let value = serde_json::from_str::<Value>(raw_json).ok()?;
+    let plan_usage = value
+        .get("individualUsage")
+        .and_then(|usage| usage.get("plan"));
+    let on_demand_usage = value
+        .get("individualUsage")
+        .and_then(|usage| usage.get("onDemand"));
+
+    let plan_used_raw = plan_usage
+        .and_then(|plan| plan.get("used"))
+        .and_then(json_number_value)
+        .unwrap_or(0.0);
+    let plan_limit_raw = plan_usage
+        .and_then(|plan| plan.get("limit"))
+        .and_then(json_number_value)
+        .unwrap_or(0.0);
+    let plan_total_percent_used = plan_usage
+        .and_then(|plan| plan.get("totalPercentUsed"))
+        .and_then(json_number_value);
+    let plan_used_percent = if plan_limit_raw > 0.0 {
+        ((plan_used_raw / plan_limit_raw) * 100.0).clamp(0.0, 100.0)
+    } else if let Some(total_percent) = plan_total_percent_used {
+        if total_percent <= 1.0 {
+            (total_percent * 100.0).clamp(0.0, 100.0)
+        } else {
+            total_percent.clamp(0.0, 100.0)
+        }
+    } else {
+        0.0
+    };
+
+    let on_demand_used_raw = on_demand_usage
+        .and_then(|usage| usage.get("used"))
+        .and_then(json_number_value)
+        .unwrap_or(0.0);
+    let on_demand_limit_raw = on_demand_usage
+        .and_then(|usage| usage.get("limit"))
+        .and_then(json_number_value);
+
+    let billing_cycle_end = value
+        .get("billingCycleEnd")
+        .and_then(Value::as_str)
+        .map(str::trim)
+        .filter(|text| !text.is_empty())
+        .map(ToOwned::to_owned);
+
+    let primary = Some(RateWindow {
+        used_percent: Some(plan_used_percent),
+        window_minutes: None,
+        resets_at: billing_cycle_end.clone(),
+    });
+    let secondary = on_demand_limit_raw.and_then(|limit_raw| {
+        if limit_raw > 0.0 {
+            Some(RateWindow {
+                used_percent: Some(((on_demand_used_raw / limit_raw) * 100.0).clamp(0.0, 100.0)),
+                window_minutes: None,
+                resets_at: billing_cycle_end.clone(),
+            })
+        } else {
+            None
+        }
+    });
+
+    let source = if args.source.eq_ignore_ascii_case("auto") {
+        source_label.to_string()
+    } else {
+        args.source.clone()
+    };
+    let membership_label = value
+        .get("membershipType")
+        .and_then(Value::as_str)
+        .map(format_cursor_membership_type);
+    let status = if args.status {
+        Some(StatusInfo {
+            indicator: Some("none".to_string()),
+            description: Some("Operational".to_string()),
+            updated_at: Some(now_iso8601()),
+            url: Some("https://status.cursor.com".to_string()),
+        })
+    } else {
+        None
+    };
+
+    Some(ProviderEntry {
+        provider: "cursor".to_string(),
+        source: Some(source),
+        updated_at: now_iso8601(),
+        primary,
+        secondary,
+        tertiary: None,
+        credits_remaining: None,
+        code_review_remaining_percent: None,
+        identity: Some(IdentityInfo {
+            account_email: None,
+            account_organization: None,
+            login_method: membership_label,
+        }),
+        status,
+    })
+}
+
+fn format_cursor_membership_type(raw: &str) -> String {
+    match raw.trim().to_ascii_lowercase().as_str() {
+        "enterprise" => "Cursor Enterprise".to_string(),
+        "pro" => "Cursor Pro".to_string(),
+        "hobby" => "Cursor Hobby".to_string(),
+        "team" => "Cursor Team".to_string(),
+        value if !value.is_empty() => format!("Cursor {}", title_case_words(value)),
+        _ => "Cursor".to_string(),
+    }
+}
+
+fn fetch_copilot_entry(args: &UsageArgs) -> Result<Option<ProviderEntry>> {
+    let access_token = match resolve_copilot_token_for_internal_api() {
+        Some(token) => token,
+        None => return Ok(None),
+    };
+
+    let output = match fetch_copilot_internal_usage_json(&access_token) {
+        Ok(output) => output,
+        Err(error) if error.kind() == ErrorKind::NotFound => return Ok(None),
+        Err(error) if error.kind() == ErrorKind::TimedOut => return Ok(None),
+        Err(error) => {
+            return Err(error).context("failed to query GitHub Copilot internal usage API");
+        }
+    };
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let (body, status_code) = match split_curl_body_and_status(&stdout) {
+        Some(parts) => parts,
+        None => return Ok(None),
+    };
+    if status_code != 200 {
+        return Ok(None);
+    }
+
+    Ok(copilot_entry_from_internal_usage_json(
+        body,
+        args,
+        "github-copilot-api",
+    ))
+}
+
+fn resolve_copilot_token_for_internal_api() -> Option<String> {
+    first_env_value(&["CODEXBAR_COPILOT_API_TOKEN", "COPILOT_API_TOKEN"])
+        .and_then(|value| clean_token_value(&value))
+        .or_else(load_copilot_token_from_codexbar_config)
+        .or_else(load_copilot_token_from_gh_auth)
+}
+
+fn load_copilot_token_from_codexbar_config() -> Option<String> {
+    let home = std::env::var("HOME").ok()?;
+    let path = PathBuf::from(home).join(".codexbar").join("config.json");
+    let raw = fs::read_to_string(path).ok()?;
+    let json = serde_json::from_str::<Value>(&raw).ok()?;
+    let providers = json.get("providers").and_then(Value::as_array)?;
+
+    for provider in providers {
+        let id = provider
+            .get("id")
+            .and_then(Value::as_str)
+            .unwrap_or_default();
+        if !id.eq_ignore_ascii_case("copilot") {
+            continue;
+        }
+
+        let api_key = provider.get("apiKey").and_then(Value::as_str)?;
+        if let Some(token) = clean_token_value(api_key) {
+            return Some(token);
+        }
+    }
+
+    None
+}
+
+fn load_copilot_token_from_gh_auth() -> Option<String> {
+    let args = ["auth", "token", "-h", "github.com"];
+    let output = run_command_with_timeout("gh", &args, Duration::from_secs(8)).ok()?;
+    if !output.status.success() {
+        return None;
+    }
+
+    clean_token_value(String::from_utf8_lossy(&output.stdout).trim())
+}
+
+fn fetch_copilot_internal_usage_json(access_token: &str) -> io::Result<Output> {
+    let args_owned = [
+        "-sS".to_string(),
+        "--location".to_string(),
+        "--max-time".to_string(),
+        "15".to_string(),
+        "-H".to_string(),
+        format!("Authorization: token {access_token}"),
+        "-H".to_string(),
+        "Accept: application/json".to_string(),
+        "-H".to_string(),
+        "Editor-Version: vscode/1.96.2".to_string(),
+        "-H".to_string(),
+        "Editor-Plugin-Version: copilot-chat/0.26.7".to_string(),
+        "-H".to_string(),
+        "User-Agent: GitHubCopilotChat/0.26.7".to_string(),
+        "-H".to_string(),
+        "X-Github-Api-Version: 2025-04-01".to_string(),
+        "-w".to_string(),
+        "\n%{http_code}".to_string(),
+        "https://api.github.com/copilot_internal/user".to_string(),
+    ];
+    let args = args_owned.iter().map(String::as_str).collect::<Vec<_>>();
+    run_command_with_timeout("curl", &args, Duration::from_secs(20))
+}
+
+fn copilot_entry_from_internal_usage_json(
+    raw_json: &str,
+    args: &UsageArgs,
+    source_label: &str,
+) -> Option<ProviderEntry> {
+    let value = serde_json::from_str::<Value>(raw_json).ok()?;
+    let primary =
+        copilot_window_from_internal_usage(&value, "premium_interactions").or_else(|| {
+            Some(RateWindow {
+                used_percent: Some(0.0),
+                window_minutes: None,
+                resets_at: None,
+            })
+        });
+    let secondary = copilot_window_from_internal_usage(&value, "chat");
+    let source = if args.source.eq_ignore_ascii_case("auto") {
+        source_label.to_string()
+    } else {
+        args.source.clone()
+    };
+    let plan_label = value
+        .get("copilot_plan")
+        .and_then(Value::as_str)
+        .map(title_case_words)
+        .filter(|label| !label.is_empty());
+    let status = if args.status {
+        Some(StatusInfo {
+            indicator: Some("none".to_string()),
+            description: Some("Operational".to_string()),
+            updated_at: Some(now_iso8601()),
+            url: Some("https://www.githubstatus.com/".to_string()),
+        })
+    } else {
+        None
+    };
+
+    Some(ProviderEntry {
+        provider: "copilot".to_string(),
+        source: Some(source),
+        updated_at: now_iso8601(),
+        primary,
+        secondary,
+        tertiary: None,
+        credits_remaining: None,
+        code_review_remaining_percent: None,
+        identity: Some(IdentityInfo {
+            account_email: None,
+            account_organization: None,
+            login_method: plan_label,
+        }),
+        status,
+    })
+}
+
+fn copilot_window_from_internal_usage(value: &Value, key: &str) -> Option<RateWindow> {
+    // Preferred schema (documented in docs/copilot.md).
+    let used_percent = if let Some(percent_remaining) = value
+        .get("quota_snapshots")
+        .and_then(|snapshots| snapshots.get(key))
+        .and_then(|snapshot| snapshot.get("percent_remaining"))
+        .and_then(json_number_value)
+    {
+        (100.0 - percent_remaining).clamp(0.0, 100.0)
+    } else {
+        // Variant observed for limited/free plans where quotas are represented as
+        // remaining/entitlement counts rather than percent_remaining.
+        let bucket = match key {
+            "premium_interactions" => "completions",
+            "chat" => "chat",
+            _ => return None,
+        };
+
+        let total = value
+            .get("monthly_quotas")
+            .and_then(|quotas| quotas.get(bucket))
+            .and_then(json_number_value)?;
+        let remaining = value
+            .get("limited_user_quotas")
+            .and_then(|quotas| quotas.get(bucket))
+            .and_then(json_number_value)?;
+
+        if total <= 0.0 {
+            0.0
+        } else {
+            ((1.0 - (remaining / total)) * 100.0).clamp(0.0, 100.0)
+        }
+    };
+
+    Some(RateWindow {
+        used_percent: Some(used_percent),
+        window_minutes: None,
+        resets_at: None,
+    })
+}
+
+fn title_case_words(input: &str) -> String {
+    input
+        .split_whitespace()
+        .filter(|part| !part.is_empty())
+        .map(|part| {
+            let mut chars = part.chars();
+            match chars.next() {
+                Some(first) => format!(
+                    "{}{}",
+                    first.to_uppercase(),
+                    chars.as_str().to_ascii_lowercase()
+                ),
+                None => String::new(),
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
+fn clean_token_value(raw: &str) -> Option<String> {
+    let mut token = raw.trim().to_string();
+    if token.is_empty() {
+        return None;
+    }
+
+    if (token.starts_with('"') && token.ends_with('"'))
+        || (token.starts_with('\'') && token.ends_with('\''))
+    {
+        token.remove(0);
+        token.pop();
+    }
+
+    let cleaned = token.trim().to_string();
+    if cleaned.is_empty() {
+        None
+    } else {
+        Some(cleaned)
+    }
+}
+
 fn first_env_value(names: &[&str]) -> Option<String> {
     names.iter().find_map(|name| {
         std::env::var(name)
@@ -551,6 +2352,26 @@ fn fetch_json_with_bearer(endpoint: &str, access_token: &str) -> io::Result<Outp
 
 fn lookup_claude_secret(field: &str) -> Option<String> {
     lookup_claude_secret_via_secret_tool(field).or_else(|| lookup_claude_secret_via_kwallet(field))
+}
+
+fn clear_claude_secret(field: &str) {
+    clear_claude_secret_via_secret_tool(field);
+    clear_claude_secret_via_kwallet(field);
+}
+
+fn clear_claude_secret_via_secret_tool(field: &str) {
+    let args = [
+        "clear", "service", "codexbar", "provider", "claude", "field", field,
+    ];
+    let _ = run_command_with_timeout("secret-tool", &args, Duration::from_secs(8));
+}
+
+fn clear_claude_secret_via_kwallet(field: &str) {
+    let entry = format!("claude.{field}");
+    for wallet in ["kdewallet", "kdewallet5"] {
+        let args = ["-f", "CodexBar", "-d", entry.as_str(), wallet];
+        let _ = run_command_with_timeout("kwallet-query", &args, Duration::from_secs(8));
+    }
 }
 
 fn lookup_claude_secret_via_secret_tool(field: &str) -> Option<String> {

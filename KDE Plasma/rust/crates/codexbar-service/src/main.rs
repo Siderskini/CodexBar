@@ -18,6 +18,7 @@ struct Cli {
 enum Commands {
     Snapshot(SnapshotArgs),
     Auth(AuthArgs),
+    Remove(RemoveArgs),
 }
 
 #[derive(Debug, Parser, Clone)]
@@ -47,6 +48,15 @@ struct AuthArgs {
     provider: String,
 }
 
+#[derive(Debug, Parser, Clone)]
+struct RemoveArgs {
+    #[arg(long)]
+    provider: String,
+
+    #[arg(long, default_value_t = false)]
+    yes: bool,
+}
+
 fn main() {
     if let Err(error) = run() {
         eprintln!("codexbar-service: {error:#}");
@@ -68,6 +78,7 @@ fn run() -> Result<()> {
     match command {
         Commands::Snapshot(args) => render_snapshot(&args),
         Commands::Auth(args) => run_auth(&args),
+        Commands::Remove(args) => run_remove(&args),
     }
 }
 
@@ -92,11 +103,15 @@ fn build_snapshot(args: &SnapshotArgs) -> Result<WidgetSnapshot> {
         let raw = fs::read_to_string(path)
             .with_context(|| format!("failed to read JSON input from {}", path.display()))?;
         let values = parse_json_values(&raw)?;
-        return Ok(WidgetSnapshot::from_codexbar_cli_values(&values));
+        let mut snapshot = WidgetSnapshot::from_codexbar_cli_values(&values);
+        apply_pinned_providers(&mut snapshot);
+        return Ok(snapshot);
     }
 
     if args.from_codexbar_cli {
-        return fetch_from_codexbar_cli(&args.provider, args.status);
+        let mut snapshot = fetch_from_codexbar_cli(&args.provider, args.status)?;
+        apply_pinned_providers(&mut snapshot);
+        return Ok(snapshot);
     }
 
     bail!("no live data source selected; pass --from-codexbar-cli or --input <path>")
@@ -122,6 +137,67 @@ fn fetch_from_codexbar_cli(provider: &str, status: bool) -> Result<WidgetSnapsho
     let stdout = String::from_utf8(output.stdout).context("codexbar stdout was not valid UTF-8")?;
     let values = parse_json_values(&stdout).context("failed to decode codexbar JSON payload")?;
     Ok(WidgetSnapshot::from_codexbar_cli_values(&values))
+}
+
+fn apply_pinned_providers(snapshot: &mut WidgetSnapshot) {
+    let mut merged = Vec::new();
+    push_provider_unique(&mut merged, "codex");
+
+    for provider in load_pinned_providers_from_config() {
+        push_provider_unique(&mut merged, &provider);
+    }
+
+    snapshot.enabled_providers = merged;
+}
+
+fn load_pinned_providers_from_config() -> Vec<String> {
+    let home = match std::env::var("HOME") {
+        Ok(home) => home,
+        Err(_) => return Vec::new(),
+    };
+    let path = PathBuf::from(home).join(".codexbar").join("config.json");
+    let raw = match fs::read_to_string(path) {
+        Ok(raw) => raw,
+        Err(_) => return Vec::new(),
+    };
+    let json = match serde_json::from_str::<Value>(&raw) {
+        Ok(json) => json,
+        Err(_) => return Vec::new(),
+    };
+    let pinned = match json.get("pinnedProviders").and_then(Value::as_array) {
+        Some(pinned) => pinned,
+        None => return Vec::new(),
+    };
+
+    let mut providers = Vec::new();
+    for item in pinned {
+        let provider = item.as_str().map(normalize_provider_id).unwrap_or_default();
+        if provider.is_empty() {
+            continue;
+        }
+        push_provider_unique(&mut providers, &provider);
+    }
+
+    providers
+}
+
+fn push_provider_unique(providers: &mut Vec<String>, provider: &str) {
+    let normalized = normalize_provider_id(provider);
+    if normalized.is_empty() {
+        return;
+    }
+    if providers.iter().any(|item| item == &normalized) {
+        return;
+    }
+    providers.push(normalized);
+}
+
+fn normalize_provider_id(raw: &str) -> String {
+    let trimmed = raw.trim().to_ascii_lowercase();
+    match trimmed.as_str() {
+        "droid" => "factory".to_string(),
+        _ => trimmed,
+    }
 }
 
 fn run_codexbar_command(program: &Path, provider: &str, status: bool) -> std::io::Result<Output> {
@@ -216,4 +292,33 @@ fn run_codexbar_auth_command(program: &Path, provider: &str) -> std::io::Result<
         .arg("--provider")
         .arg(provider)
         .status()
+}
+
+fn run_remove(args: &RemoveArgs) -> Result<()> {
+    let status = if let Some(sibling) = sibling_codexbar_path() {
+        run_codexbar_remove_command(&sibling, &args.provider, args.yes)
+            .with_context(|| format!("failed to spawn codexbar CLI at {}", sibling.display()))?
+    } else {
+        run_codexbar_remove_command(Path::new("codexbar"), &args.provider, args.yes)
+            .with_context(|| "failed to spawn codexbar CLI".to_string())?
+    };
+
+    if !status.success() {
+        bail!("codexbar remove exited with status {}", status);
+    }
+
+    Ok(())
+}
+
+fn run_codexbar_remove_command(
+    program: &Path,
+    provider: &str,
+    yes: bool,
+) -> std::io::Result<ExitStatus> {
+    let mut command = Command::new(program);
+    command.arg("remove").arg("--provider").arg(provider);
+    if yes {
+        command.arg("--yes");
+    }
+    command.status()
 }
